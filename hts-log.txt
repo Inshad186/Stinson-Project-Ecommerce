@@ -1,0 +1,31 @@
+HTTrack3.49-2+htsswf+htsjava launched on Thu, 02 May 2024 16:42:04 at https://htmldemo.net/stinson-v1/stinson/index.html +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://htmldemo.net/stinson-v1/stinson/index.html -O1 "C:\My Web Sites\ecomm" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+16:42:38	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/apple-touch-icon.webp (from https://htmldemo.net/stinson-v1/stinson/index.html)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/order-complete (from https://htmldemo.net/stinson-v1/stinson/index.html)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/fonts/Pe-icon-7-stroke.eot?d7yf1v (from https://htmldemo.net/stinson-v1/stinson/css/pe-icon-7-stroke.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/fonts/Pe-icon-7-stroke.eot? (from https://htmldemo.net/stinson-v1/stinson/css/pe-icon-7-stroke.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/fonts/Pe-icon-7-stroke.ttf?d7yf1v (from https://htmldemo.net/stinson-v1/stinson/css/pe-icon-7-stroke.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/fonts/Pe-icon-7-stroke.svg?d7yf1v (from https://htmldemo.net/stinson-v1/stinson/css/pe-icon-7-stroke.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-bg_inset-hard_100_fcfdfd_1x100.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-bg_gloss-wave_55_5c9ccc_500x100.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-bg_glass_85_dfeffc_1x400.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-bg_glass_75_d0e5f5_1x400.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-bg_inset-hard_100_f5f8f9_1x100.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-bg_glass_95_fef1ec_1x400.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-icons_469bdd_256x240.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-icons_d8e7f3_256x240.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-icons_6da8d5_256x240.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-icons_217bc0_256x240.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-icons_f9bd01_256x240.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-icons_2e83ff_256x240.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/images/ui-icons_cd0a0a_256x240.png (from https://htmldemo.net/stinson-v1/stinson/css/jquery-ui.min.css)
+16:43:05	Error: 	"Not Found" (404) at link https://htmldemo.net/stinson-v1/stinson/css/AjaxLoader.gif (from https://htmldemo.net/stinson-v1/stinson/css/owl.carousel.css)
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 minutes 4 seconds : 154 links scanned, 133 files written (5126955 bytes overall) [3539336 bytes received at 55302 bytes/sec], 2316710 bytes transferred using HTTP compression in 72 files, ratio 25%, 38.5 requests per connection
+(20 errors, 0 warnings, 0 messages)
