@@ -1014,7 +1014,7 @@
                                     <%= new Date(products[i].createdAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %>
                                   </td>
                                   <td>
-                                    <%= products[i].size.join(", ") %></td>
+                                    <%= products[i].size.join(",") %></td>
                                   <td><%- products[i].orginalPrice %></td>
                                   <td id="<%= products[i]._id %>">
                                     <%= products[i].is_Delete ? 'UNLISTED' : 'LISTED' %>

@@ -30,6 +30,14 @@ const varientSchema = new mongoose.Schema({
     is_Delete: {
         type: Boolean,
         default: false
+    },
+    productName: {
+        type: String,
+        required:true
+    },
+    categoryName: {
+        type: String,
+        required:true
     }
 })
 

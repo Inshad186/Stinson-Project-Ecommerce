@@ -105,6 +105,7 @@
 												<li><a href="/shopList">New Product</a></li>				
 											</ul>
 										</li>
+										<li><a href="/userProfile">My Account</a>
 										<!-- <li><a href="product-grid-left.html">Shop</a>
 											<div class="magamenu">
 												<ul>
@@ -687,18 +688,19 @@
 								<div class="tab-content">
 									<div class="tab-pane fade text-center show active" id="grid">
 										<div class="row">
-											<% products.forEach(product => { %>
+											<% variants.forEach(variant => { %>
 											<div class="col-md-6 col-lg-4">
 												<div class="single-product">
 													<div class="product-img">
 														<div class="pro-type">
 															<span>sale</span>
 														</div>
-														<a href="/productDetail?id=<%= product._id %>"><img src="<%= product.image %>" alt="<%= product.name %>" /></a>
+														<a href="/productDetail?id=<%= variant._id %>"><img src="<%= variant.image[0] %>" alt="<%= variant.salePrice %>"></a>
+														<% console.log('number of variants',variant._id) %>
 													</div>
 													<div class="product-dsc">
-														<p><a href="/productDetail"><%= product.name %></a></p>
-														<span>$<%= product.orginalPrice %></span>
+														<p><a href="/productDetail"><%= variant.colour.toUpperCase() %>-<%= variant.productName.toUpperCase() %></a></p>
+														<span><%= variant.salePrice %>/-</span>
 													</div>
 													<div class="actions-btn">
 														<a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>

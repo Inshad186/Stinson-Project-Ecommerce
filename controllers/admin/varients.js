@@ -1,5 +1,6 @@
 const Variants = require('../../models/varientModel');
 const Product = require('../../models/productModel');
+const Category = require("../../models/categoryModel")
 
 exports.loadvarients = async (req, res) => {
     try {
@@ -13,11 +14,19 @@ exports.loadvarients = async (req, res) => {
 };
 
 
+
 exports.addVarients = async (req, res) => {
     try {
-        const { colour, salePrice, sizes, stocks ,productId } = req.body;
+        const { colour, salePrice, sizes, stocks, productId } = req.body;
 
-        console.log("Product ID:", productId);
+        // Fetch productName and categoryName based on productId
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+
+        const productName = product.name;  // Replace with the actual field name from Product model
+        const categoryName = product.categoryId;  // Replace with the actual field name from Product model
 
         const sizesArray = Array.isArray(sizes) ? sizes : [sizes];
         const stocksArray = Array.isArray(stocks) ? stocks.map(stock => parseInt(stock, 10)) : [parseInt(stocks, 10)];
@@ -42,7 +51,9 @@ exports.addVarients = async (req, res) => {
             stock: stocksArray,
             colour,
             salePrice: parseFloat(salePrice),
-            image: imagePaths
+            image: imagePaths,
+            productName,  // Assign productName
+            categoryName  // Assign categoryName
         });
 
         const savedVariant = await newVariant.save();
@@ -54,6 +65,7 @@ exports.addVarients = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error' });
     }
 };
+
 
 
 

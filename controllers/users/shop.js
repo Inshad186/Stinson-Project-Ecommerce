@@ -1,12 +1,11 @@
 const Product = require("../../models/productModel")
 const Variant = require("../../models/varientModel")
-const mongoose = require('mongoose');
 
 exports.viewshopList = async(req,res)=>{
     try {
         const products = await Product.find({is_Delete : false})
-        console.log("-------------------------------------------- My Products",products);
-        res.render("users/shopList", {products})
+        const variants = await Variant.find({})
+        res.render("users/shopList", {products , variants})
     } catch (error) {
        console.log(error.message); 
     }
@@ -14,28 +13,33 @@ exports.viewshopList = async(req,res)=>{
 
 
 
+
 exports.productDetail = async (req, res) => {
     try {
-        const productId = req.query.id;
-        const product = await Product.findById(productId);
-        const variants = await Variant.find({ productId });
+        const variantId = req.query.id;
+        const variant = await Variant.findOne({ _id: variantId });
 
+        if (!variant) {
+            return res.status(404).send("Variant not found");
+        }
 
-        const isOutOfStock = variants.some(variant => {
-            return variant.stock.some(stockItem => stockItem <= 0);
-        });
-        
+        // Assuming 'stock' is an array of numbers representing stock levels
+        const stockStatus = variant.stock.some(stock => stock > 0) ? 'In stock' : 'Out of stock';
 
-        console.log("------------ find by id product ", product);
-        console.log("------------ variants ", variants);
-        console.log("-------------this is my stock", isOutOfStock);
+        const productId = variant.productId;
+        const otherVariants = await Variant.find({ productId });
 
-        res.render("users/productDetail", { product, variants, isOutOfStock });
+        const colors = [variant.colour];
+        const sizes = variant.size;
+
+        res.render("users/productDetail", { variant, stockStatus, colors, sizes, otherVariants });
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Server Error");
     }
 };
+
+
 
 
 

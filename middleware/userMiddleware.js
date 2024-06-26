@@ -1,23 +1,31 @@
 
-// const isAuthenticated = (req, res, next) => {
-//     if (req.session.userId) {
-//         next();
-//         console.log('auth success', req.session.userId)
-//     } else {
-//         res.redirect('/login');
-//         console.log('auth failed')
-//     }
-// };
+const isAuthenticated = async(req,res,next) => {
+    try {
+        if(!req.session.userId) {
+            return res.redirect('/login')
+        }
+        next();
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 const isUnAuthenticated = (req, res, next) => {
-    if (req.session.userId) {
-        console.log('auth failed');
-        return res.redirect('/');
+    try {
+        if (req.session.userId) {
+            return res.redirect('/');
+        }
+        next();
+
+    } catch (error) {
+        console.log(error.message)
     }
-    next();
+ 
 };
 
 
 module.exports = {
+    isAuthenticated,
     isUnAuthenticated,
 };

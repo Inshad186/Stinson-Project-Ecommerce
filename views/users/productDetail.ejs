@@ -1,5 +1,30 @@
 <%- include("../layouts/header.ejs") %>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- <style>
+
+/* Style for variant colors */
+.variant-colors {
+  margin-bottom: 10px;
+}
+
+.variant-colors .property-key {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.color-link {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+</style> -->
+
 	<body>
 		<!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -112,6 +137,7 @@
 												<li><a href="/shopList">New Product</a></li>
 											</ul>
 										</li>
+										<li><a href="/userProfile">My Account</a>
 										<!--<div class="magamenu">
 												<ul>
 													<li class="right-mega colmd8 active"><a href="#">all products</a>
@@ -534,23 +560,23 @@
 						<div class="quick-image">
 							<div class="single-quick-image tab-content text-center">
 								<div id="main-image-container" class="simpleLens-container tab-pane active show">
-									<a class="simpleLens-image" data-lens-image="<%= variants[0].image[0] %>" href="#">
-										<img id="main-image" src="<%= variants[0].image[0] %>" alt="" class="simpleLens-big-image">
+									<a class="simpleLens-image" data-lens-image="<%= variant.image[0] %>" href="#">
+										<img id="main-image" src="<%= variant.image[0] %>" alt="" class="simpleLens-big-image">
 									</a>
 								</div>
 							</div>
 							<div class="quick-thumb">
 								<div class="nav nav-tabs">
 									<ul id="tabs-details" class="owl-carousel product-slider owl-theme">
-										<% variants.forEach(function(variant, index) { %>
-											<% variant.image.forEach(function(image, imageIndex) { %>
-												<li class="tablist <%= (index === 0 && imageIndex === 0) ? 'active' : '' %> thumbnail-link" data-image="<%= image %>" data-variant-index="<%= index %>">
-													<a data-bs-toggle="tab" href="#sin-<%= index %>_<%= imageIndex %>">
-														<img src="<%= image %>" alt="quick view" />
-													</a>
-												</li>
-											<% }); %>
-										<% }); %>
+										<% variant.image.forEach((img, index) => { %>
+											<li class="tablist <%= (index === 0) ? 'active' : '' %> thumbnail-link"
+												data-image="<%= img %>"
+												data-variant-index="<%= index %>">
+												<a data-bs-toggle="tab" href="#sin-<%= index %>">
+													<img src="<%= img %>" alt="quick view" />
+												</a>
+											</li>
+										<% }) %>
 									</ul>
 								</div>
 							</div>
@@ -560,7 +586,7 @@
 					<div class="col-md-7">
 						<div class="quick-right">
 							<div class="quick-right-text">
-								<h3><strong><%= product.name %></strong></h3>
+								<h3><strong><%= variant.productName %></strong></h3>
 								<div class="rating">
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
@@ -570,141 +596,136 @@
 									<a href="#">06 Review</a>
 									<a href="#">Add review</a>
 								</div>
-								<div class="amount">
-									<h4>$<%= product.orginalPrice %></h4>
-								</div>
-								<h5><%= product.description %></h5>
-								<div class="row m-p-b">
-									<div class="col-lg-6">
-										<div class="por-dse">
-											<ul>
-												<li>
-													<span>Availability</span><strong>:</strong>
-													<% console.log("isOutOfStock") %>
-													<% console.log( isOutOfStock ) %>
-													<% if (isOutOfStock) { %>
-														<span style="color: red;">Out of Stock</span>
-													<% } else { %>
-														In stock
-													<% } %>
-												</li>
-												<li><span>Condition</span><strong>:</strong> New product</li>
-												<li><span>Category</span><strong>:</strong> <a href="#">Men</a> <a href="#">Fashion</a> <a href="#">Shirt</a></li>
-											</ul>
-										</div>
+								<br>
+								<h4><%= variant.salePrice %>/-</h4>
+								<br>
+								<br>
+								<h3>Variants</h3>
+								<div class="variants">
+									<% if (otherVariants && otherVariants.length > 0) { %>
+									<div class="variant-colors">
+										<div class="variant-property"></div>
+										<span class="property-key">Colors:</span>
+										<% otherVariants.forEach((variant, index) => { %>
+										<a href="/productDetail?id=<%= variant._id %>" class="color-link" data-variant-id="<%= variant._id %>">
+											<img src="<%= variant.image[0] %>" alt="<%= variant.colour %>" style="width: 50px; height: 50px;">
+										</a>
+										<% }) %>
 									</div>
-									<div class="col-lg-6">
-										<div class="por-dse color">
-											<ul>
-												<li><span>Color</span><strong>:</strong>
-													<% variants.forEach(function(variant, index) { %>
-														<a href="#" class="color-link" data-color-index="<%= index %>"><%= variant.colour %></a>
-													<% }); %>
-												</li>
-												<li><span>Size</span><strong>:</strong>
-													<% product.size.forEach(size => { %>
-														<a href="#"><%= size %></a>
-													<% }) %>
-												</li>
-												<li><span>Tag</span><strong>:</strong> <a href="#">Men</a> <a href="#">Fashion</a> <a href="#">Shirt</a></li>
-											</ul>
-										</div>
+									<% } %>
+					
+					
+									<div class="dropdown">
+										<span class="property-key">Size:</span>
+										<select class="custom-select" id="sizeDropdown">
+											<option selected>Select Size</option>
+											<% sizes.forEach(size => { %>
+											<option value="<%= size %>"><%= size %></option>
+											<% }) %>
+										</select>
 									</div>
 								</div>
-								<div class="dse-btn">
-									<div class="row">
-										<div class="col-sm-7 col-md-6">
-											<div class="por-dse">
-												<ul>
-													<li class="share-btn qty clearfix"><span>Quantity</span>
-														<form action="#" method="POST">
-															<div class="plus-minus">
-																<a class="dec qtybutton">-</a>
-																<input type="text" value="1" name="qtybutton" class="plus-minus-box">
-																<a class="inc qtybutton">+</a>
-															</div>
-														</form>
-													</li>
-													<li class="share-btn clearfix"><span>Share</span>
-														<a href="#"><i class="fa fa-facebook"></i></a>
-														<a href="#"><i class="fa fa-twitter"></i></a>
-														<a href="#"><i class="fa fa-google-plus"></i></a>
-														<a href="#"><i class="fa fa-linkedin"></i></a>
-														<a href="#"><i class="fa fa-instagram"></i></a>
-													</li>
-												</ul>
-											</div>
-										</div>
-										<div class="col-sm-5 col-md-6">
-											<div class="por-dse clearfix responsive-othre">
-												<ul class="other-btn">
-													<li><a href="#"><i class="fa fa-heart"></i></a></li>
-													<li><a href="#"><i class="fa fa-refresh"></i></a></li>
-													<li><a href="#"><i class="fa fa-envelope-o"></i></a></li>
-												</ul>
-											</div>
-											<div class="por-dse add-to">
-												<a href="#">Add to cart</a>
-											</div>
-										</div>
+								<br>
+
+								<div class="col-lg-6">
+									<div class="por-dse responsive-strok clearfix">
+										<ul>
+											<% if (variant.stock && variant.stock.length > 0 && variant.stock.some(stock => stock > 0)) { %>
+												<li><span>Available</span><strong>:</strong> In stock</li>
+											<% } else { %>
+												<li><span>Available</span><strong>:</strong> <span style="color: red;">Out of stock</span></li>
+											<% } %>
+											<li><span>Condition</span><strong>:</strong> New product</li>
+											<li><span>Category</span><strong>:</strong> Men</li>
+										</ul>
 									</div>
 								</div>
+								
+
+								<br>
+								<p>Overview
+									Spruce up her casual wardrobe with this T-shirt. It is designed with a round neckline, long sleeves, and a cute graphic print on the front.
+									Details
+									Net Quantity : 1 Number
+									Design : Printed
+									Product : T-shirt
+									Fabric : Cotton</p>
+
+									<div class="add-to-cart">
+										<button data-variant-id="<%= variant._id %>" onclick="addToCart(event)">Add To Cart</button>
+									</div>
+									
+									
 							</div>
 						</div>
 					</div>
-					
+
+					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 					
 					<script>
-						document.addEventListener('DOMContentLoaded', function () {
-							// Select all color links and thumbnail links
-							const colorLinks = document.querySelectorAll('.color-link');
-							const thumbnailLinks = document.querySelectorAll('.thumbnail-link');
-							const mainImage = document.getElementById('main-image');
-					
-							colorLinks.forEach(link => {
-								link.addEventListener('click', function (event) {
-									event.preventDefault();
-					
-									// Get the index of the selected color
-									const colorIndex = this.getAttribute('data-color-index');
-					
-									// Find the first image of the selected color
-									const firstVariantImage = document.querySelector(`.thumbnail-link[data-variant-index="${colorIndex}"]`);
-					
-									if (firstVariantImage) {
-										// Update the main image
-										mainImage.src = firstVariantImage.getAttribute('data-image');
-					
-										// Update thumbnail navigation
-										const thumbItems = document.querySelectorAll('#tabs-details li');
-										thumbItems.forEach(item => item.classList.remove('active'));
-										firstVariantImage.classList.add('active');
-									}
-								});
-							});
-					
+						document.addEventListener("DOMContentLoaded", function() {
+							const thumbnailLinks = document.querySelectorAll(".thumbnail-link");
+							const mainImage = document.getElementById("main-image");
+						
 							thumbnailLinks.forEach(link => {
-								link.addEventListener('click', function (event) {
+								link.addEventListener("click", function(event) {
 									event.preventDefault();
-					
-									// Update the main image
-									const newImageSrc = this.getAttribute('data-image');
-									mainImage.src = newImageSrc;
-					
-									// Update thumbnail navigation
-									const thumbItems = document.querySelectorAll('#tabs-details li');
-									thumbItems.forEach(item => item.classList.remove('active'));
-									this.classList.add('active');
+						
+									// Get the new image URL from the clicked thumbnail
+									const newImageSrc = this.getAttribute("data-image");
+						
+									// Update the main image source
+									mainImage.setAttribute("src", newImageSrc);
+						
+									// Update the lens image source if using lens zoom feature
+									const lensImage = document.querySelector(".simpleLens-image");
+									lensImage.setAttribute("data-lens-image", newImageSrc);
+						
+									// Remove 'active' class from all thumbnails and add it to the clicked one
+									thumbnailLinks.forEach(link => link.classList.remove("active"));
+									this.classList.add("active");
 								});
 							});
 						});
-					</script>
+						
+						async function addToCart(event) {
+							event.preventDefault();
+						
+							const variantId = "<%= variant._id %>"; 
+							const selectedSize = document.getElementById("sizeDropdown").value;
+						
+							if (selectedSize === "Select Size") {
+								await Swal.fire({
+									title: "Oops",
+									text: "Please select a size before adding to cart",
+									icon: "error"
+								});
+								return;
+							}
+						
+							// Perform fetch to add item to cart
+							const response = await fetch("/cart-add", {
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json"
+								},
+								body: JSON.stringify({ variantId, size: selectedSize })
+							});
+						
+							if (response.ok) {
+								window.location.href = "/cart"; 
+							} else {
+								const responseData = await response.json();
+								await Swal.fire({
+									title: "Error",
+									text: responseData.error || "Failed to add item to cart",
+									icon: "error"
+								});
+							}
+						}
+						</script>
+						
 					
-					
-					
-			
-			
-
 
 
 			<!-- single-product item end -->
@@ -1547,5 +1568,7 @@
 		<!-- main js -->
 		<script src="js/main.js"></script>
 	</body>
+
+
 
 	<%- include("../layouts/footer.ejs") %>
