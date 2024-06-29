@@ -9,6 +9,8 @@ const loadshopList = require("../controllers/users/shop")
 const userAuth = require("../middleware/userMiddleware")
 const userDetail = require("../controllers/users/userProfile")
 const loadCart = require("../controllers/users/cart")
+const loadOrder = require("../controllers/users/order")
+
 
 
 router.get("/", loadHome);
@@ -34,11 +36,20 @@ router.post("/insertAddress", userAuth.isAuthenticated,userDetail.insertAddress)
 router.delete("/deleteAddress/:id", userAuth.isAuthenticated,userDetail.deleteAddress);
 router.post("/editAddress/:id", userAuth.isAuthenticated,userDetail.editAddress)
 router.post("/changePassword", userAuth.isAuthenticated,userDetail.changePassword)
+router.post("/orderList", userAuth.isAuthenticated,userDetail.getUserOrders)
+// router.get('/checkOutAddress',userAuth.isAuthenticated , userDetail.checkOutAddress);
 
 
 router.post('/cart-add', userAuth.isAuthenticated, loadCart.addToCart);
 router.get("/cart", userAuth.isAuthenticated, loadCart.viewCart);
 router.delete("/cart-remove",userAuth.isAuthenticated , loadCart.removeCart)
-// router.post("/addToCart",userAuth.isAuthenticated, loadCart.addToCart)
+router.post("/cart-update-quantity",userAuth.isAuthenticated , loadCart.updateCartQuantity)
+
+router.get("/checkOut", userAuth.isAuthenticated , loadCart.viewCheckOut)
+
+router.get("/order",userAuth.isAuthenticated , loadOrder.viewOrder)
+router.post('/place-order',userAuth.isAuthenticated , loadOrder.placeOrder)
+
 
 module.exports = router;
+

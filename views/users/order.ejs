@@ -1,5 +1,4 @@
-<%-include("../layouts/header.ejs") %>
-
+<%- include("../layouts/header.ejs") %>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -36,7 +35,7 @@
 											<li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li>
 										</ul>
 									</li>
-									<li><a href="cart.html"><i class="pe-7s-cart"></i><span>2</span></a>
+									<li><a href="/cart"><i class="pe-7s-cart"></i><span>2</span></a>
 										<ul class="drop-cart">
 											<!-- <li>
 												<a href="cart.html"><img src="img/cart/1.webp" alt="" /></a>
@@ -61,8 +60,8 @@
 												<div class="pro-close">
 													<i class="pe-7s-close"></i>
 												</div>
-											</li>
-											<li class="total-amount clearfix">
+											</li> -->
+											<!-- <li class="total-amount clearfix">
 												<span class="floatleft">total</span>
 												<span class="floatright"><strong>= $150.00</strong></span>
 											</li> -->
@@ -107,6 +106,173 @@
 											</ul>
 										</li>
 										<li><a href="/userProfile">My Account</a>
+										<!-- <li><a href="product-grid-left.html">Shop</a>
+											<div class="magamenu">
+												<ul>
+													<li class="right-mega colmd8 active"><a href="#">all products</a>
+														<ul>
+															<li class="single-menu colmd4">
+																<span>men’s wear</span>
+																<a href="#">shirts & top</a>
+																<a href="#">shoes</a>
+																<a href="#">dresses</a>
+																<a href="#">shwmwear</a>
+																<a href="#">jeans</a>
+																<a href="#">sweaters</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>women’s wear</span>
+																<a href="#">shirts & tops</a>
+																<a href="#">shoes</a>
+																<a href="#">dresses</a>
+																<a href="#">shwmwear</a>
+																<a href="#">jeans</a>
+																<a href="#">sweaters</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>accessories</span>
+																<a href="#">sunglasses</a>
+																<a href="#">leather</a>
+																<a href="#">belts</a>
+																<a href="#">rings</a>
+																<a href="#">sweaters</a>
+																<a href="#">persess</a>
+																<a href="#">bags</a>
+															</li>
+															<li class="maga-banner clear">
+																<a href="#"><img src="img/maga-banner.webp" alt="" /></a>
+															</li>
+														</ul>
+													</li>
+													<li class="right-mega colmd8"><a href="#">New products</a>
+														<ul>
+															<li class="single-menu colmd4">
+																<span>men’s wear</span>
+																<a href="#">shirts & top</a>
+																<a href="#">shoes</a>
+																<a href="#">jeans</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>women’s wear</span>
+																<a href="#">shirts & tops</a>
+																<a href="#">shoes</a>
+																<a href="#">dresses</a>
+																<a href="#">shwmwear</a>
+																<a href="#">jeans</a>
+																<a href="#">sweaters</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>accessories</span>
+																<a href="#">sunglasses</a>
+																<a href="#">leather</a>
+																<a href="#">belts</a>
+																<a href="#">sweaters</a>
+																<a href="#">persess</a>
+																<a href="#">bags</a>
+															</li>
+															<li class="maga-banner clear">
+																<a href="#"><img src="img/maga-banner.webp" alt="" /></a>
+															</li>
+														</ul>
+													</li>
+													<li class="right-mega colmd8"><a href="#">best sell</a>
+														<ul>
+															<li class="single-menu colmd4">
+																<span>men’s wear</span>
+																<a href="#">shirts & top</a>
+																<a href="#">shoes</a>
+																<a href="#">dresses</a>
+																<a href="#">shwmwear</a>
+																<a href="#">jeans</a>
+																<a href="#">sweaters</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>accessories</span>
+																<a href="#">sunglasses</a>
+																<a href="#">leather</a>
+																<a href="#">belts</a>
+																<a href="#">rings</a>
+																<a href="#">sweaters</a>
+																<a href="#">persess</a>
+																<a href="#">bags</a>
+															</li>
+															<li class="maga-banner clear">
+																<a href="#"><img src="img/maga-banner.webp" alt="" /></a>
+															</li>
+														</ul>
+													</li>
+													<li class="right-mega colmd8"><a href="#">features products</a>
+														<ul>
+															<li class="single-menu colmd4">
+																<span>men’s wear</span>
+																<a href="#">shirts & top</a>
+																<a href="#">shoes</a>
+																<a href="#">sweaters</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>women’s wear</span>
+																<a href="#">shirts & tops</a>
+																<a href="#">shoes</a>
+																<a href="#">dresses</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>accessories</span>
+																<a href="#">sunglasses</a>
+																<a href="#">leather</a>
+																<a href="#">belts</a>
+																<a href="#">rings</a>
+																<a href="#">sweaters</a>
+																<a href="#">persess</a>
+																<a href="#">bags</a>
+															</li>
+															<li class="maga-banner clear">
+																<a href="#"><img src="img/maga-banner.webp" alt="" /></a>
+															</li>
+														</ul>
+													</li>
+													<li class="right-mega colmd8"><a href="#">popular products</a>
+														<ul>
+															<li class="single-menu colmd4">
+																<span>men’s wear</span>
+																<a href="#">shirts & top</a>
+																<a href="#">shoes</a>
+																<a href="#">dresses</a>
+																<a href="#">jeans</a>
+																<a href="#">sweaters</a>
+																<a href="#">jacket</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>women’s wear</span>
+																<a href="#">shirts & tops</a>
+																<a href="#">shoes</a>
+																<a href="#">dresses</a>
+															</li>
+															<li class="single-menu colmd4">
+																<span>accessories</span>
+																<a href="#">sunglasses</a>
+																<a href="#">leather</a>
+																<a href="#">belts</a>
+																<a href="#">rings</a>
+																<a href="#">sweaters</a>
+																<a href="#">persess</a>
+																<a href="#">bags</a>
+															</li>
+															<li class="maga-banner clear">
+																<a href="#"><img src="img/maga-banner.webp" alt="" /></a>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+										</li> -->
+										<!-- <li><a href="shop-style-1.html">Lookbook</a></li> -->
 										<li><a href="blog-style-1.html">Blog</a>
 											<ul>
 												<li><a href="single-blog.html">Single Blog</a></li>
@@ -340,10 +506,10 @@
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="pages-title-text">
-							<h3>Cart</h3>
+							<h3>Order Complete</h3>
 							<ul>
 								<li><a href="/">Home</a></li>
-								<li><span>/</span>Cart</li>
+								<li><span>/</span>Order Complete</li>
 							</ul>
 						</div>
 					</div>
@@ -351,302 +517,89 @@
 			</div>
 		</div>
 		<!-- pages-title-end -->
-		<!-- cart content section start -->
-		<section class="pages cart-page section-padding-top">
+		<!-- order-complete content section start -->
+		<section class="pages checkout order-complete section-padding-top">
 			<div class="container">
 				<div class="row">
-					<div class="col-12">
-						<div class="table-responsive">
-							
-							<table class="cart-table text-center">
+					<div class="col-12 text-center">
+						<div class="complete-title">
+							<p>thank you. your order has been received.</p>
+						</div>
+						<div class="order-no">
+							<ul>
+								<li>order no <span>m 2653257</span></li>
+								<li>Date <span><%= new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span></li>
+								<li>total<span>$ 3086.00</span></li>
+								<li>payment method<span>Cash On Delivery</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row section-padding-top">
+					<div class="col-md-4">
+						<div class="log-title">
+							<h3><strong>your order</strong></h3>
+							<hr />
+						</div>
+						<div class="place-text clearfix">
+
+							<table>
 								<thead>
 									<tr>
-										<th>Items</th>
-										<th>Price</th>
-										<th>Quantity</th>
-										<th>Total Price</th>
-										<th>Remove</th>
+										<th>Product</th>
+										<th>Total</th>
 									</tr>
 								</thead>
 								<tbody>
-									<% if (cart && cart.products.length > 0) { %>
-										<% cart.products.forEach(product => { %>
-											<tr data-product-id="<%= product.productVariantId._id %>">
-												<td class="td-img text-left">
-													<a href="#"><img src="<%= product.productVariantId.image[0] %>" alt="Product Image" style="width: 100px; height: 120px;"/></a>
-													<div class="items-dsc">
-														<h6><a href="#"><%= product.productVariantId.productName %></a></h6>
-														<h6 class="itemcolor">Color : <span><%= product.productVariantId.colour %></span></h6>
-														<h6 class="itemcolor">Size  : <span><%= product.size %></span></h6>
-													</div>
-												</td>
-												<td><%= product.productVariantId.salePrice %></td>
-												<td>
-													<div class="plus-minus">
-														<a class="dec qtybutton">-</a>
-														<input type="number" value="<%= product.quantity %>" name="qtybutton" class="plus-minus-box" min="1" max="5" disabled>
-														<a class="inc qtybutton">+</a>
-													</div>
-												</td>
-												<td>
-													<div class="total-price">
-														<%= product.productVariantId.salePrice * product.quantity %>
-													</div>
-												</td>
-												<td><i class="pe-7s-close" title="Remove this product"></i></td>
-											</tr>
-										<% }) %>
-									<% } else { %>
+									<% let subTotal = 0; %>
+									<% orders.orderItems.forEach(item => { %>
+										<% const total = item.variantPrice * item.quantity; %>
+										<% subTotal += total; %>
 										<tr>
-											<td colspan="5">Your cart is empty.</td>
+											<td><%= item.variantName %> x <%= item.quantity %></td>
+											<td><%= total.toFixed(2) %>/-</td>
 										</tr>
-									<% } %>
-								</tbody>
-							</table>
-							
-							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-							
-							<script>
-								document.addEventListener("DOMContentLoaded", function() {
-									function updateSubtotalAndGrandTotal() {
-										let subtotal = 0;
-										document.querySelectorAll('.total-price').forEach(totalPriceElem => {
-											subtotal += parseFloat(totalPriceElem.textContent);
-										});
-							
-										const shipping = (subtotal === 0) ? 0 : 50.00; 
-										const grandTotal = subtotal + shipping;
-							
-										document.querySelector('td[data-subtotal]').textContent = subtotal.toFixed(2);
-										document.querySelector('td[data-grand-total]').textContent = grandTotal.toFixed(2);
-									}
-
-										async function updateCartQuantity(productId, size, quantity) {
-										const response = await fetch("/cart-update-quantity", {
-											method: "POST",
-											headers: {
-												"Content-Type": "application/json"
-											},
-											body: JSON.stringify({ variantId: productId, size, quantity })
-										});
-
-										if (!response.ok) {
-											const responseData = await response.json();
-											Swal.fire({
-												title: "Error",
-												text: responseData.error || "Failed to update cart quantity",
-												icon: "error"
-											});
-										}else{
-											await Swal.fire({
-												title: "Success",
-												text: "Cart quantity updated successfully",
-												icon: "success"
-											});
-
-										}
-									}
-							
-									document.querySelectorAll(".pe-7s-close").forEach(removeBtn => {
-										removeBtn.addEventListener("click", async function(event) {
-											event.preventDefault();
-							
-											const productId = this.closest('tr').dataset.productId;
-							
-											const response = await fetch("/cart-remove", {
-												method: "DELETE",
-												headers: {
-													"Content-Type": "application/json"
-												},
-												body: JSON.stringify({ productId })
-											});
-							
-											const responseData = await response.json();
-							
-											if (response.ok) {
-												Swal.fire({
-													title: "Success",
-													text: responseData.message,
-													icon: "success"
-												}).then(() => {
-													this.closest('tr').remove();
-													updateSubtotalAndGrandTotal();
-												});
-											} else {
-												Swal.fire({
-													title: "Error",
-													text: responseData.error || "Failed to remove item from cart",
-													icon: "error"
-												});
-											}
-										});
-									});
-							
-									document.querySelectorAll('.plus-minus-box').forEach(input => {
-										input.addEventListener('change', function() {
-											let value = parseInt(this.value);
-											if (value < 1) {
-												this.value = 1;
-												Swal.fire({
-													title: "Error",
-													text: "You must have at least one product.",
-													icon: "error"
-												});
-											} else if (value > 5) {
-												this.value = 5;
-												Swal.fire({
-													title: "Error",
-													text: "You cannot add more than 5 products.",
-													icon: "error"
-												});
-											}
-											updateTotalPrice(this);
-										});
-									});
-							
-									document.querySelectorAll('.dec.qtybutton').forEach(btn => {
-										btn.addEventListener('click', function() {
-											let input = this.nextElementSibling;
-											let value = parseInt(input.value) - 0;
-											if (value >= 1) {
-												input.value = value;
-												updateTotalPrice(input);
-											} else {
-												input.value = 1;
-												Swal.fire({
-													title: "Error",
-													text: "You must have at least one product.",
-													icon: "error"
-												});
-											}
-										});
-									});
-							
-									document.querySelectorAll('.inc.qtybutton').forEach(btn => {
-									btn.addEventListener('click', function() {
-										let input = this.previousElementSibling;
-										let value = parseInt(input.value) + 0;
-										if (value <= 5) {
-											input.value = value;
-											updateTotalPrice(input);
-											const productId = this.closest('tr').dataset.productId;
-											const size = this.closest('tr').querySelector('.itemcolor span').textContent;
-											updateCartQuantity(productId, size, value);
-										} else {
-											input.value = 5;
-											Swal.fire({
-												title: "Error",
-												text: "You cannot add more than 5 products.",
-												icon: "error"
-											});
-										}
-									});
-								});
-							
-									function updateTotalPrice(input) {
-										const tr = input.closest('tr');
-										const price = parseFloat(tr.querySelector('td:nth-child(2)').textContent);
-										const quantity = parseInt(input.value);
-										tr.querySelector('.total-price').textContent = (price * quantity).toFixed(2);
-										updateSubtotalAndGrandTotal();
-									}
-							
-									updateSubtotalAndGrandTotal();
-								});
-							</script>
-							
-									
-						</div>
-					</div>
-				</div>
-				<!-- <div class="row margin-top">
-					<div class="col-md-4">
-						<div class="single-cart-form">
-							<div class="cart-form-title">
-								<h4>calculate shipping</h4>
-							</div>
-							<div class="cart-form-text custom-input">
-								<p>Enter your coupon code if you have one!</p>
-								<form action="#">
-									<div class="custom-select">
-										<select class="form-control">
-											<option> Country</option>
-											<option> Bangladesh </option>
-											<option> United States </option>
-											<option> United Kingdom </option>
-											<option> Canada </option>
-											<option> Malaysia </option>
-											<option> United Arab Emirates </option>
-										</select>
-									</div>
-									<div class="custom-select">
-										<select class="form-control">
-											<option> Region / State</option>
-											<option> Aberdeen </option>
-											<option> Bedfordshire </option>
-											<option> Caerphilly </option>
-											<option> Denbighshire </option>
-											<option> East Ayrshire </option>
-											<option> Falkirk </option>
-										</select>
-									</div>
-									<input type="text" name="subject" placeholder="Post Code" />
-									<div class="submit-text">
-										<button type="submit" >get a quote</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="single-cart-form">
-							<div class="cart-form-title">
-								<h4>coupon discount</h4>
-							</div>
-							<div class="cart-form-text custom-input">
-								<p>Enter your coupon code if you have one!</p>
-								<form action="#">
-									<input type="text" name="subject" placeholder="Enter your code here..." />
-									<div class="submit-text coupon">
-										<button type="submit">apply coupon </button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div> -->
-
-					<div class="col-md-4">
-					<div class="single-cart-form">
-						<div class="cart-form-title">
-							<h4>payment details</h4>
-						</div>
-						<div class="cart-form-text">
-							<table>
-								<tbody>
-									<tr>
-										<th>subtotal</th>
-										<td data-subtotal="0.00">0.00</td>
-									</tr>
-								
+									<% }); %>
 								</tbody>
 								<tfoot>
 									<tr>
-										<th class="tfoot-padd">grand total</th>
-										<td class="tfoot-padd" data-grand-total="0.00">0.00</td>
+										<th>Sub Total</th>
+										<td><%= subTotal.toFixed(2) %>/-</td>
 									</tr>
 								</tfoot>
 							</table>
-							<div class="submit-text">
-								<a href="/checkOut">proceed to checkout</a>
+							
+						</div>
+					</div>
+					<div class="col-md-4 offset-lg-1 col-lg-3">
+						<div class="order-details">
+							<div class="log-title">
+								<h3><strong>customer details</strong></h3>
+								<hr />
+							</div>
+							<div class="por-dse">
+
 							</div>
 						</div>
 					</div>
-				</div>
-				
+					<div class="col-md-4 offset-lg-1 col-lg-3">
+						<div class="order-address">
+							<div class="log-title">
+								<h3><strong>shipping address</strong></h3>
+								<hr />
+							</div>
+							<div class="por-dse">
+								<ul>
+									<li><span>Name</span><strong>:</strong> <%= address ? address.name : '' %></li>
+									<li><span>Mobile</span><strong>:</strong> <%= address ? address.altPhone : '' %></li>
+									<li><span>Place</span><strong>:</strong> <%= address ? address.city : '' %></li>
+								</ul>
+							</div>
+					</div>
 				</div>
 			</div>
 		</section>
-		<!-- cart content section end -->
+		<!-- order-complete content section end -->
         <!-- footer section start -->
 		<footer class="section-padding-top">
 			<!-- brand logo area start -->
@@ -888,4 +841,4 @@
         <script src="js/main.js"></script>
     </body>
 
-	<%-include("../layouts/footer.ejs") %>
+	<%- include("../layouts/footer.ejs") %>

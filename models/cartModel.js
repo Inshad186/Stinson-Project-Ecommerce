@@ -14,10 +14,13 @@ const cartModel = new mongoose.Schema({
             ref   : 'Varients',
             required : true
         },
-
         quantity :{
             type : Number,
             default : 1
+        },
+        size :{
+            type : String,
+            required : true
         }
     }]
 

@@ -80,69 +80,55 @@
             </ul>
           </li>
           <li class="menu-label">UI Elements</li>
-          <li>
-            <a href="javascript:;" class="has-arrow">
-              <div class="parent-icon">
-                <ion-icon name="briefcase-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Users</div>
-            </a>
-            <ul>
-              <li><a href="/admin/userList">
-                  <ion-icon name="ellipse-outline"></ion-icon>User List
-                </a>
-              </li>
-            </ul>
-          </li>
+        <li>
+          <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Users</div>
+          </a>
+          <ul>
+          <li><a href="/admin/userList">
+            <ion-icon name="ellipse-outline"></ion-icon>User List
+          </a>
+        </li>
+      </ul>
+        </li>
 
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="gift-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Categories</div>
-            </a>
+        <li>
+          <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon">
+              <ion-icon name="gift-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Categories</div>
+          </a>
             <ul>
               <li><a href="/admin/categoryList">
-                  <ion-icon name="ellipse-outline"></ion-icon>Categories
+                <ion-icon name="ellipse-outline"></ion-icon>Categories
               </li>
               <li><a href="/admin/addCategory">
-                  <ion-icon name="ellipse-outline"></ion-icon>Add Category
+                <ion-icon name="ellipse-outline"></ion-icon>Add Category
               </li>
             </ul>
-            </a>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="leaf-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Products</div>
-            </a>
+          </a>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon">
+              <ion-icon name="leaf-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Products</div>
+          </a>
             <ul>
               <li><a href="/admin/productList">
-                  <ion-icon name="ellipse-outline"></ion-icon>Products
+                <ion-icon name="ellipse-outline"></ion-icon>Products
               </li>
               <li><a href="/admin/addProduct">
-                  <ion-icon name="ellipse-outline"></ion-icon>Add Product
+                <ion-icon name="ellipse-outline"></ion-icon>Add Product
               </li>
             </ul>
-            </a>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="gift-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Orders</div>
-            </a>
-              <ul>
-                <li><a href="/admin/order">
-                  <ion-icon name="ellipse-outline"></ion-icon>Orders List
-                </li>
-              </ul>
-            </a>
-          </li>
+          </a>
+        </li>
 
           <!-- <li class="menu-label">Forms & Tables</li>
           <li>
@@ -763,16 +749,14 @@
 
 
 
-
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
           <div class="card radius-10 w-100">
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <h6 class="mb-0">Recent Details</h6>
                 <div class="fs-5 ms-auto dropdown">
-                  <div class="dropdown-toggle dropdown-toggle-nocaret cursor-pointer" data-bs-toggle="dropdown"><i
-                      class="bi bi-three-dots"></i></div>
+                  <div class="dropdown-toggle dropdown-toggle-nocaret cursor-pointer" data-bs-toggle="dropdown">
+                    <i class="bi bi-three-dots"></i>
+                  </div>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -788,72 +772,93 @@
                 <button class="btn btn-primary" type="button" onclick="searchTable()">Search</button>
               </div>
               <div class="table-responsive mt-2">
+                
                 <table class="table align-middle mb-0">
                   <thead class="table-light">
                     <tr>
-                      <th>CATEGORY</th>
-                      <th>ADDED DATE</th>
-                      <th>VERIFIED</th>
-                      <th>STATUS</th>
-                      <th>ACTION</th>
+                      <th>USER ID</th>
+                      <th>DATE</th>
+                      <th>CUSTOMER</th>
+                      <th>PAYMENT STATUS</th>
+                      <th>FULFILMENT STATUS</th>
+                      <th>PAYMENT METHOD</th>
+                      <th>TOTAL</th>
+                      <th>DETAILS</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <% for(let i=categoryList.length-1 ; i>=0 ; i--){ %>
+                  <tbody id="user-table-body">
+                    <% orders.forEach(order => { %>
                       <tr>
                         <td>
-                          <img src="<%- categoryList[i].image %>" alt="Category Image"
-                            style="width: 50px; height: 50px;">
-                          <%= categoryList[i].name %>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= new Date(categoryList[i].createdAt).toLocaleString('en-US', { dateStyle: 'medium' ,
-                              timeStyle: 'short' }) %>
+                          <h6 class="product-name mb-1">
+                            <%= order._id %>
                           </h6>
                         </td>
                         <td>
-                          <h6>VERIFIED
-                        </td>
-                        </h6>
-                        <td id="<%= categoryList[i]._id %>">
-                          <%= categoryList[i].is_Delete ? 'UNLISTED' : 'LISTED' %>
+                          <div class="d-flex align-items-center gap-3">
+                            <div class="product-info">
+                              <h6>
+                                <%= order.createdAt.toLocaleDateString('en-US', {
+                                  weekday: 'short' , month: 'short' , day: 'numeric' , year:'numeric'})%>
+                              </h6>
+                            </div>
+                          </div>
                         </td>
                         <td>
-                          <a href="/admin/editCategory/<%= categoryList[i]._id %>"><span class="badge bg-primary"
-                              style="cursor: pointer;">EDIT</span></a>
-                          <span class="badge bg-<%= categoryList[i].is_Delete ? 'success' : 'danger' %>"
-                            onclick="toggleStatus('<%= categoryList[i]._id %>', this , document.getElementById('<%= categoryList[i]._id %>'))">
-                            <%= categoryList[i].is_Delete ? 'LIST' : 'UNLIST' %>
-                          </span>
+                          <h6>
+                            <%= order.shippingAddress.name %> 
+                          </h6>
                         </td>
-
+                        <td>
+                          <h6>
+                            <%= order.paymentMethod %> 
+                          </h6>            
+                        </td>
+                        <td>
+                          <select>
+                            <option value="<%= order.orderItems[0].orderStatus %> ">Pending</option>
+                            <option value="<%= order.orderItems[0].orderStatus %> ">shipped</option>
+                            <option value="<%= order.orderItems[0].orderStatus %> ">Delivered</option>
+                            <option value="<%= order.orderItems[0].orderStatus %> ">Cancelled</option>
+                      
+                          </select>
+                        </td>
+                        <td>
+                          <h6>
+                            <%= order.paymentMethod %> 
+                          </h6>
+                        </td>
+                        <td>
+                          <h6>
+                            <%= order.grandTotal %> 
+                          </h6>
+                        </td>
+                        <td>
+                          <h6>
+                            <button type="button" class="btn btn-success">SHOW</button>
+                          </h6>
+                        </td>
                         <td>
                           <div class="d-flex align-items-center gap-3 fs-6">
-                            <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="View detail"
-                              aria-label="Views">
+                            <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View detail">
                               <ion-icon name="eye-outline"></ion-icon>
                             </a>
-                            <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit">
+                            <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit info">
                               <ion-icon name="pencil-outline"></ion-icon>
                             </a>
-                            <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete">
+                            <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete">
                               <ion-icon name="trash-outline"></ion-icon>
                             </a>
                           </div>
-                          <br>
-                          <br>
-                          <br>
                         </td>
                       </tr>
-                      <% } %>
-                  </tbody>
+                    <% }); %>
+                  </tbody>                  
                 </table>
+                
+                
+
               </div>
-              <% if(showPagination >5) { %>
               <div class="d-flex justify-content-between align-items-center mt-2">
                 <div>
                   <button class="btn btn-secondary" onclick="prevPage()">Previous</button>
@@ -863,11 +868,10 @@
                   <span>Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
                 </div>
               </div>
-              <% } %>
             </div>
           </div>
-
-          <script>
+          
+          <!-- <script>
             let currentPage = 1;
             const itemsPerPage = 5; // Number of items to display per page
             let originalRows = []; // Store the original unfiltered rows
@@ -931,68 +935,45 @@
               originalRows = Array.from(document.querySelectorAll('tbody tr'));
               paginateTable();
             });
-          </script>
+          </script> -->
+          
+          
+          
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+          <!-- <script>
 
-          <script>
-            async function toggleStatus(categoryId, button, statusElement) {
+            async function toggleStatus(userId, button, status) {
 
-              console.log(categoryId)
+              const response = await fetch("/admin/blockUser", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  userId: userId,
+                })
+              });
+              const data = await response.json();
 
-              try {
-                const response = await fetch("/admin/deleteCategory", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                    categoryId: categoryId,
-                  })
-                });
+              if (data.success) {
+                button.innerText = data.userState ? "UNBLOCK" : "BLOCK";
+                button.classList.remove("bg-success", "bg-danger");
+                button.classList.add(data.userState ? "bg-success" : "bg-danger");
 
-                console.log('Response:', response);
-                const data = await response.json();
+                status.innerText = data.userState ? "INACTIVE" : "ACTIVE";
 
-                console.log("data------------",data);
-
-                if (data.success) {
-                  button.innerText = data.categoryState ? "LIST" : "UNLIST";
-                  button.classList.remove("bg-success", "bg-danger");
-                  button.classList.add(data.categoryState ? "bg-success" : "bg-danger");
-
-                  statusElement.innerText = data.categoryState ? "UNLISTED" : "LISTED";
-
-                  const result = await Swal.fire({
-                    title: "Updated!",
-                    text: "Category status has been updated",
-                    icon: "success"
-                  });
-                } else {
-                  await Swal.fire({
-                    title: "Error!",
-                    text: data.message || "An error occurred while updating the category status.",
-                    icon: "error"
-                  });
-                }
-              } catch (error) {
-                console.error("Error updating category status:", error);
-                await Swal.fire({
-                  title: "Error!",
-                  text: "An error occurred while updating the category status.",
-                  icon: "error"
+                const result = await Swal.fire({
+                  title: "Updated!",
+                  text: "User data has been updated",
+                  icon: "success"
                 });
               }
             }
-          </script>
+
+          </script> -->
 
 
-
-          <div style="text-align: center;">
-            <button
-              style="background-color: transparent; border: none; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s, transform 0.3s;">
-              <a href="/admin/addCategory" class="btn btn-primary"><i class="bx bxs-cart-add"></i>Add Category</a>
-            </button>
-          </div>
 
 
           <!--start footer-->

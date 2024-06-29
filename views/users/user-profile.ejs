@@ -24,96 +24,96 @@
 
     <style>
         /* Basic Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.modal.active {
-    display: flex;
-    opacity: 1;
-}
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
 
-.modal-content {
-    background: #fff;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 600px;
-    padding: 20px;
-    position: relative;
-    animation: zoomIn 0.3s ease;
-}
+        .modal-content {
+            background: #fff;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
 
-@keyframes zoomIn {
-    from {
-        transform: scale(0.5);
-    }
-    to {
-        transform: scale(1);
-    }
-}
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+            }
 
-/* Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
-}
+            to {
+                transform: scale(1);
+            }
+        }
 
-.close-btn:hover {
-    color: #ff5722;
-}
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
 
-/* Form Styles */
-.form-group {
-    margin-bottom: 15px;
-}
+        .close-btn:hover {
+            color: #ff5722;
+        }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-}
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
 
-.form-group input:focus {
-    border-color: #ff5722;
-}
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
 
-button[type="submit"] {
-    background-color: #ff5722;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        .form-group input:focus {
+            border-color: #ff5722;
+        }
 
-button[type="submit"]:hover {
-    background-color: #e64a19;
-}
+        button[type="submit"] {
+            background-color: #ff5722;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
+        button[type="submit"]:hover {
+            background-color: #e64a19;
+        }
     </style>
 
 </head>
@@ -1231,7 +1231,7 @@ Support Ticket
                                     </svg>
                                 </span>
 
-                                    <li><a href="#" id="logout-button"><i class="fa fa-lock"></i> Logout</a></li>
+                                <li><a href="#" id="logout-button"><i class="fa fa-lock"></i> Logout</a></li>
 
                             </a>
                         </div>
@@ -1355,7 +1355,6 @@ Support Ticket
                                                             <p>
                                                                 <%= user.email %>
                                                             </p>
-                                                            <!-- <p><a href="https://quomodothemes.website/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="adc9c8c0c2c8c0ccc4c1edcac0ccc4c183cec2c0">[email&#160;protected]</a></p> -->
                                                             <p>
                                                                 <%= user.mobile %>
                                                             </p>
@@ -1670,44 +1669,37 @@ too.Max 5mb.</p>
                                                 </div>
                                             </td>
                                         </tr>
+                                    </tr>
+                                    <% userOrders.forEach(order => { %>
                                         <tr class="table-row ticket-row">
                                             <td class="table-wrapper wrapper-product">
                                                 <div class="wrapper">
-                                                    <div class="wrapper-img">
-                                                        <img src="assets/images/homepage-one/product-img/product-img-1.webp"
-                                                            alt="img">
-                                                    </div>
                                                     <div class="wrapper-content">
-                                                        <h5 class="heading">Classic Design Skart</h5>
+                                                        <h5 class="heading"><%= order.orderItems[0].variantName %></h5>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="table-wrapper">
                                                 <div class="table-wrapper-center">
-                                                    <h5 class="heading">$20.00</h5>
+                                                    <h5 class="heading"><%= order.subTotal.toFixed(2) %></h5>
                                                 </div>
                                             </td>
                                             <td class="table-wrapper">
                                                 <div class="table-wrapper-center">
                                                     <div class="quantity">
-                                                        <span class="minus">
-                                                            -
-                                                        </span>
-                                                        <span class="number">1</span>
-                                                        <span class="plus">
-                                                            +
-                                                        </span>
+                                                        <span class="number"><%= order.orderItems[0].quantity %></span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="table-wrapper wrapper-total">
                                                 <div class="table-wrapper-center">
-                                                    <h5 class="heading">$40.00</h5>
+                                                    <h5 class="heading"><%= order.grandTotal.toFixed(2) %></h5>
                                                 </div>
                                             </td>
                                             <td class="table-wrapper">
                                                 <div class="table-wrapper-center">
                                                     <span>
+                                                        <!-- Your action buttons/icons -->
                                                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path
@@ -1718,150 +1710,7 @@ too.Max 5mb.</p>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr class="table-row ticket-row">
-                                            <td class="table-wrapper wrapper-product">
-                                                <div class="wrapper">
-                                                    <div class="wrapper-img">
-                                                        <img src="assets/images/homepage-one/product-img/product-img-2.webp"
-                                                            alt="img">
-                                                    </div>
-                                                    <div class="wrapper-content">
-                                                        <h5 class="heading">Classic Black Suit</h5>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="heading">$20.00</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <div class="quantity">
-                                                        <span class="minus">
-                                                            -
-                                                        </span>
-                                                        <span class="number">1</span>
-                                                        <span class="plus">
-                                                            +
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper wrapper-total">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="heading">$40.00</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper ">
-                                                <div class="table-wrapper-center">
-                                                    <span>
-                                                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z"
-                                                                fill="#AAAAAA"></path>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="table-row ticket-row">
-                                            <td class="table-wrapper wrapper-product">
-                                                <div class="wrapper">
-                                                    <div class="wrapper-img">
-                                                        <img src="assets/images/homepage-one/product-img/product-img-3.webp"
-                                                            alt="img">
-                                                    </div>
-                                                    <div class="wrapper-content">
-                                                        <h5 class="heading">Blue Party Dress</h5>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="heading">$20.00</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <div class="quantity">
-                                                        <span class="minus">
-                                                            -
-                                                        </span>
-                                                        <span class="number">1</span>
-                                                        <span class="plus">
-                                                            +
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper wrapper-total">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="heading">$40.00</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <span>
-                                                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z"
-                                                                fill="#AAAAAA"></path>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="table-row ticket-row">
-                                            <td class="table-wrapper wrapper-product">
-                                                <div class="wrapper">
-                                                    <div class="wrapper-img">
-                                                        <img src="assets/images/homepage-one/product-img/product-img-4.webp"
-                                                            alt="img">
-                                                    </div>
-                                                    <div class="wrapper-content">
-                                                        <h5 class="heading">Classic Party Dress</h5>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="heading">$20.00</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <div class="quantity">
-                                                        <span class="minus">
-                                                            -
-                                                        </span>
-                                                        <span class="number">1</span>
-                                                        <span class="plus">
-                                                            +
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper wrapper-total">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="heading">$40.00</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <span>
-                                                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z"
-                                                                fill="#AAAAAA"></path>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    <% }); %>
                                     </tbody>
                                 </table>
                             </div>
@@ -2025,10 +1874,11 @@ too.Max 5mb.</p>
                             <div class="profile-section address-section addresses ">
                                 <div class="row gy-md-0 g-5">
                                     <% if(userAddress){ %>
-                                        <% userAddress.forEach((address, index) => { %>
+                                        <% userAddress.forEach((address, index)=> { %>
                                             <div class="col-md-6" id="address-<%= address._id %>">
                                                 <div class="seller-info">
-                                                    <h5 class="heading">User Address <%= index + 1 %></h5>
+                                                    <h5 class="heading">Address <%= index + 1 %>
+                                                    </h5>
                                                     <div class="info-list">
                                                         <div class="info-title">
                                                             <p>Name:</p>
@@ -2040,444 +1890,532 @@ too.Max 5mb.</p>
                                                             <p>State:</p>
                                                         </div>
                                                         <div class="info-details">
-                                                            <p><%= address.name %></p>
-                                                            <p><%= address.mobile %></p>
-                                                            <p><%= address.city %></p>
-                                                            <p><%= address.pincode %></p>
-                                                            <p><%= address.postOffice %></p>
-                                                            <p><%= address.landMark %></p>
-                                                            <p><%= address.state %></p>
+                                                            <p>
+                                                                <%= address.name %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.mobile %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.city %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.pincode %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.postOffice %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.landMark %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.state %>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <div class="button-group">
-                                                        <a href="#" class="edit-button" data-id="<%= address._id %>">Edit</a>
+                                                        <a href="#" class="edit-button"
+                                                            data-id="<%= address._id %>">Edit</a>
 
-                                                        <a href="#" class="delete-button" data-id="<%= address._id %>">Delete</a>
+                                                        <a href="#" class="delete-button"
+                                                            data-id="<%= address._id %>">Delete</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <% }) %>
-                                    <% }else{ %>
-                                        <h4>No address found</h4>
-                                    <% } %>
+                                            <% }) %>
+                                                <% }else{ %>
+                                                    <h4>No address found</h4>
+                                                    <% } %>
 
-        <!--------------------- This script for Edit Details -------------------------->
+                                                        <!--------------------- This script for Edit Details -------------------------->
 
-        <!-- Edit Address Modal -->
+                                                        <!-- Edit Address Modal -->
 
-                                <div id="editAddressModal" class="modal">
-                                    <div class="modal-content">
-                                        <span class="close-btn">&times;</span>
-                                        <h4>Edit Address</h4>
-                                        <form id="editAddressForm">
-                                            <input type="hidden" id="editAddressId" name="id">
-                                            <div class="form-group">
-                                                <label for="editName">Name:</label>
-                                                <input type="text" id="editName" name="name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="editMobile">Phone:</label>
-                                                <input type="text" id="editMobile" name="mobile" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="editCity">City:</label>
-                                                <input type="text" id="editCity" name="city" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="editPincode">Pincode:</label>
-                                                <input type="text" id="editPincode" name="pincode" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="editPostOffice">Postoffice:</label>
-                                                <input type="text" id="editPostOffice" name="postOffice" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="editLandmark">Landmark:</label>
-                                                <input type="text" id="editLandmark" name="landMark" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="editState">State:</label>
-                                                <input type="text" id="editState" name="state" required>
-                                            </div>
-                                            <button type="submit">Save</button>
-                                        </form>
-                                    </div>
-                                </div>
-        
-
-
-                                    <script>
-
-                                        document.querySelectorAll('.edit-button').forEach(button => {
-                                        button.addEventListener('click', function(event) {
-                                            event.preventDefault();
-                                            const addressId = this.getAttribute('data-id');
-                                            const addressElement = document.getElementById(`address-${addressId}`);
-                                            
-                                            // Fill the form with the current address details
-                                            document.getElementById('editAddressId').value = addressId;
-                                            document.getElementById('editName').value = addressElement.querySelector('.info-details p:nth-child(1)').textContent;
-                                            document.getElementById('editMobile').value = addressElement.querySelector('.info-details p:nth-child(2)').textContent;
-                                            document.getElementById('editCity').value = addressElement.querySelector('.info-details p:nth-child(3)').textContent;
-                                            document.getElementById('editPincode').value = addressElement.querySelector('.info-details p:nth-child(4)').textContent;
-                                            document.getElementById('editPostOffice').value = addressElement.querySelector('.info-details p:nth-child(5)').textContent;
-                                            document.getElementById('editLandmark').value = addressElement.querySelector('.info-details p:nth-child(6)').textContent;
-                                            document.getElementById('editState').value = addressElement.querySelector('.info-details p:nth-child(7)').textContent;
-
-                                            // Show the modal
-                                            document.getElementById('editAddressModal').style.display = 'flex';
-                                            document.getElementById('editAddressModal').classList.add('active');
-                                        });
-                                    });
-
-                                    // Close the modal when clicking the close button
-                                    document.querySelector('.close-btn').addEventListener('click', function() {
-                                        document.getElementById('editAddressModal').style.display = 'none';
-                                        document.getElementById('editAddressModal').classList.remove('active');
-                                    });
-
-                                    // Close the modal when clicking anywhere outside of it
-                                    window.onclick = function(event) {
-                                        if (event.target == document.getElementById('editAddressModal')) {
-                                            document.getElementById('editAddressModal').style.display = 'none';
-                                            document.getElementById('editAddressModal').classList.remove('active');
-                                        }
-                                    }
-
-                                    // Handle form submission
-                                    document.getElementById('editAddressForm').addEventListener('submit', async function(event) {
-                                        event.preventDefault();
-                                        const formData = new FormData(this);
-                                        const addressId = formData.get('id');
-
-                                        try {
-                                            const response = await fetch(`/editAddress/${addressId}`, {
-                                                method: 'POST',
-                                                body: JSON.stringify(Object.fromEntries(formData)),
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                }
-                                            });
-
-                                            if (response.ok) {
-                                                const updatedAddress = await response.json();
-                                                
-                                                // Update the address details on the client side
-                                                const addressElement = document.getElementById(`address-${addressId}`);
-                                                addressElement.querySelector('.info-details p:nth-child(1)').textContent = updatedAddress.name;
-                                                addressElement.querySelector('.info-details p:nth-child(2)').textContent = updatedAddress.mobile;
-                                                addressElement.querySelector('.info-details p:nth-child(3)').textContent = updatedAddress.city;
-                                                addressElement.querySelector('.info-details p:nth-child(4)').textContent = updatedAddress.pincode;
-                                                addressElement.querySelector('.info-details p:nth-child(5)').textContent = updatedAddress.postOffice;
-                                                addressElement.querySelector('.info-details p:nth-child(6)').textContent = updatedAddress.landMark;
-                                                addressElement.querySelector('.info-details p:nth-child(7)').textContent = updatedAddress.state;
-                                                
-                                                // Close the modal
-                                                document.getElementById('editAddressModal').style.display = 'none';
-                                                document.getElementById('editAddressModal').classList.remove('active');
-                                                Swal.fire({
-                                                    title: 'Success',
-                                                    text: 'Address updated successfully!',
-                                                    icon: 'success'
-                                                });
-                                            } else {
-                                                Swal.fire({
-                                                    title: 'Error',
-                                                    text: 'Failed to update the address.',
-                                                    icon: 'error'
-                                                });
-                                            }
-                                        } catch (error) {
-                                            console.error('Error:', error);
-                                            Swal.fire({
-                                                title: 'Error',
-                                                text: 'An unexpected error occurred.',
-                                                icon: 'error'
-                                            });
-                                        }
-                                    });
-
-                                    </script>
-                                        
-         <!------------------------------------    This script is for delete    --------------------------------------->
-
-                                    <script>
-                                        document.querySelectorAll('.delete-button').forEach(button => {
-                                            button.addEventListener('click', async function(event) {
-                                                event.preventDefault();
-                                                const addressId = this.getAttribute('data-id');
-                                        
-                                                try {
-                                                    const response = await fetch(`/deleteAddress/${addressId}`, {
-                                                        method: 'DELETE',
-                                                    });
-                                        
-                                                    if (response.ok) {
-                                                        document.getElementById(`address-${addressId}`).remove();
-                                                        Swal.fire({
-                                                            title: 'Deleted!',
-                                                            text: 'Address deleted successfully!',
-                                                            icon: 'success'
-                                                        });
-                                                    } else {
-                                                        Swal.fire({
-                                                            title: 'Error',
-                                                            text: 'Failed to delete the address.',
-                                                            icon: 'error'
-                                                        });
-                                                    }
-                                                } catch (error) {
-                                                    console.error('Error:', error);
-                                                    Swal.fire({
-                                                        title: 'Error',
-                                                        text: 'An unexpected error occurred.',
-                                                        icon: 'error'
-                                                    });
-                                                }
-                                            });
-                                        });
-                                        </script>
-                                    
-                                    <style>
-                                        .button-group {
-                                            display: flex;
-                                            flex-wrap: wrap;
-                                            gap: 50px;
-                                            margin-top: 10px; 
-                                        }
-                                    
-                                        .edit-button,
-                                        .delete-button {
-                                            display: inline-block;
-                                            color: white;
-                                            padding: 10px 20px; /* Adjust padding as needed */
-                                            border-radius: 4px; /* Rounded corners */
-                                            text-decoration: none; /* Remove underline from link */
-                                            text-align: center; /* Center text */
-                                            min-width: 100px; /* Set minimum width */
-                                            box-sizing: border-box; /* Include padding and border in width */
-                                        }
-                                    
-                                        .edit-button {
-                                            background-color: rgb(57, 183, 233); /* Blue background color for Edit button */
-                                        }
-                                    
-                                        .delete-button {
-                                            background-color: rgb(194, 8, 45); /* Red background color for Delete button */
-                                        }
-                                    </style>
-                                    
-<!------------------------------- This is for Add New Address ------------------------------->
-                                   
-                                    <div class="col-lg-6">
-                                        <a href="#" class="shop-btn" onclick="modalAction('.submit')">Add New Address</a>
-                                    
-                                        <div class="modal-wrapper submit">
-                                            <div onclick="modalAction('.submit')" class="anywhere-away"></div>
-                                    
-                                            <div class="login-section account-section modal-main">
-                                                <div class="review-form">
-                                                    <div class="review-content">
-                                                        <h5 class="comment-title">Add Your Address</h5>
-                                                        <div class="close-btn">
-                                                            <img src="assets/images/homepage-one/close-btn.png" onclick="modalAction('.submit')" alt="close-btn">
-                                                        </div>
-                                                    </div>
-                                                    <form id="addressForm">
-                                                        <div class="account-inner-form">
-                                                            <div class="review-form-name">
-                                                                <label for="name" class="form-label">Name</label>
-                                                                <input name="name" type="text" id="name" class="form-control" placeholder="Full Name">
-                                                                <div id="name-error" class="error-message" style="display:none; color: red;">User Names can only contain letters and special characters.</div>
+                                                        <div id="editAddressModal" class="modal">
+                                                            <div class="modal-content">
+                                                                <span class="close-btn">&times;</span>
+                                                                <h4>Edit Address</h4>
+                                                                <form id="editAddressForm">
+                                                                    <input type="hidden" id="editAddressId" name="id">
+                                                                    <div class="form-group">
+                                                                        <label for="editName">Name:</label>
+                                                                        <input type="text" id="editName" name="name"
+                                                                            required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="editMobile">Phone:</label>
+                                                                        <input type="text" id="editMobile" name="mobile"
+                                                                            required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="editCity">City:</label>
+                                                                        <input type="text" id="editCity" name="city"
+                                                                            required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="editPincode">Pincode:</label>
+                                                                        <input type="text" id="editPincode"
+                                                                            name="pincode" required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="editPostOffice">Postoffice:</label>
+                                                                        <input type="text" id="editPostOffice"
+                                                                            name="postOffice" required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="editLandmark">Landmark:</label>
+                                                                        <input type="text" id="editLandmark"
+                                                                            name="landMark" required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="editState">State:</label>
+                                                                        <input type="text" id="editState" name="state"
+                                                                            required>
+                                                                    </div>
+                                                                    <button type="submit">Save</button>
+                                                                </form>
                                                             </div>
                                                         </div>
-                                                        <div class="account-inner-form">
-                                                            <div class="review-form-name">
-                                                                <label for="phone" class="form-label">Phone</label>
-                                                                <input name="phone" type="tel" id="phone" class="form-control" placeholder="+91 ">
-                                                                <div id="phone-error" class="error-message" style="display:none; color: red;">Please enter a valid phone number.</div>
+
+
+
+                                                        <script>
+
+                                                            document.querySelectorAll('.edit-button').forEach(button => {
+                                                                button.addEventListener('click', function (event) {
+                                                                    event.preventDefault();
+                                                                    const addressId = this.getAttribute('data-id');
+                                                                    const addressElement = document.getElementById(`address-${addressId}`);
+
+                                                                    // Fill the form with the current address details
+                                                                    document.getElementById('editAddressId').value = addressId;
+                                                                    document.getElementById('editName').value = addressElement.querySelector('.info-details p:nth-child(1)').textContent;
+                                                                    document.getElementById('editMobile').value = addressElement.querySelector('.info-details p:nth-child(2)').textContent;
+                                                                    document.getElementById('editCity').value = addressElement.querySelector('.info-details p:nth-child(3)').textContent;
+                                                                    document.getElementById('editPincode').value = addressElement.querySelector('.info-details p:nth-child(4)').textContent;
+                                                                    document.getElementById('editPostOffice').value = addressElement.querySelector('.info-details p:nth-child(5)').textContent;
+                                                                    document.getElementById('editLandmark').value = addressElement.querySelector('.info-details p:nth-child(6)').textContent;
+                                                                    document.getElementById('editState').value = addressElement.querySelector('.info-details p:nth-child(7)').textContent;
+
+                                                                    // Show the modal
+                                                                    document.getElementById('editAddressModal').style.display = 'flex';
+                                                                    document.getElementById('editAddressModal').classList.add('active');
+                                                                });
+                                                            });
+
+                                                            // Close the modal when clicking the close button
+                                                            document.querySelector('.close-btn').addEventListener('click', function () {
+                                                                document.getElementById('editAddressModal').style.display = 'none';
+                                                                document.getElementById('editAddressModal').classList.remove('active');
+                                                            });
+
+                                                            // Close the modal when clicking anywhere outside of it
+                                                            window.onclick = function (event) {
+                                                                if (event.target == document.getElementById('editAddressModal')) {
+                                                                    document.getElementById('editAddressModal').style.display = 'none';
+                                                                    document.getElementById('editAddressModal').classList.remove('active');
+                                                                }
+                                                            }
+
+                                                            // Handle form submission
+                                                            document.getElementById('editAddressForm').addEventListener('submit', async function (event) {
+                                                                event.preventDefault();
+                                                                const formData = new FormData(this);
+                                                                const addressId = formData.get('id');
+
+                                                                try {
+                                                                    const response = await fetch(`/editAddress/${addressId}`, {
+                                                                        method: 'POST',
+                                                                        body: JSON.stringify(Object.fromEntries(formData)),
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json'
+                                                                        }
+                                                                    });
+
+                                                                    if (response.ok) {
+                                                                        const updatedAddress = await response.json();
+
+                                                                        // Update the address details on the client side
+                                                                        const addressElement = document.getElementById(`address-${addressId}`);
+                                                                        addressElement.querySelector('.info-details p:nth-child(1)').textContent = updatedAddress.name;
+                                                                        addressElement.querySelector('.info-details p:nth-child(2)').textContent = updatedAddress.mobile;
+                                                                        addressElement.querySelector('.info-details p:nth-child(3)').textContent = updatedAddress.city;
+                                                                        addressElement.querySelector('.info-details p:nth-child(4)').textContent = updatedAddress.pincode;
+                                                                        addressElement.querySelector('.info-details p:nth-child(5)').textContent = updatedAddress.postOffice;
+                                                                        addressElement.querySelector('.info-details p:nth-child(6)').textContent = updatedAddress.landMark;
+                                                                        addressElement.querySelector('.info-details p:nth-child(7)').textContent = updatedAddress.state;
+
+                                                                        // Close the modal
+                                                                        document.getElementById('editAddressModal').style.display = 'none';
+                                                                        document.getElementById('editAddressModal').classList.remove('active');
+                                                                        Swal.fire({
+                                                                            title: 'Success',
+                                                                            text: 'Address updated successfully!',
+                                                                            icon: 'success'
+                                                                        });
+                                                                    } else {
+                                                                        Swal.fire({
+                                                                            title: 'Error',
+                                                                            text: 'Failed to update the address.',
+                                                                            icon: 'error'
+                                                                        });
+                                                                    }
+                                                                } catch (error) {
+                                                                    console.error('Error:', error);
+                                                                    Swal.fire({
+                                                                        title: 'Error',
+                                                                        text: 'An unexpected error occurred.',
+                                                                        icon: 'error'
+                                                                    });
+                                                                }
+                                                            });
+
+                                                        </script>
+
+                                                        <!------------------------------------    This script is for delete    --------------------------------------->
+
+                                                        <script>
+                                                            document.querySelectorAll('.delete-button').forEach(button => {
+                                                                button.addEventListener('click', async function (event) {
+                                                                    event.preventDefault();
+                                                                    const addressId = this.getAttribute('data-id');
+
+                                                                    try {
+                                                                        const response = await fetch(`/deleteAddress/${addressId}`, {
+                                                                            method: 'DELETE',
+                                                                        });
+
+                                                                        if (response.ok) {
+                                                                            document.getElementById(`address-${addressId}`).remove();
+                                                                            Swal.fire({
+                                                                                title: 'Deleted!',
+                                                                                text: 'Address deleted successfully!',
+                                                                                icon: 'success'
+                                                                            });
+                                                                        } else {
+                                                                            Swal.fire({
+                                                                                title: 'Error',
+                                                                                text: 'Failed to delete the address.',
+                                                                                icon: 'error'
+                                                                            });
+                                                                        }
+                                                                    } catch (error) {
+                                                                        console.error('Error:', error);
+                                                                        Swal.fire({
+                                                                            title: 'Error',
+                                                                            text: 'An unexpected error occurred.',
+                                                                            icon: 'error'
+                                                                        });
+                                                                    }
+                                                                });
+                                                            });
+                                                        </script>
+
+                                                        <style>
+                                                            .button-group {
+                                                                display: flex;
+                                                                flex-wrap: wrap;
+                                                                gap: 50px;
+                                                                margin-top: 10px;
+                                                            }
+
+                                                            .edit-button,
+                                                            .delete-button {
+                                                                display: inline-block;
+                                                                color: white;
+                                                                padding: 10px 20px;
+                                                                /* Adjust padding as needed */
+                                                                border-radius: 4px;
+                                                                /* Rounded corners */
+                                                                text-decoration: none;
+                                                                /* Remove underline from link */
+                                                                text-align: center;
+                                                                /* Center text */
+                                                                min-width: 100px;
+                                                                /* Set minimum width */
+                                                                box-sizing: border-box;
+                                                                /* Include padding and border in width */
+                                                            }
+
+                                                            .edit-button {
+                                                                background-color: rgb(57, 183, 233);
+                                                                /* Blue background color for Edit button */
+                                                            }
+
+                                                            .delete-button {
+                                                                background-color: rgb(194, 8, 45);
+                                                                /* Red background color for Delete button */
+                                                            }
+                                                        </style>
+
+                                                        <!------------------------------- This is for Add New Address ------------------------------->
+
+                                                        <div class="col-lg-6">
+                                                            <a href="#" class="shop-btn"
+                                                                onclick="modalAction('.submit')">Add New Address</a>
+
+                                                            <div class="modal-wrapper submit">
+                                                                <div onclick="modalAction('.submit')"
+                                                                    class="anywhere-away"></div>
+
+                                                                <div class="login-section account-section modal-main">
+                                                                    <div class="review-form">
+                                                                        <div class="review-content">
+                                                                            <h5 class="comment-title">Add Your Address
+                                                                            </h5>
+                                                                            <div class="close-btn">
+                                                                                <img src="assets/images/homepage-one/close-btn.png"
+                                                                                    onclick="modalAction('.submit')"
+                                                                                    alt="close-btn">
+                                                                            </div>
+                                                                        </div>
+                                                                        <form id="addressForm">
+                                                                            <div class="account-inner-form">
+                                                                                <div class="review-form-name">
+                                                                                    <label for="name"
+                                                                                        class="form-label">Name</label>
+                                                                                    <input name="name" type="text"
+                                                                                        id="name" class="form-control"
+                                                                                        placeholder="Full Name">
+                                                                                    <div id="name-error"
+                                                                                        class="error-message"
+                                                                                        style="display:none; color: red;">
+                                                                                        User Names can only contain
+                                                                                        letters and special characters.
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="account-inner-form">
+                                                                                <div class="review-form-name">
+                                                                                    <label for="phone"
+                                                                                        class="form-label">Phone</label>
+                                                                                    <input name="phone" type="tel"
+                                                                                        id="phone" class="form-control"
+                                                                                        placeholder="+91 ">
+                                                                                    <div id="phone-error"
+                                                                                        class="error-message"
+                                                                                        style="display:none; color: red;">
+                                                                                        Please enter a valid phone
+                                                                                        number.</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="account-inner-form">
+                                                                                <div class="review-form-name">
+                                                                                    <label for="city"
+                                                                                        class="form-label">City</label>
+                                                                                    <input name="city" type="text"
+                                                                                        id="city" class="form-control">
+                                                                                    <div id="city-error"
+                                                                                        class="error-message"
+                                                                                        style="display:none; color: red;">
+                                                                                        City name can only contain
+                                                                                        letters.</div>
+                                                                                </div>
+                                                                                <div class="review-form-name">
+                                                                                    <label for="landMark"
+                                                                                        class="form-label">Landmark</label>
+                                                                                    <input name="landMark" type="text"
+                                                                                        id="landMark"
+                                                                                        class="form-control">
+                                                                                    <div id="landMark-error"
+                                                                                        class="error-message"
+                                                                                        style="display:none; color: red;">
+                                                                                        Landmark can only contain
+                                                                                        letters and numbers.</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="account-inner-form">
+                                                                                <div class="review-form-name">
+                                                                                    <label for="postoffice"
+                                                                                        class="form-label">Post
+                                                                                        Office</label>
+                                                                                    <input name="postoffice" type="text"
+                                                                                        id="postoffice"
+                                                                                        class="form-control">
+                                                                                    <div id="postoffice-error"
+                                                                                        class="error-message"
+                                                                                        style="display:none; color: red;">
+                                                                                        Post Office name can only
+                                                                                        contain letters.</div>
+                                                                                </div>
+                                                                                <div class="review-form-name">
+                                                                                    <label for="pincode"
+                                                                                        class="form-label">Pincode</label>
+                                                                                    <input name="pincode" type="text"
+                                                                                        id="pincode"
+                                                                                        class="form-control">
+                                                                                    <div id="pincode-error"
+                                                                                        class="error-message"
+                                                                                        style="display:none; color: red;">
+                                                                                        Please enter a valid pincode.
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="account-inner-form">
+                                                                                <div class="review-form-name">
+                                                                                    <label for="state"
+                                                                                        class="form-label">State</label>
+                                                                                    <input name="state" type="text"
+                                                                                        id="state" class="form-control">
+                                                                                    <div id="state-error"
+                                                                                        class="error-message"
+                                                                                        style="display:none; color: red;">
+                                                                                        State name can only contain
+                                                                                        letters.</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="login-btn text-center">
+                                                                                <button type="submit"
+                                                                                    class="shop-btn">Add
+                                                                                    Address</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="account-inner-form">
-                                                            <div class="review-form-name">
-                                                                <label for="city" class="form-label">City</label>
-                                                                <input name="city" type="text" id="city" class="form-control">
-                                                                <div id="city-error" class="error-message" style="display:none; color: red;">City name can only contain letters.</div>
-                                                            </div>
-                                                            <div class="review-form-name">
-                                                                <label for="landMark" class="form-label">Landmark</label>
-                                                                <input name="landMark" type="text" id="landMark" class="form-control">
-                                                                <div id="landMark-error" class="error-message" style="display:none; color: red;">Landmark can only contain letters and numbers.</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="account-inner-form">
-                                                            <div class="review-form-name">
-                                                                <label for="postoffice" class="form-label">Post Office</label>
-                                                                <input name="postoffice" type="text" id="postoffice" class="form-control">
-                                                                <div id="postoffice-error" class="error-message" style="display:none; color: red;">Post Office name can only contain letters.</div>
-                                                            </div>
-                                                            <div class="review-form-name">
-                                                                <label for="pincode" class="form-label">Pincode</label>
-                                                                <input name="pincode" type="text" id="pincode" class="form-control">
-                                                                <div id="pincode-error" class="error-message" style="display:none; color: red;">Please enter a valid pincode.</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="account-inner-form">
-                                                            <div class="review-form-name">
-                                                                <label for="state" class="form-label">State</label>
-                                                                <input name="state" type="text" id="state" class="form-control">
-                                                                <div id="state-error" class="error-message" style="display:none; color: red;">State name can only contain letters.</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="login-btn text-center">
-                                                            <button type="submit" class="shop-btn">Add Address</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
 
-                                    
-                                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                                    <script>
-                                    
-                                        document.getElementById("addressForm").addEventListener("submit", async function(event) {
-                                            event.preventDefault();
-                                    
-                                            const name = document.getElementById("name").value;
-                                            const phone = document.getElementById("phone").value;
-                                            const city = document.getElementById("city").value;
-                                            const landMark = document.getElementById("landMark").value;
-                                            const postoffice = document.getElementById("postoffice").value;
-                                            const pincode = document.getElementById("pincode").value;
-                                            const state = document.getElementById("state").value;
+                                                        <script
+                                                            src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                                            const nameRegex = /^[^\s][a-zA-Z\s]*[^\s]$/;
-                                            const phoneRegex = /^(\+?\d{1,3}[- ]?)?(6|7|8|9)\d{9}$/;
-                                            const cityRegex = /^[a-zA-Z\s]+$/;
-                                            const landMarkRegex = /^[a-zA-Z0-9\s]+$/;
-                                            const postofficeRegex = /^[a-zA-Z\s]+$/;
-                                            const pincodeRegex = /^\d{6}$/;
-                                            const stateRegex = /^[a-zA-Z\s]+$/;
+                                                        <script>
+
+                                                            document.getElementById("addressForm").addEventListener("submit", async function (event) {
+                                                                event.preventDefault();
+
+                                                                const name = document.getElementById("name").value;
+                                                                const phone = document.getElementById("phone").value;
+                                                                const city = document.getElementById("city").value;
+                                                                const landMark = document.getElementById("landMark").value;
+                                                                const postoffice = document.getElementById("postoffice").value;
+                                                                const pincode = document.getElementById("pincode").value;
+                                                                const state = document.getElementById("state").value;
+
+                                                                const nameRegex = /^[^\s][a-zA-Z\s]*[^\s]$/;
+                                                                const phoneRegex = /^(\+?\d{1,3}[- ]?)?(6|7|8|9)\d{9}$/;
+                                                                const cityRegex = /^[a-zA-Z\s]+$/;
+                                                                const landMarkRegex = /^[a-zA-Z0-9\s]+$/;
+                                                                const postofficeRegex = /^[a-zA-Z\s]+$/;
+                                                                const pincodeRegex = /^\d{6}$/;
+                                                                const stateRegex = /^[a-zA-Z\s]+$/;
 
 
-                                            let isValid = true;
-                                    
-                                            if (!nameRegex.test(name)) {
-                                                showError('name-error', "User Names can only contain letters and special characters.");
-                                                isValid = false;
-                                            } else {
-                                                hideError('name-error');
-                                            }
-                                    
-                                            if (!phoneRegex.test(phone)) {
-                                                showError('phone-error', "Please enter a valid phone number.");
-                                                isValid = false;
-                                            } else {
-                                                hideError('phone-error');
-                                            }
-                                    
-                                            if (!cityRegex.test(city)) {
-                                                showError('city-error', "City name can only contain letters.");
-                                                isValid = false;
-                                            } else {
-                                                hideError('city-error');
-                                            }
-                                    
-                                            if (!landMarkRegex.test(landMark)) {
-                                                showError('landMark-error', "Landmark can only contain letters and numbers.");
-                                                isValid = false;
-                                            } else {
-                                                hideError('landMark-error');
-                                            }
-                                    
-                                            if (!postofficeRegex.test(postoffice)) {
-                                                showError('postoffice-error', "Post Office name can only contain letters.");
-                                                isValid = false;
-                                            } else {
-                                                hideError('postoffice-error');
-                                            }
-                                    
-                                            if (!pincodeRegex.test(pincode)) {
-                                                showError('pincode-error', "Please enter a valid pincode.");
-                                                isValid = false;
-                                            } else {
-                                                hideError('pincode-error');
-                                            }
-                                    
-                                            if (!stateRegex.test(state)) {
-                                                showError('state-error', "State name can only contain letters.");
-                                                isValid = false;
-                                            } else {
-                                                hideError('state-error');
-                                            }
+                                                                let isValid = true;
 
-                                    
-                                            const addressData = {
-                                                name,
-                                                phone,
-                                                city,
-                                                landMark,
-                                                postoffice,
-                                                pincode,
-                                                state
-                                            };
-                                    
-                                    
-                                            if (!isValid) {
-                                                return;
-                                            }
-                                    
-                                            try {
-                                                const response = await fetch('/insertAddress', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json'
-                                                    },
-                                                    body: JSON.stringify(addressData)
-                                                });
-                                    
-                                                const data = await response.json();
-                                    
-                                                if (response.ok) {
-                                                    await Swal.fire({
-                                                        title: 'Success!',
-                                                        text: 'Address added successfully!',
-                                                        icon: 'success'
-                                                    });
-                                                } else {
-                                                    await Swal.fire({
-                                                        title: 'Error',
-                                                        text: data.error || 'An unexpected error occurred.',
-                                                        icon: 'error'
-                                                    });
-                                                }
-                                            } catch (error) {
-                                                console.error('Error:', error);
-                                                await Swal.fire({
-                                                    title: 'Error',
-                                                    text: 'An unexpected error occurred.',
-                                                    icon: 'error'
-                                                });
-                                            }
-                                        });
+                                                                if (!nameRegex.test(name)) {
+                                                                    showError('name-error', "User Names can only contain letters and special characters.");
+                                                                    isValid = false;
+                                                                } else {
+                                                                    hideError('name-error');
+                                                                }
 
-                                        function showError(elementId, message) {
-                                            const errorElement = document.getElementById(elementId);
-                                            errorElement.innerText = message;
-                                            errorElement.style.display = 'block';
-                                        }
-                                    
-                                        function hideError(elementId) {
-                                            const errorElement = document.getElementById(elementId);
-                                            errorElement.style.display = 'none';
-                                        }
+                                                                if (!phoneRegex.test(phone)) {
+                                                                    showError('phone-error', "Please enter a valid phone number.");
+                                                                    isValid = false;
+                                                                } else {
+                                                                    hideError('phone-error');
+                                                                }
 
-                                    </script>
-                                    
+                                                                if (!cityRegex.test(city)) {
+                                                                    showError('city-error', "City name can only contain letters.");
+                                                                    isValid = false;
+                                                                } else {
+                                                                    hideError('city-error');
+                                                                }
+
+                                                                if (!landMarkRegex.test(landMark)) {
+                                                                    showError('landMark-error', "Landmark can only contain letters and numbers.");
+                                                                    isValid = false;
+                                                                } else {
+                                                                    hideError('landMark-error');
+                                                                }
+
+                                                                if (!postofficeRegex.test(postoffice)) {
+                                                                    showError('postoffice-error', "Post Office name can only contain letters.");
+                                                                    isValid = false;
+                                                                } else {
+                                                                    hideError('postoffice-error');
+                                                                }
+
+                                                                if (!pincodeRegex.test(pincode)) {
+                                                                    showError('pincode-error', "Please enter a valid pincode.");
+                                                                    isValid = false;
+                                                                } else {
+                                                                    hideError('pincode-error');
+                                                                }
+
+                                                                if (!stateRegex.test(state)) {
+                                                                    showError('state-error', "State name can only contain letters.");
+                                                                    isValid = false;
+                                                                } else {
+                                                                    hideError('state-error');
+                                                                }
+
+
+                                                                const addressData = {
+                                                                    name,
+                                                                    phone,
+                                                                    city,
+                                                                    landMark,
+                                                                    postoffice,
+                                                                    pincode,
+                                                                    state
+                                                                };
+
+
+                                                                if (!isValid) {
+                                                                    return;
+                                                                }
+
+                                                                try {
+                                                                    const response = await fetch('/insertAddress', {
+                                                                        method: 'POST',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json'
+                                                                        },
+                                                                        body: JSON.stringify(addressData)
+                                                                    });
+
+                                                                    const data = await response.json();
+
+                                                                    if (response.ok) {
+                                                                        await Swal.fire({
+                                                                            title: 'Success!',
+                                                                            text: 'Address added successfully!',
+                                                                            icon: 'success'
+                                                                        });
+                                                                    } else {
+                                                                        await Swal.fire({
+                                                                            title: 'Error',
+                                                                            text: data.error || 'An unexpected error occurred.',
+                                                                            icon: 'error'
+                                                                        });
+                                                                    }
+                                                                } catch (error) {
+                                                                    console.error('Error:', error);
+                                                                    await Swal.fire({
+                                                                        title: 'Error',
+                                                                        text: 'An unexpected error occurred.',
+                                                                        icon: 'error'
+                                                                    });
+                                                                }
+                                                            });
+
+                                                            function showError(elementId, message) {
+                                                                const errorElement = document.getElementById(elementId);
+                                                                errorElement.innerText = message;
+                                                                errorElement.style.display = 'block';
+                                                            }
+
+                                                            function hideError(elementId) {
+                                                                const errorElement = document.getElementById(elementId);
+                                                                errorElement.style.display = 'none';
+                                                            }
+
+                                                        </script>
+
 
 
                                 </div>
@@ -2674,82 +2612,87 @@ too.Max 5mb.</p>
                             aria-labelledby="v-pills-password-tab" tabindex="0">
                             <div class="row align-items-center">
 
-<!------------------------------- This is for Change Password --------------------------------->
+                                <!------------------------------- This is for Change Password --------------------------------->
 
                                 <div class="col-lg-6">
                                     <div class="form-section">
                                         <form id="changePasswordForm" action="/changePassword" method="POST">
                                             <div class="currentpass form-item">
                                                 <label for="currentpass" class="form-label">Current Password</label>
-                                                <input type="password" class="form-control" id="currentpass" name="currentpass" placeholder="****" required>
+                                                <input type="password" class="form-control" id="currentpass"
+                                                    name="currentpass" placeholder="****" required>
                                             </div>
                                             <div class="password form-item">
                                                 <label for="newPassword" class="form-label">New Password</label>
-                                                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="****" required>
+                                                <input type="password" class="form-control" id="newPassword"
+                                                    name="newPassword" placeholder="****" required>
                                             </div>
                                             <div class="re-password form-item">
-                                                <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="****" required>
+                                                <label for="confirmPassword" class="form-label">Confirm New
+                                                    Password</label>
+                                                <input type="password" class="form-control" id="confirmPassword"
+                                                    name="confirmPassword" placeholder="****" required>
                                             </div>
                                             <div class="form-btn">
                                                 <button type="submit" class="shop-btn">Update Password</button>
-                                                <button type="button" class="shop-btn cancel-btn" onclick="cancelPasswordChange()">Cancel</button>
+                                                <button type="button" class="shop-btn cancel-btn"
+                                                    onclick="cancelPasswordChange()">Cancel</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                
+
                                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
                                 <script>
-                                document.getElementById('changePasswordForm').addEventListener('submit', async function(event) {
-                                event.preventDefault();
+                                    document.getElementById('changePasswordForm').addEventListener('submit', async function (event) {
+                                        event.preventDefault();
 
-                                const currentpass = document.getElementById('currentpass').value;
-                                const newPassword = document.getElementById('newPassword').value;
-                                const confirmPassword = document.getElementById('confirmPassword').value;
+                                        const currentpass = document.getElementById('currentpass').value;
+                                        const newPassword = document.getElementById('newPassword').value;
+                                        const confirmPassword = document.getElementById('confirmPassword').value;
 
-                                // Perform basic validation
-                                if (newPassword !== confirmPassword) {
-                                    alert('New password and confirm password must match.');
-                                    return;
-                                }
+                                        // Perform basic validation
+                                        if (newPassword !== confirmPassword) {
+                                            alert('New password and confirm password must match.');
+                                            return;
+                                        }
 
-                                // Submit the form to server
-                                try {
-                                    const response = await fetch('/changePassword', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({ currentpass, newPassword })
+                                        // Submit the form to server
+                                        try {
+                                            const response = await fetch('/changePassword', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({ currentpass, newPassword })
+                                            });
+
+                                            if (response.ok) {
+                                                await Swal.fire({
+                                                    title: 'Success',
+                                                    text: 'Password updated successfully.',
+                                                    icon: 'success'
+                                                });
+                                            } else {
+                                                const errorMessage = await response.text();
+                                                await Swal.fire({
+                                                    title: 'OOps',
+                                                    text: `Failed to update password: ${errorMessage}`,
+                                                    icon: 'error'
+                                                });
+                                            }
+                                        } catch (error) {
+                                            console.error('Error:', error);
+                                            await Swal.fire({
+                                                title: 'OOps',
+                                                text: 'An error occurred while updating password.',
+                                                icon: 'error'
+                                            });
+                                        }
                                     });
 
-                                    if (response.ok) {
-                                        await Swal.fire({
-                                        title: 'Success',
-                                        text: 'Password updated successfully.',
-                                        icon: 'success'
-                                    });
-                                    } else {
-                                        const errorMessage = await response.text();
-                                        await Swal.fire({
-                                        title: 'OOps',
-                                        text: `Failed to update password: ${errorMessage}`,
-                                        icon: 'error'
-                                    });
-                                    }
-                                } catch (error) {
-                                    console.error('Error:', error);
-                                    await Swal.fire({
-                                        title: 'OOps',
-                                        text: 'An error occurred while updating password.',
-                                        icon: 'error'
-                                    });
-                                }
-                            });
-
-                            </script>
+                                </script>
 
 
 
@@ -3382,7 +3325,6 @@ too.Max 5mb.</p>
     <script src="assets/js/swiper10-bundle.min.js"></script>
 
     <script src="assets/js/shopus.js"></script>
-
 
 
 </body>

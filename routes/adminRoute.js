@@ -8,6 +8,7 @@ const loadUserList = require("../controllers/admin/user")
 const loadCategory = require('../controllers/admin/category')
 const varient = require("../controllers/admin/varients")
 const adminAuth = require("../middleware/adminMiddleware")
+const loadOrder = require("../controllers/admin/order")
 
 
 const generateStorage = require("../utils/multer")
@@ -50,6 +51,6 @@ router.post("/deleteVariant",varient.deleteVariant)
 
 router.get("/productDetail",loadProduct.viewProductDetails)
 
-
+router.get("/order",loadOrder.loadOrder)
 
 module.exports = router;

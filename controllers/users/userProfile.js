@@ -1,6 +1,7 @@
 const User = require("../../models/userModel");
 const bcrypt = require("bcrypt")
 const Address = require("../../models/addressModel")
+const Order = require("../../models/orderModel")
 
 exports.viewUserProfile = async (req, res) => {
     try {
@@ -11,15 +12,37 @@ exports.viewUserProfile = async (req, res) => {
         }
         const user = await User.findById(userId);
         const userAddress = await Address.find({userId:userId})
+        const userOrders = await Order.find({ userId:userId })
 
         if (!user) {
             return res.status(404).send("User not found");
         }
-        res.render("users/user-profile", { user,userAddress});
+        res.render("users/user-profile", { user ,userAddress ,userOrders });
         
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
+    }
+};
+
+
+exports.getUserOrders = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+
+        if (!userId) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const orders = await Order.find({ userId }).populate({
+            path: 'orderItems.variantId',
+            select: 'productName'
+        });
+
+        res.status(200).json({ success: true, orders });
+    } catch (error) {
+        console.log("Error in getUserOrders", error);
+        return res.status(500).json({ success: false, message: "Server Error" });
     }
 };
 
@@ -49,6 +72,7 @@ exports.updateUserProfile = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
+
 
 
 
@@ -132,25 +156,19 @@ exports.changePassword = async (req, res) => {
         if (!userId) {
             return res.status(401).send("Unauthorized: No userId found");
         }
-
-        // Find the user by _id (assuming _id is the correct identifier)
         const user = await User.findOne({ _id: userId });
 
         if (!user) {
             return res.status(404).send("User not found");
         }
-
-        // Check if current password matches
         const isMatch = await bcrypt.compare(currentpass, user.password);
 
         if (!isMatch) {
             return res.status(400).send("Current password is incorrect");
         }
 
-        // Hash the new password
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        // Update user's password
         user.password = hashedPassword;
         await user.save();
 
@@ -161,5 +179,22 @@ exports.changePassword = async (req, res) => {
     }
 };
 
+
+// exports.checkOutAddress = async(req,res)=>{
+//     try {
+//         const userId = req.session.userId
+
+//         if(!userId){
+//             return res.status(401).send("Unavailable")
+//         }
+//         const address = await Address.findOne({userId})
+
+//         res.render('checkout', { address });
+        
+//     } catch (error) {
+//         console.log("message in checkOutAddress",error);
+//         res.status(500).send("Server Error")
+//     }
+// }
 
 

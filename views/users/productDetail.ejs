@@ -66,44 +66,16 @@
 											<li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li>
 										</ul>
 									</li>
-									<li><a href="cart.html"><i class="pe-7s-cart"></i><span>2</span></a>
+									<li><a href="/cart"><i class="pe-7s-cart"></i><span>2</span></a>
 										<ul class="drop-cart">
 											<li>
-												<a href="cart.html"><img src="img/cart/1.webp" alt="" /></a>
-												<div class="add-cart-text">
-													<p><a href="#">White Shirt</a></p>
-													<p>$50.00</p>
-													<span>Color : Blue</span>
-													<span>Size : SL</span>
-												</div>
-												<div class="pro-close">
-													<i class="pe-7s-close"></i>
-												</div>
-											</li>
-											<li>
-												<a href="cart.html"><img src="img/cart/2.webp" alt="" /></a>
-												<div class="add-cart-text">
-													<p><a href="#">White Shirt</a></p>
-													<p>$50.00 x 2</p>
-													<span>Color : Blue</span>
-													<span>Size : SL</span>
-												</div>
-												<div class="pro-close">
-													<i class="pe-7s-close"></i>
-												</div>
-											</li>
-											<li class="total-amount clearfix">
-												<span class="floatleft">total</span>
-												<span class="floatright"><strong>= $150.00</strong></span>
-											</li>
-											<li>
 												<div class="goto text-center">
-													<a href="cart.html"><strong>go to cart &nbsp;<i
+													<a href="/cart"><strong>go to cart &nbsp;<i
 																class="pe-7s-angle-right"></i></strong></a>
 												</div>
 											</li>
 											<li class="checkout-btn text-center">
-												<a href="checkout.html">Check out</a>
+												<a href="/checkOut">Check out</a>
 											</li>
 										</ul>
 									</li>
@@ -304,13 +276,7 @@
 											</div>
 										</li> -->
 										<!-- <li><a href="shop-style-1.html">Lookbook</a></li> -->
-										<li><a href="blog-style-1.html">Blog</a>
-											<ul>
-												<li><a href="single-blog.html">Single Blog</a></li>
-												<li><a href="blog-style-1.html">Blog Style One</a></li>
-												<li><a href="blog-style-2.html">Blog Style Two</a></li>
-											</ul>
-										</li>
+										<li><a href="shop-style-1.html">Orders</a></li>
 										<li><a href="#">Pages</a>
 											<ul>
 												<li><a href="cart.html">Cart</a></li>
@@ -619,11 +585,14 @@
 										<span class="property-key">Size:</span>
 										<select class="custom-select" id="sizeDropdown">
 											<option selected>Select Size</option>
-											<% sizes.forEach(size => { %>
-											<option value="<%= size %>"><%= size %></option>
+											<% stockWithStatus.forEach(stockWithStatus => { %>
+											<option value="<%= stockWithStatus.size %>">
+												<%= stockWithStatus.size %> - <%= stockWithStatus.status %>
+											</option>
 											<% }) %>
 										</select>
 									</div>
+									
 								</div>
 								<br>
 
@@ -670,18 +639,14 @@
 							thumbnailLinks.forEach(link => {
 								link.addEventListener("click", function(event) {
 									event.preventDefault();
-						
-									// Get the new image URL from the clicked thumbnail
+
 									const newImageSrc = this.getAttribute("data-image");
-						
-									// Update the main image source
+					
 									mainImage.setAttribute("src", newImageSrc);
-						
-									// Update the lens image source if using lens zoom feature
+				
 									const lensImage = document.querySelector(".simpleLens-image");
 									lensImage.setAttribute("data-lens-image", newImageSrc);
-						
-									// Remove 'active' class from all thumbnails and add it to the clicked one
+				
 									thumbnailLinks.forEach(link => link.classList.remove("active"));
 									this.classList.add("active");
 								});
@@ -713,7 +678,11 @@
 							});
 						
 							if (response.ok) {
-								window.location.href = "/cart"; 
+								await Swal.fire({
+									title: "Added",
+									text: "Product added to Cart",
+									icon: "success"
+								});
 							} else {
 								const responseData = await response.json();
 								await Swal.fire({

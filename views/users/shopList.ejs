@@ -1,8 +1,29 @@
 <%- include("../layouts/header.ejs") %>
     <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+
+		<style>
+			.pagination .page-item .page-link {
+			color: #ef6644; /* Orange color */
+			border: 1px solid #ef6644;
+			margin: 0 5px;
+			padding: 10px 15px;
+			text-decoration: none;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		.pagination .page-item .page-link:hover {
+			background-color: #ef6644; /* Orange background on hover */
+			color: #FFFFFF; /* White text on hover */
+			border-color: #ef6644; /* Border color on hover */
+		}
+
+		.pagination .page-item.active .page-link {
+			background-color: #ef6644; /* Orange background for active page */
+			color: #FFFFFF; /* White text for active page */
+			border-color: #ef6644; /* Border color for active page */
+		}
+		</style>
+
 
         <!-- header section start -->
 		<header class="pages-header">
@@ -31,14 +52,14 @@
 											<li><a href="my-account.html"><i class="fa fa-user"></i>My account</a></li>
 											<li><a href="cart.html"><i class="fa fa-shopping-cart"></i>My cart</a></li>
 											<li><a href="wishlist.html"><i class="fa fa-heart"></i>My wishlist</a></li>
-											<li><a href="checkout.html"><i class="fa fa-usd"></i>Creck out</a></li>
-											<li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li>
+											<li><a href="checkout.html"><i class="fa fa-usd"></i>Check out</a></li>
+											<!-- <li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li> -->
 										</ul>
 									</li>
-									<li><a href="cart.html"><i class="pe-7s-cart"></i><span>2</span></a>
+									<li><a href="/cart"><i class="pe-7s-cart"></i><span>2</span></a>
 										<ul class="drop-cart">
-											<li>
-												<a href="cart.html"><img src="img/cart/1.webp" alt="" /></a>
+											<!-- <li>
+												<a href="/cart"><img src="img/cart/1.webp" alt="" /></a>
 												<div class="add-cart-text">
 													<p><a href="#">White Shirt</a></p>
 													<p>$50.00</p>
@@ -64,14 +85,14 @@
 											<li class="total-amount clearfix">
 												<span class="floatleft">total</span>
 												<span class="floatright"><strong>= $150.00</strong></span>
-											</li>
+											</li> -->
 											<li>
 												<div class="goto text-center">
-													<a href="cart.html"><strong>go to cart &nbsp;<i class="pe-7s-angle-right"></i></strong></a>
+													<a href="/cart"><strong>go to cart &nbsp;<i class="pe-7s-angle-right"></i></strong></a>
 												</div>
 											</li>
 											<li class="checkout-btn text-center">
-												<a href="checkout.html">Check out</a>
+												<a href="/checkOut">Check out</a>
 											</li>
 										</ul>
 									</li>
@@ -273,13 +294,7 @@
 											</div>
 										</li> -->
 										<!-- <li><a href="shop-style-1.html">Lookbook</a></li> -->
-										<li><a href="blog-style-1.html">Blog</a>
-											<ul>
-												<li><a href="single-blog.html">Single Blog</a></li>
-												<li><a href="blog-style-1.html">Blog Style One</a></li>
-												<li><a href="blog-style-2.html">Blog Style Two</a></li>
-											</ul>
-										</li>
+										<li><a href="shop-style-1.html">Orders</a></li>
 										<li><a href="#">Pages</a>
 											<ul>
 												<li><a href="cart.html">Cart</a></li>
@@ -571,7 +586,7 @@
 									</form>
 								</div>
 							</div>
-							<div class="s-side-text">
+							<!-- <div class="s-side-text">
 								<div class="sidebar-title">
 									<h4>color</h4>
 								</div>
@@ -585,7 +600,7 @@
 										<li><a href="#">orange</a></li>
 									</ul>
 								</div>
-							</div>
+							</div> -->
 							<!-- <div class="s-side-text">
 								<div class="sidebar-title">
 									<h4>MANUFACTURER</h4>
@@ -619,15 +634,16 @@
 								</div>
 								<div class="facturer category text-bg">
 									<ul>
-										<li><a href="#">Shirt <span class="floatright">12</span></a></li>
-										<li><a href="#">Pant<span class="floatright">25</span></a></li>
-										<li><a href="#">T-shirt<span class="floatright">65</span></a></li>
-										<li><a href="#">Trousers & shorts<span class="floatright">89</span></a></li>
+										<li><a href="#">Shirt <span class="floatright"></span></a></li>
+										<li><a href="#">Pant<span class="floatright"></span></a></li>
+										<li><a href="#">T-shirt<span class="floatright"></span></a></li>
+										<li><a href="#">Trousers & shorts<span class="floatright"></span></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
+
 					<div class="col-md-8 col-lg-9">
 						<div class="right-products">
 							<div class="row">
@@ -637,7 +653,6 @@
 											<li>
 												<ul class="nav nav-tabs">
 													<li><a class="active" data-bs-toggle="tab" href="#grid"> <img src="img/products/grid-icon.webp" alt="grid-icon" /> </a></li>
-													<!-- <li><a class="active" data-bs-toggle="tab" href="#list"> <img src="img/products/list-icon.webp" alt="list-icon" /> </a></li> -->
 												</ul>
 											</li>
 											<li class="sort-by l-r-margin">
@@ -647,11 +662,7 @@
 												<form action="#">
 													<div class="custom-select">
 														<select class="form-control">
-															<option> Newest Products</option>
-															<option> men Products </option>
-															<option> women Products </option>
-															<option> popular Products </option>
-															<option> best sell Products </option>
+															<option> Men Products </option>
 														</select>
 													</div>
 												</form>
@@ -663,13 +674,9 @@
 												<form action="#">
 													<div class="custom-select">
 														<select class="form-control">
-															<option> 09</option>
-															<option> 10</option>
-															<option> 11</option>
-															<option> 12</option>
-															<option> 15</option>
-															<option> 16</option>
-															<option> 18</option>
+															<option> 01</option>
+															<option> 02</option>
+															<option> 03</option>
 														</select>
 													</div>
 												</form>
@@ -678,12 +685,7 @@
 									</div>
 								</div>
 							</div>
-
-
-
-
-
-
+					
 							<div class="row">
 								<div class="tab-content">
 									<div class="tab-pane fade text-center show active" id="grid">
@@ -695,8 +697,9 @@
 														<div class="pro-type">
 															<span>sale</span>
 														</div>
-														<a href="/productDetail?id=<%= variant._id %>"><img src="<%= variant.image[0] %>" alt="<%= variant.salePrice %>"></a>
-														<% console.log('number of variants',variant._id) %>
+														<a href="/productDetail?id=<%= variant._id %>">
+															<img src="<%= variant.image[0] %>" alt="<%= variant.salePrice %>">
+														</a>
 													</div>
 													<div class="product-dsc">
 														<p><a href="/productDetail"><%= variant.colour.toUpperCase() %>-<%= variant.productName.toUpperCase() %></a></p>
@@ -715,13 +718,31 @@
 									</div>
 								</div>
 							</div>
-							
-							
-											
-
-
-										</div>
-									</div>
+					
+							<div class="row">
+								<div class="col-12 text-center">
+									<ul class="pagination">
+										<% if (currentPage > 1) { %>
+										<li class="page-item">
+											<a class="page-link" href="/shopList?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+										</li>
+										<% } %>
+										<% for (let i = 1; i <= totalPages; i++) { %>
+										<li class="page-item <%= i === currentPage ? 'active' : '' %>">
+											<a class="page-link" href="/shopList?page=<%= i %>&limit=<%= limit %>"><%= i %></a>
+										</li>
+										<% } %>
+										<% if (currentPage < totalPages) { %>
+										<li class="page-item">
+											<a class="page-link" href="/shopList?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+										</li>
+										<% } %>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 									<!-- grid view end -->
 
 
