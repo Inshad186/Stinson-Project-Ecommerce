@@ -44,6 +44,9 @@ router.post('/cart-add', userAuth.isAuthenticated, loadCart.addToCart);
 router.get("/cart", userAuth.isAuthenticated, loadCart.viewCart);
 router.delete("/cart-remove",userAuth.isAuthenticated , loadCart.removeCart)
 router.post("/cart-update-quantity",userAuth.isAuthenticated , loadCart.updateCartQuantity)
+router.get("/wishList", userAuth.isAuthenticated , loadCart.viewWishList)
+router.post("/addWishList" ,userAuth.isAuthenticated ,loadCart.addWishList)
+router.delete("/wishList-remove" ,userAuth.isAuthenticated, loadCart.removeWishList)
 
 router.get("/checkOut", userAuth.isAuthenticated , loadCart.viewCheckOut)
 

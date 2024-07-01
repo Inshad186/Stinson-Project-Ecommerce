@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt")
 const Address = require("../../models/addressModel")
 const Order = require("../../models/orderModel")
 
+
 exports.viewUserProfile = async (req, res) => {
     try {
         const userId = req.session.userId;
@@ -22,27 +23,6 @@ exports.viewUserProfile = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
-    }
-};
-
-
-exports.getUserOrders = async (req, res) => {
-    try {
-        const userId = req.session.userId;
-
-        if (!userId) {
-            return res.status(401).send("User not authenticated");
-        }
-
-        const orders = await Order.find({ userId }).populate({
-            path: 'orderItems.variantId',
-            select: 'productName'
-        });
-
-        res.status(200).json({ success: true, orders });
-    } catch (error) {
-        console.log("Error in getUserOrders", error);
-        return res.status(500).json({ success: false, message: "Server Error" });
     }
 };
 
@@ -73,6 +53,27 @@ exports.updateUserProfile = async (req, res) => {
     }
 };
 
+
+
+exports.getUserOrders = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+
+        if (!userId) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const orders = await Order.find({ userId }).populate({
+            path: 'orderItems.variantId',
+            select: 'productName'
+        });
+
+        res.status(200).json({ success: true, orders });
+    } catch (error) {
+        console.log("Error in getUserOrders", error);
+        return res.status(500).json({ success: false, message: "Server Error" });
+    }
+};
 
 
 
@@ -127,6 +128,7 @@ exports.deleteAddress = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+
 
 
 exports.editAddress = async (req, res) => {

@@ -551,19 +551,19 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% let subTotal = 0; %>
+									<% let subTotal = 50; %>
 									<% orders.orderItems.forEach(item => { %>
 										<% const total = item.variantPrice * item.quantity; %>
 										<% subTotal += total; %>
 										<tr>
-											<td><%= item.variantName %> x <%= item.quantity %></td>
-											<td><%= total.toFixed(2) %>/-</td>
+											<th><%= item.variantName %> x <%= item.quantity %></th>
+											<th><%= total.toFixed(2) %>/-</th>
 										</tr>
 									<% }); %>
 								</tbody>
 								<tfoot>
 									<tr>
-										<th>Sub Total</th>
+										<th>Sub Total + shipping charge</th>
 										<td><%= subTotal.toFixed(2) %>/-</td>
 									</tr>
 								</tfoot>
@@ -578,7 +578,11 @@
 								<hr />
 							</div>
 							<div class="por-dse">
-
+								<ul>
+									<li><span>Name</span><strong>:</strong> <%= address.name%></li>
+									<li><span>Mobile</span><strong>:</strong>(+91)<%= address.mobile %></li>
+									<li><span>Place</span><strong>:</strong> <%= address ? address.city : '' %></li>
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -589,11 +593,7 @@
 								<hr />
 							</div>
 							<div class="por-dse">
-								<ul>
-									<li><span>Name</span><strong>:</strong> <%= address ? address.name : '' %></li>
-									<li><span>Mobile</span><strong>:</strong> <%= address ? address.altPhone : '' %></li>
-									<li><span>Place</span><strong>:</strong> <%= address ? address.city : '' %></li>
-								</ul>
+								<p>Customer Datails : <%=address.name%> , <%=address.city%> , <%=address.pincode%> , <%=address.postOffice%> , <%=address.landMark%> , <%=address.state%></p>
 							</div>
 					</div>
 				</div>
