@@ -96,6 +96,11 @@ const orderSchema = new mongoose.Schema({
             required: true
         },
 
+        postoffice: {
+            type: String,
+            required: true
+        },
+
         // addressType: {
         //     type: String,
         //     required: true

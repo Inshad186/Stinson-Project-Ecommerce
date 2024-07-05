@@ -529,7 +529,12 @@
 							<ul>
 								<li>order no <span>m 2653257</span></li>
 								<li>Date <span><%= new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span></li>
-								<li>total<span>$ 3086.00</span></li>
+								<% let grandTotal = 50; %>
+								<% orders.orderItems.forEach(item => { %>
+									<% const total = item.variantPrice * item.quantity; %>
+									<% grandTotal += total; %>
+								<% }); %>
+								<li>total<span><%= grandTotal %>/-</span></li>
 								<li>payment method<span>Cash On Delivery</span></li>
 							</ul>
 						</div>
@@ -579,9 +584,9 @@
 							</div>
 							<div class="por-dse">
 								<ul>
-									<li><span>Name</span><strong>:</strong> <%= address.name%></li>
-									<li><span>Mobile</span><strong>:</strong>(+91)<%= address.mobile %></li>
-									<li><span>Place</span><strong>:</strong> <%= address ? address.city : '' %></li>
+									<li><span>Name</span><strong>:</strong> <%= orders.shippingAddress.name%></li>
+									<li><span>Mobile</span><strong>:</strong>(+91)<%= orders.shippingAddress.altPhone %></li>
+									<li><span>Place</span><strong>:</strong> <%= orders.shippingAddress.city %></li>
 								</ul>
 							</div>
 						</div>
@@ -593,7 +598,7 @@
 								<hr />
 							</div>
 							<div class="por-dse">
-								<p>Customer Datails : <%=address.name%> , <%=address.city%> , <%=address.pincode%> , <%=address.postOffice%> , <%=address.landMark%> , <%=address.state%></p>
+								<h6>Customer Datails : <%=orders.shippingAddress.name %> , <%=orders.shippingAddress.city%> , <%=orders.shippingAddress.pinCode%> , <%=orders.shippingAddress.postoffice%> , <%=orders.shippingAddress.landmark%> , <%=orders.shippingAddress.state%></h6>
 							</div>
 					</div>
 				</div>

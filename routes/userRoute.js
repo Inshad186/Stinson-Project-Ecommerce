@@ -52,6 +52,7 @@ router.get("/checkOut", userAuth.isAuthenticated , loadCart.viewCheckOut)
 
 router.get("/order",userAuth.isAuthenticated , loadOrder.viewOrder)
 router.post('/place-order',userAuth.isAuthenticated , loadOrder.placeOrder)
+router.post("/payment-success", userAuth.isAuthenticated ,loadOrder.verifyPayment)
 
 
 module.exports = router;

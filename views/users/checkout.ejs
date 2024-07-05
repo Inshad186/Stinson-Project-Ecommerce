@@ -1,10 +1,11 @@
 <%- include("../layouts/header.ejs") %>
-    <body>
-        <!--[if lt IE 8]>
+
+	<body>
+		<!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- header section start -->
+		<!-- header section start -->
 		<header class="pages-header">
 			<div class="header-top">
 				<div class="container">
@@ -12,8 +13,12 @@
 						<div class="col-md-6">
 							<div class="left-header clearfix">
 								<ul>
-									<li><p><i class="pe-7s-call"></i>(+880) 1910 000251</p></li>
-									<li><p><i class="pe-7s-clock"></i>Mon-fri : 9:00-19:00</p></li>
+									<li>
+										<p><i class="pe-7s-call"></i>(+880) 1910 000251</p>
+									</li>
+									<li>
+										<p><i class="pe-7s-clock"></i>Mon-fri : 9:00-19:00</p>
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -22,7 +27,8 @@
 								<ul>
 									<li><i class="pe-7s-search"></i>
 										<form method="get" id="searchform" action="#">
-											<input type="text" value="" name="s" id="ws" placeholder="Search product..." />
+											<input type="text" value="" name="s" id="ws"
+												placeholder="Search product..." />
 											<button type="submit"><i class="pe-7s-search"></i></button>
 										</form>
 									</li>
@@ -67,7 +73,8 @@
 											</li> -->
 											<li>
 												<div class="goto text-center">
-													<a href="/cart"><strong>go to cart &nbsp;<i class="pe-7s-angle-right"></i></strong></a>
+													<a href="/cart"><strong>go to cart &nbsp;<i
+																class="pe-7s-angle-right"></i></strong></a>
 												</div>
 											</li>
 											<li class="checkout-btn text-center">
@@ -102,11 +109,11 @@
 										<li><a href="#">Shop</a>
 											<ul>
 												<li><a href="/shopList">All Product</a></li>
-												<li><a href="/shopList">New Product</a></li>				
+												<li><a href="/shopList">New Product</a></li>
 											</ul>
 										</li>
 										<li><a href="/userProfile">My Account</a>
-										<!-- <li><a href="product-grid-left.html">Shop</a>
+											<!-- <li><a href="product-grid-left.html">Shop</a>
 											<div class="magamenu">
 												<ul>
 													<li class="right-mega colmd8 active"><a href="#">all products</a>
@@ -272,7 +279,7 @@
 												</ul>
 											</div>
 										</li> -->
-										<!-- <li><a href="shop-style-1.html">Lookbook</a></li> -->
+											<!-- <li><a href="shop-style-1.html">Lookbook</a></li> -->
 										<li><a href="blog-style-1.html">Blog</a>
 											<ul>
 												<li><a href="single-blog.html">Single Blog</a></li>
@@ -499,8 +506,8 @@
 				</div>
 			</div>
 		</header>
-        <!-- header section end -->
-        <!-- pages-title-start -->
+		<!-- header section end -->
+		<!-- pages-title-start -->
 		<div class="pages-title section-padding">
 			<div class="container">
 				<div class="row">
@@ -521,99 +528,108 @@
 		<section class="pages checkout login-page section-padding-top">
 			<div class="container">
 				<div class="row">
-					
-<!-- checkout.ejs -->
 
-						<div class="col-md-6">
-							<div class="login-text billing new-customer">
-								<div class="log-title">
-									<h3><strong>Shipping Address</strong></h3>
-									<hr />
-								</div>
-								<div class="custom-input">
-									<form action="#">
-										<% addresses.forEach(address => { %>
-											<label>
-												<input type="radio" name="selectedAddress" value="<%= address._id %>" <%= (selectedAddressId && selectedAddressId.toString() === address._id.toString()) ? 'checked' : '' %> />
-												<%= address.name %> - <%= address.city %>, <%= address.pincode %>
-											</label><br>
-											<!-- Display address details -->
-											<div class="address-details" id="address_<%= address._id %>">
-												<input type="text" name="name" placeholder="Name" value="<%= address.name %>" disabled />
-												<input type="text" name="number" placeholder="Phone Number" value="<%= address.mobile %>" disabled />
-												<input type="text" name="city" placeholder="City" value="<%= address.city %>" disabled />
-												<input type="text" name="pincode" placeholder="Pincode" value="<%= address.pincode %>" disabled />
-												<input type="text" name="postoffice" placeholder="Post Office" value="<%= address.postOffice %>" disabled />
-												<input type="text" name="landMark" placeholder="Landmark" value="<%= address.landMark %>" disabled />
-												
-											</div>
-										<% }); %>
-									</form>
-								</div>
+					<!-- checkout.ejs -->
+
+					<div class="col-md-6">
+						<div class="login-text billing new-customer">
+							<div class="log-title">
+								<h3><strong>Shipping Address</strong></h3>
+								<hr />
 							</div>
+							<div class="custom-input">
+								<form action="#">
+									<% addresses.forEach(address=> { %>
+										<label>
+											<input type="radio" name="selectedAddress" value="<%= address._id %>" />
+											<%= address.name %> - <%= address.city %>, <%= address.pincode %>
+										</label><br>
+										<!-- Display address details -->
+										<div class="address-details" id="address_<%= address._id %>">
+											<input type="text" name="name" placeholder="Name"
+												value="<%= address.name %>" disabled />
+											<input type="text" name="number" placeholder="Phone Number"
+												value="<%= address.mobile %>" disabled />
+											<input type="text" name="city" placeholder="City"
+												value="<%= address.city %>" disabled />
+											<input type="text" name="pincode" placeholder="Pincode"
+												value="<%= address.pincode %>" disabled />
+											<input type="text" name="postoffice" placeholder="Post Office"
+												value="<%= address.postOffice %>" disabled />
+											<input type="text" name="landMark" placeholder="Landmark"
+												value="<%= address.landMark %>" disabled />
 
-
-							<!-- Other shipping address section -->
-							<div class="login-text new-customer">
-								<!-- <div class="log-title">
-									<h3><strong>Shipping Details</strong></h3>
-									<hr />
-								</div> -->
-								<button id="toggleShippingAddress" class="btn btn-primary">Ship to a different address</button>
-								<div id="shippingAddressSection" class="custom-input" style="display: none; margin-top: 20px;">
-									<form action="#">
-										<input type="text" name="ship_name" placeholder="Name" />
-										<input type="text" name="ship_number" placeholder="Phone Number" />
-										<div class="custom-select">
-											<select class="form-control">
-												<option> Town / City</option>
-												<option> Thalassery </option>
-												<option> Ramanatukara </option>
-												<option> Kannur </option>
-												<option> Vadakara </option>
-												<option> Kuthuparamba </option>
-												<option> Farook </option>
-											</select>
 										</div>
-										<input type="text" name="ship_pincode" placeholder="Pincode" />
-										<input type="text" name="ship_postoffice" placeholder="Post Office" />
-										<input type="text" name="ship_landMark" placeholder="Landmark" />
-										<div class="review-mess">
-											<textarea rows="4" placeholder="Order notes here" name="ship_message"></textarea>
-										</div>
-									</form>
-								</div>
+										<% }); %>
+								</form>
 							</div>
 						</div>
 
-						<script>
-							document.addEventListener('DOMContentLoaded', function() {
-								// Function to show/hide address details based on radio button selection
-								const addresses = document.querySelectorAll('input[name="selectedAddress"]');
-								addresses.forEach(function(address) {
-									address.addEventListener('change', function() {
-										const addressId = this.value;
-										// Hide all address details
-										document.querySelectorAll('.address-details').forEach(function(el) {
-											el.style.display = 'none';
-										});
-										// Show selected address details
-										document.getElementById('address_' + addressId).style.display = 'block';
+
+						<!-- Other shipping address section -->
+						<div class="login-text new-customer">
+							<!-- <div class="log-title">
+									<h3><strong>Shipping Details</strong></h3>
+									<hr />
+								</div> -->
+							<button id="toggleShippingAddress" class="btn btn-primary">Ship to a different
+								address</button>
+							<div id="shippingAddressSection" class="custom-input"
+								style="display: none; margin-top: 20px;">
+								<form action="#">
+									<input type="text" name="ship_name" placeholder="Name" />
+									<input type="text" name="ship_number" placeholder="Phone Number" />
+									<div class="custom-select">
+										<select class="form-control">
+											<option> Town / City</option>
+											<option> Thalassery </option>
+											<option> Ramanatukara </option>
+											<option> Kannur </option>
+											<option> Vadakara </option>
+											<option> Kuthuparamba </option>
+											<option> Farook </option>
+										</select>
+									</div>
+									<input type="text" name="ship_pincode" placeholder="Pincode" />
+									<input type="text" name="ship_postoffice" placeholder="Post Office" />
+									<input type="text" name="ship_landMark" placeholder="Landmark" />
+									<div class="review-mess">
+										<textarea rows="4" placeholder="Order notes here"
+											name="ship_message"></textarea>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<script>
+						document.addEventListener('DOMContentLoaded', function () {
+							// Function to show/hide address details based on radio button selection
+							const addresses = document.querySelectorAll('input[name="selectedAddress"]');
+							addresses.forEach(function (address) {
+								address.addEventListener('change', function () {
+									const addressId = this.value;
+									// Hide all address details
+									document.querySelectorAll('.address-details').forEach(function (el) {
+										el.style.display = 'none';
 									});
-								});
-						
-								// Toggle shipping address section
-								document.getElementById('toggleShippingAddress').addEventListener('click', function() {
-									var shippingAddressSection = document.getElementById('shippingAddressSection');
-									if (shippingAddressSection.style.display === 'none' || shippingAddressSection.style.display === '') {
-										shippingAddressSection.style.display = 'block';
-									} else {
-										shippingAddressSection.style.display = 'none';
-									}
+									// Show selected address details
+									document.getElementById('address_' + addressId).style.display = 'block';
 								});
 							});
-						</script>
-						
+
+							// Toggle shipping address section
+							document.getElementById('toggleShippingAddress').addEventListener('click', function () {
+								var shippingAddressSection = document.getElementById('shippingAddressSection');
+								if (shippingAddressSection.style.display === 'none' || shippingAddressSection.style.display === '') {
+									shippingAddressSection.style.display = 'block';
+								} else {
+									shippingAddressSection.style.display = 'none';
+								}
+							});
+						});
+					</script>
+
 
 					<div class="col-md-6">
 						<div class="log-title">
@@ -629,67 +645,43 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% let subTotal = 50; %>
-									<% cart.products.forEach(product => { %>
-										<% const total = product.productVariantId.salePrice * product.quantity; %>
-										<% subTotal += total; %>
-										<tr>
-											<th><%= product.productVariantId.productName %> x <%= product.quantity %>
-												<span>Color: <%= product.productVariantId.colour %> & Size: <%= product.size %></span>
-											</th>
-											<td><%= total.toFixed(2) %>/-</td>
-										</tr>
-									<% }); %>
+									<% let subTotal=50; %>
+										<% cart.products.forEach(product=> { %>
+											<% const total=product.productVariantId.salePrice * product.quantity; %>
+												<% subTotal +=total; %>
+													<tr>
+														<th>
+															<%= product.productVariantId.productName %> x <%=
+																	product.quantity %>
+																	<span>Color: <%= product.productVariantId.colour %>
+																			& Size: <%= product.size %></span>
+														</th>
+														<td>
+															<%= total.toFixed(2) %>/-
+														</td>
+													</tr>
+													<% }); %>
 
 								</tbody>
 								<tfoot>
 									<tr>
 										<th>Subtotal</th>
-										<td><%= subTotal.toFixed(2) %>/-</td>
+										<td>
+											<%= subTotal.toFixed(2) %>/-
+										</td>
 									</tr>
 								</tfoot>
 							</table>
-							
+
 							<ul id="accordion" class="panel-group clearfix">
-								<!-- <li class="panel">
-									<div data-bs-toggle="collapse" data-bs-target="#collapse1">
-										<label>
-											<input type="radio" name="rememberme" value="forever" checked="">
-											direct bank transfer
-										</label>
-									</div>
-									<div class="panel-collapse collapse show" id="collapse1" data-bs-parent="#accordion">
-										<div class="prayment-dsc">
-											<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-										</div>
-									</div>
-								</li> -->
-								<!-- <li class="panel panelimg">
-									<div data-bs-toggle="collapse" data-bs-target="#collapse2">
-										<label>
-											<input type="radio" name="rememberme" value="forever">
-											cheque payment
-										</label>
-									</div>
-									<div class="paypal-dsc panel-collapse collapse" id="collapse2" data-bs-parent="#accordion">
-										<div class="prayment-dsc">
-											<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-										</div>
-									</div>
-								</li> -->
-								<!-- <li class="panel panelimg">
+								<li class="panel panelimg">
 									<div data-bs-toggle="collapse" data-bs-target="#collapse3">
 										<label>
-											<input type="radio" name="rememberme" value="forever">
-											paypal
+											<input type="radio" name="paymentMethod" value="forever">
+											Online Payments
 										</label>
 									</div>
-									<div id="collapse3" class="paypal-dsc panel-collapse collapse" data-bs-parent="#accordion">
-										<div class="prayment-dsc">
-											<p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-										</div>
-									</div>
-								</li> -->
+								</li>
 								<li class="panel panelimg">
 									<div data-bs-toggle="collapse" data-bs-target="#collapseCOD">
 										<label>
@@ -697,14 +689,9 @@
 											Cash on Delivery
 										</label>
 									</div>
-									<div id="collapseCOD" class="cod-dsc panel-collapse collapse" data-bs-parent="#accordion">
-										<div class="prayment-dsc">
-											<p>Pay with cash upon delivery.</p>
-										</div>
-									</div>
 								</li>
 							</ul>
-							
+
 							<div class="submit-text place-order floatright">
 								<a id="placeOrderBtn" href="#">Place Order</a>
 							</div>
@@ -713,15 +700,158 @@
 								<input type="hidden" name="paymentMethod" value="Cash on Delivery (COD)">
 							</form>
 
+							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+							<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+							<script>
+								document.getElementById('placeOrderBtn').addEventListener('click', function (event) {
+									event.preventDefault();
+								
+									// Check if any address is selected
+									const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
+									if (!selectedAddress) {
+										Swal.fire({
+											icon: 'error',
+											title: 'Oops...',
+											text: 'Please select a shipping address!',
+										});
+										return;
+									}
+								
+									// Check selected payment method
+									const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+									if (!selectedPaymentMethod) {
+										Swal.fire({
+											icon: 'error',
+											title: 'Oops...',
+											text: 'Please select a payment method!',
+										});
+										return;
+									}
+								
+									const addressId = selectedAddress.value;
+									const paymentMethod = selectedPaymentMethod.value;
+								
+									// If COD is selected, proceed with COD order
+									Swal.fire({
+										title: 'Are you sure?',
+										text: 'Do you want to confirm your order?',
+										icon: 'warning',
+										showCancelButton: true,
+										confirmButtonText: 'Yes, place order!',
+										cancelButtonText: 'No, cancel',
+										reverseButtons: true
+									}).then((result) => {
+										if (result.isConfirmed) {
+											// After confirmation, send the address ID to the backend using fetch
+											fetch('/place-order', {
+												method: 'POST',
+												headers: {
+													'Content-Type': 'application/json',
+												},
+												body: JSON.stringify({
+													addressId: addressId,
+													paymentMethod: paymentMethod
+												})
+											})
+											.then(response => response.json())
+											.then(data => {
+												if (data.success) {
+													if (paymentMethod === 'Cash on Delivery (COD)') {
+														window.location.href = `/order?orderId=${data.orderId}`;
+													} else {
+														var options = {
+															"key": "rzp_test_DWA5ns4k1ISYlu",
+															"amount": data.grandTotal * 100,
+															"currency": "INR",
+															"name": "Acme Corp",
+															"order_id": data.razorpayOrderId,
+								
+															"handler": async function (response) {
+																const paymentData = {
+																	razorpay_order_id: response.razorpay_order_id,
+																	razorpay_payment_id: response.razorpay_payment_id,
+																	razorpay_signature: response.razorpay_signature,
+																	order_id: data.orderId
+																};
+								
+																// Verify payment
+																try {
+																	const res = await fetch('/payment-success', {
+																		method: 'POST',
+																		headers: {
+																			'Content-Type': 'application/json'
+																		},
+																		body: JSON.stringify(paymentData)
+																	});
+								
+																	const verifyData = await res.json();
+								
+																	if (verifyData.success) {
+																		Swal.fire({
+																			text: verifyData.success || "Success",
+																			icon: "success"
+																		}).then(() => {
+																			window.location.href = `/order?orderId=${data.order_id}`;
+																		});
+																	} else if (verifyData.error) {
+																		Swal.fire({
+																			text: verifyData.error || "Failed",
+																			icon: "error"
+																		});
+																	}
+																} catch (error) {
+																	Swal.fire({
+																		text: "An error occurred during payment verification.",
+																		icon: "error"
+																	});
+																}
+															},
+															prefill: {
+																"name": "Gaurav Kumar", // Customer's name
+																"email": "gaurav.kumar@example.com",
+																"contact": "9000090000" // Customer's phone number
+															},
+															theme: {
+																color: '#1462e0'
+															},
+															modal: {
+																ondismiss: function () {
+																	Swal.fire({
+																		text: "Payment failed or was dismissed. Please try again.",
+																		icon: "error"
+																	}).then(() => {
+																		window.location.href = '/order';
+																	});
+																}
+															}
+														};
+														const rzp1 = new Razorpay(options);
+														rzp1.open();
+													}
+												} else {
+													Swal.fire({
+														text: "Order placement failed",
+														icon: "error"
+													});
+												}
+											});
+										}
+									});
+								});
+								</script>
+								
+
+
 						</div>
 					</div>
 
-					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-					<script>
-						document.getElementById('placeOrderBtn').addEventListener('click', function(event) {
+					<!-- <script>
+						document.getElementById('placeOrderBtn').addEventListener('click', function (event) {
 							event.preventDefault();
-						
+
 							// Check if any address is selected
 							const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
 							if (!selectedAddress) {
@@ -732,7 +862,7 @@
 								});
 								return;
 							}
-						
+
 							// If address is selected, confirm order
 							Swal.fire({
 								title: 'Are you sure?',
@@ -747,7 +877,7 @@
 									// After confirmation, send the address ID to the backend using fetch
 									const addressId = selectedAddress.value;
 									console.log("Selected Address ID:", addressId);
-					
+
 									fetch('/place-order', {
 										method: 'POST',
 										headers: {
@@ -758,32 +888,32 @@
 											paymentMethod: 'Cash on Delivery (COD)'
 										})
 									})
-									.then(response => response.json())
-									.then(data => {
-										if (data.success) {
-											Swal.fire({
-												title: 'Your order is confirmed',
-												text: 'Thank you for your purchase!',
-												icon: 'success'
-											}).then(() => {
-												window.location.href = `/order?orderId=${data.orderId}`;
-											});
-										} else {
+										.then(response => response.json())
+										.then(data => {
+											if (data.success) {
+												Swal.fire({
+													title: 'Your order is confirmed',
+													text: 'Thank you for your purchase!',
+													icon: 'success'
+												}).then(() => {
+													window.location.href = `/order?orderId=${data.orderId}`;
+												});
+											} else {
+												Swal.fire({
+													icon: 'error',
+													title: 'Error',
+													text: 'There was a problem placing your order. Please try again.',
+												});
+											}
+										})
+										.catch(error => {
 											Swal.fire({
 												icon: 'error',
 												title: 'Error',
 												text: 'There was a problem placing your order. Please try again.',
 											});
-										}
-									})
-									.catch(error => {
-										Swal.fire({
-											icon: 'error',
-											title: 'Error',
-											text: 'There was a problem placing your order. Please try again.',
+											console.error('Error placing order:', error);
 										});
-										console.error('Error placing order:', error);
-									});
 								} else {
 									Swal.fire(
 										'Cancelled',
@@ -793,11 +923,11 @@
 								}
 							});
 						});
-					</script>
-					
-					
-					
-					
+					</script> -->
+
+
+
+
 
 
 
@@ -805,7 +935,7 @@
 			</div>
 		</section>
 		<!-- Checkout content section end -->
-        <!-- footer section start -->
+		<!-- footer section start -->
 		<footer class="section-padding-top">
 			<!-- brand logo area start -->
 			<div class="brand-logo">
@@ -867,21 +997,24 @@
 							<div class="single-service">
 								<i class="pe-7s-plane"></i>
 								<h4>Free Shipping</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+									incididunt ut labore et dolore magna aliqua.</p>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="single-service">
 								<i class="pe-7s-headphones"></i>
 								<h4>Customer Support</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+									incididunt ut labore et dolore magna aliqua.</p>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="single-service">
 								<i class="pe-7s-refresh"></i>
 								<h4>15 days money back</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+									incididunt ut labore et dolore magna aliqua.</p>
 							</div>
 						</div>
 					</div>
@@ -897,7 +1030,7 @@
 								<div class="single-text">
 									<div class="footer-title">
 										<h4>Contact us</h4>
-										<hr class="dubble-border"/>
+										<hr class="dubble-border" />
 									</div>
 									<div class="footer-text">
 										<ul>
@@ -924,7 +1057,7 @@
 								<div class="single-text">
 									<div class="footer-title">
 										<h4>my account</h4>
-										<hr class="dubble-border"/>
+										<hr class="dubble-border" />
 									</div>
 									<div class="footer-menu">
 										<ul>
@@ -942,7 +1075,7 @@
 								<div class="single-text">
 									<div class="footer-title">
 										<h4>customer service</h4>
-										<hr class="dubble-border"/>
+										<hr class="dubble-border" />
 									</div>
 									<div class="footer-menu">
 										<ul>
@@ -960,10 +1093,11 @@
 								<div class="single-text">
 									<div class="footer-title">
 										<h4>NEWSLETTER</h4>
-										<hr class="dubble-border"/>
+										<hr class="dubble-border" />
 									</div>
 									<div class="footer-text">
-										<p>Lorem ipsum dolor sit amet, consectetures do adipisicing elit, sed do eiusmod tempores incididunt ut labore</p>
+										<p>Lorem ipsum dolor sit amet, consectetures do adipisicing elit, sed do eiusmod
+											tempores incididunt ut labore</p>
 										<form action="#">
 											<input type="text" name="email" placeholder="Enter your mail" />
 											<input type="submit" value="submit" />
@@ -973,7 +1107,7 @@
 							</div>
 						</div>
 					</div>
-					<hr class="dubble-border"/>
+					<hr class="dubble-border" />
 				</div>
 				<div class="social-media">
 					<div class="container">
@@ -1011,39 +1145,40 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-12 text-center">
-							<p>&copy; 2023 Stinson. All Rights Reserved. Developer by <a href="https://themeforest.net/user/codecarnival/portfolio">Codecarnival</a></p>
+							<p>&copy; 2023 Stinson. All Rights Reserved. Developer by <a
+									href="https://themeforest.net/user/codecarnival/portfolio">Codecarnival</a></p>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- footer-bottom area end -->
 		</footer>
-        <!-- footer section end -->
-        
+		<!-- footer section end -->
+
 		<!-- all js here -->
 		<!-- jquery latest version -->
-        <script src="js/vendor/jquery-3.6.0.min.js"></script>
-        <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+		<script src="js/vendor/jquery-3.6.0.min.js"></script>
+		<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
 		<!-- bootstrap js -->
-        <script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
 		<!-- owl.carousel js -->
-        <script src="js/owl.carousel.min.js"></script>
+		<script src="js/owl.carousel.min.js"></script>
 		<!-- meanmenu js -->
-        <script src="js/jquery.meanmenu.js"></script>
+		<script src="js/jquery.meanmenu.js"></script>
 		<!-- countdown JS -->
-        <script src="js/countdown.js"></script>
+		<script src="js/countdown.js"></script>
 		<!-- nivo.slider JS -->
-        <script src="js/jquery.nivo.slider.pack.js"></script>
+		<script src="js/jquery.nivo.slider.pack.js"></script>
 		<!-- simpleLens JS -->
-        <script src="js/jquery.simpleLens.min.js"></script>
+		<script src="js/jquery.simpleLens.min.js"></script>
 		<!-- jquery-ui js -->
-        <script src="js/jquery-ui.min.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
 		<!-- sticky js -->
-        <script src="js/sticky.js"></script>
+		<script src="js/sticky.js"></script>
 		<!-- plugins js -->
-        <script src="js/plugins.js"></script>
+		<script src="js/plugins.js"></script>
 		<!-- main js -->
-        <script src="js/main.js"></script>
-    </body>
+		<script src="js/main.js"></script>
+	</body>
 
 	<%- include("../layouts/footer.ejs") %>

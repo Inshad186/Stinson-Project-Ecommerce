@@ -9,6 +9,7 @@ const loadCategory = require('../controllers/admin/category')
 const varient = require("../controllers/admin/varients")
 const adminAuth = require("../middleware/adminMiddleware")
 const loadOrder = require("../controllers/admin/order")
+const loadCoupon = require("../controllers/admin/coupons")
 
 
 const generateStorage = require("../utils/multer")
@@ -52,5 +53,12 @@ router.post("/deleteVariant",varient.deleteVariant)
 router.get("/productDetail",loadProduct.viewProductDetails)
 
 router.get("/order",loadOrder.loadOrder)
+
+router.get("/coupons",loadCoupon.couponsList)
+router.get("/addCoupon", loadCoupon.viewAddCoupons)
+router.post('/addCoupon', loadCoupon.addCoupon)
+
+router.get("/editCoupon", loadCoupon.viewEditCoupon )
+router.post("/editCoupon", loadCoupon.editCoupon)
 
 module.exports = router;

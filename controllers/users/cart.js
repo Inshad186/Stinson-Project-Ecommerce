@@ -184,7 +184,7 @@ exports.viewCheckOut = async (req, res) => {
             return res.status(400).redirect('/cart');
         }
 
-        res.render("users/checkout", { cart: cartItem, addresses, selectedAddressId: req.query.addressId });
+        res.render("users/checkout", { cart: cartItem, addresses });
     } catch (error) {
         console.log("error in viewCheckOut", error);
         res.status(500).send("Server Error");

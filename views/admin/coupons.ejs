@@ -80,83 +80,83 @@
             </ul>
           </li>
           <li class="menu-label">UI Elements</li>
-          <li>
-            <a href="javascript:;" class="has-arrow">
-              <div class="parent-icon">
-                <ion-icon name="briefcase-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Users</div>
-            </a>
-            <ul>
-              <li><a href="/admin/userList">
-                  <ion-icon name="ellipse-outline"></ion-icon>User List
-                </a>
-              </li>
-            </ul>
-          </li>
+        <li>
+          <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Users</div>
+          </a>
+          <ul>
+          <li><a href="/admin/userList">
+            <ion-icon name="ellipse-outline"></ion-icon>User List
+          </a>
+        </li>
+      </ul>
+        </li>
 
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="gift-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Categories</div>
-            </a>
+        <li>
+          <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon">
+              <ion-icon name="gift-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Categories</div>
+          </a>
             <ul>
               <li><a href="/admin/categoryList">
-                  <ion-icon name="ellipse-outline"></ion-icon>Categories
+                <ion-icon name="ellipse-outline"></ion-icon>Categories
               </li>
               <li><a href="/admin/addCategory">
-                  <ion-icon name="ellipse-outline"></ion-icon>Add Category
+                <ion-icon name="ellipse-outline"></ion-icon>Add Category
               </li>
             </ul>
-            </a>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="leaf-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Products</div>
-            </a>
+          </a>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon">
+              <ion-icon name="leaf-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Products</div>
+          </a>
             <ul>
               <li><a href="/admin/productList">
-                  <ion-icon name="ellipse-outline"></ion-icon>Products
+                <ion-icon name="ellipse-outline"></ion-icon>Products
               </li>
               <li><a href="/admin/addProduct">
-                  <ion-icon name="ellipse-outline"></ion-icon>Add Product
+                <ion-icon name="ellipse-outline"></ion-icon>Add Product
               </li>
             </ul>
-            </a>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="gift-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Orders</div>
-            </a>
-              <ul>
-                <li><a href="/admin/order">
-                  <ion-icon name="ellipse-outline"></ion-icon>Orders List
-                </li>
-              </ul>
-            </a>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="gift-outline"></ion-icon>
-              </div>
-              <div class="menu-title">Coupons</div>
-            </a>
-              <ul>
-                <li><a href="/admin/coupons">
-                  <ion-icon name="ellipse-outline"></ion-icon>Coupon List
-                </li>
-              </ul>
-            </a>
-          </li>
+          </a>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon">
+              <ion-icon name="gift-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Orders</div>
+          </a>
+            <ul>
+              <li><a href="/admin/order">
+                <ion-icon name="ellipse-outline"></ion-icon>Orders List
+              </li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon">
+              <ion-icon name="gift-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Coupons</div>
+          </a>
+            <ul>
+              <li><a href="/admin/coupons">
+                <ion-icon name="ellipse-outline"></ion-icon>Coupon List
+              </li>
+            </ul>
+          </a>
+        </li>
 
           <!-- <li class="menu-label">Forms & Tables</li>
           <li>
@@ -777,16 +777,14 @@
 
 
 
-
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
           <div class="card radius-10 w-100">
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <h6 class="mb-0">Recent Details</h6>
                 <div class="fs-5 ms-auto dropdown">
-                  <div class="dropdown-toggle dropdown-toggle-nocaret cursor-pointer" data-bs-toggle="dropdown"><i
-                      class="bi bi-three-dots"></i></div>
+                  <div class="dropdown-toggle dropdown-toggle-nocaret cursor-pointer" data-bs-toggle="dropdown">
+                    <i class="bi bi-three-dots"></i>
+                  </div>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -799,75 +797,81 @@
               </div>
               <div class="input-group mb-3 mt-2">
                 <input type="text" id="search-input" class="form-control" placeholder="Search...">
-                <button class="btn btn-primary" type="button" onclick="searchTable()">Search</button>
+                <button class="btn btn-primary" type="button">Search</button>
               </div>
               <div class="table-responsive mt-2">
                 <table class="table align-middle mb-0">
                   <thead class="table-light">
                     <tr>
-                      <th>CATEGORY</th>
-                      <th>ADDED DATE</th>
-                      <th>VERIFIED</th>
-                      <th>STATUS</th>
+                      <th>NAME</th>
+                      <th>COUPON CODE</th>
+                      <th>DIS PERCENTAGE</th>
+                      <th>MIN PURCHASEAMOUNT</th>
+                      <th>MAX REEDEMAMOUNT</th>
+                      <th>EXPIRY DATE</th>
                       <th>ACTION</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <% for(let i=categoryList.length-1 ; i>=0 ; i--){ %>
+                  <tbody id="user-table-body">
+                    <% for(let i=couponList.length-1 ; i>=0 ; i--){ %>
                       <tr>
                         <td>
-                          <img src="<%- categoryList[i].image %>" alt="Category Image"
-                            style="width: 50px; height: 50px;">
-                          <%= categoryList[i].name %>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= new Date(categoryList[i].createdAt).toLocaleString('en-US', { dateStyle: 'medium' ,
-                              timeStyle: 'short' }) %>
+                          <h6 class="product-name mb-1">
+                           <%= couponList[i].couponName %>
                           </h6>
                         </td>
                         <td>
-                          <h6>VERIFIED
-                        </td>
-                        </h6>
-                        <td id="<%= categoryList[i]._id %>">
-                          <%= categoryList[i].is_Delete ? 'UNLISTED' : 'LISTED' %>
+                          <h6>
+                            <%= couponList[i].couponCode %>
+                          </h6>            
                         </td>
                         <td>
-                          <a href="/admin/editCategory/<%= categoryList[i]._id %>"><span class="badge bg-primary"
-                              style="cursor: pointer;">EDIT</span></a>
-                          <span class="badge bg-<%= categoryList[i].is_Delete ? 'success' : 'danger' %>"
-                            onclick="toggleStatus('<%= categoryList[i]._id %>', this , document.getElementById('<%= categoryList[i]._id %>'))">
-                            <%= categoryList[i].is_Delete ? 'LIST' : 'UNLIST' %>
+                          <h6> 
+                            <%= couponList[i].discountPercentage %>
+                          </h6>
+                        </td>
+                        <td>
+                          <h6>
+                            <%= couponList[i].minPurchaseAmount %>
+                          </h6>            
+                        </td>
+                        <td>
+                          <h6>
+                            <%= couponList[i].maxRedeemAmount %>
+                          </h6>            
+                        </td>
+                        <td>
+                          <h6>
+                            <%= couponList[i].expiryDate.toLocaleDateString('en-US', {
+                              weekday: 'short' , month: 'short' , day: 'numeric' , year:'numeric'})%>
+                          </h6>            
+                        </td>
+                        <td>
+                          <a href="/admin/editCoupon?couponID=<%= couponList[i]._id %>"><span class="badge bg-primary" style="cursor: pointer;">EDIT</span></a>
+                          <span class="badge bg-<%= couponList[i].listed ? 'success' : 'danger' %>"
+                            onclick="toggleStatus('<%= couponList[i]._id %>', this)">
+                            <%= couponList[i].listed ? 'LIST' : 'UNLIST' %>
                           </span>
                         </td>
-
                         <td>
                           <div class="d-flex align-items-center gap-3 fs-6">
-                            <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="View detail"
-                              aria-label="Views">
+                            <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views">
                               <ion-icon name="eye-outline"></ion-icon>
                             </a>
-                            <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit">
+                            <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit">
                               <ion-icon name="pencil-outline"></ion-icon>
                             </a>
-                            <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete">
+                            <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete">
                               <ion-icon name="trash-outline"></ion-icon>
                             </a>
                           </div>
-                          <br>
-                          <br>
-                          <br>
+                          <br><br><br>
                         </td>
                       </tr>
                       <% } %>
                   </tbody>
                 </table>
               </div>
-              <% if(showPagination >5) { %>
               <div class="d-flex justify-content-between align-items-center mt-2">
                 <div>
                   <button class="btn btn-secondary" onclick="prevPage()">Previous</button>
@@ -877,81 +881,21 @@
                   <span>Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
                 </div>
               </div>
-              <% } %>
             </div>
           </div>
+          
+          <div style="text-align: center;">
+            <button
+              style="background-color: transparent; border: none; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s, transform 0.3s;">
+              <a href="/admin/addCoupon" class="btn btn-primary"><i class="bx bxs-cart-add"></i>Add Coupon</a>
+            </button>
+          </div>
 
-          <script>
-            let currentPage = 1;
-            const itemsPerPage = 5; // Number of items to display per page
-            let originalRows = []; // Store the original unfiltered rows
           
-            function paginateTable(filteredRows = null) {
-              const rows = filteredRows || originalRows;
-              const totalItems = rows.length;
-              const totalPages = Math.ceil(totalItems / itemsPerPage);
-          
-              // Update page info
-              document.getElementById('current-page').innerText = currentPage;
-              document.getElementById('total-pages').innerText = totalPages;
-          
-              // Hide all rows
-              originalRows.forEach(row => row.style.display = 'none');
-          
-              // Show rows for the current page
-              const start = (currentPage - 1) * itemsPerPage;
-              const end = start + itemsPerPage;
-          
-              for (let i = start; i < end && i < totalItems; i++) {
-                rows[i].style.display = '';
-              }
-          
-              // Disable previous button on first page
-              document.querySelector('.btn.btn-secondary[onclick="prevPage()"]').disabled = currentPage === 1;
-              // Disable next button on last page
-              document.querySelector('.btn.btn-secondary[onclick="nextPage()"]').disabled = currentPage === totalPages;
-            }
-          
-            function prevPage() {
-              if (currentPage > 1) {
-                currentPage--;
-                paginateTable();
-              }
-            }
-          
-            function nextPage() {
-              const totalPages = Math.ceil(originalRows.length / itemsPerPage);
-              if (currentPage < totalPages) {
-                currentPage++;
-                paginateTable();
-              }
-            }
-          
-            function searchTable() {
-              const searchValue = document.getElementById('search-input').value.toLowerCase();
-              const rows = Array.from(originalRows);
-          
-              const filteredRows = rows.filter(row => {
-                const cells = Array.from(row.querySelectorAll('td'));
-                return cells.some(cell => cell.innerText.toLowerCase().includes(searchValue));
-              });
-          
-              currentPage = 1;
-              paginateTable(filteredRows);
-            }
-          
-            // Initialize pagination on page load
-            document.addEventListener('DOMContentLoaded', () => {
-              originalRows = Array.from(document.querySelectorAll('tbody tr'));
-              paginateTable();
-            });
-          </script>
+          <!-- <script>
+            async function toggleStatus(couponId, button, statusElement) {
 
-
-          <script>
-            async function toggleStatus(categoryId, button, statusElement) {
-
-              console.log(categoryId)
+              console.log(couponId)
 
               try {
                 const response = await fetch("/admin/deleteCategory", {
@@ -960,7 +904,7 @@
                     "Content-Type": "application/json"
                   },
                   body: JSON.stringify({
-                    categoryId: categoryId,
+                    couponId: couponId,
                   })
                 });
 
@@ -997,16 +941,11 @@
                 });
               }
             }
-          </script>
+          </script> -->
 
+          
+          
 
-
-          <div style="text-align: center;">
-            <button
-              style="background-color: transparent; border: none; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s, transform 0.3s;">
-              <a href="/admin/addCategory" class="btn btn-primary"><i class="bx bxs-cart-add"></i>Add Category</a>
-            </button>
-          </div>
 
 
           <!--start footer-->
