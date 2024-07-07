@@ -12,7 +12,6 @@ const loadCart = require("../controllers/users/cart")
 const loadOrder = require("../controllers/users/order")
 
 
-
 router.get("/", loadHome);
 
 router.get("/signup", userAuth.isUnAuthenticated, loadSignup.loadSignup);
@@ -34,9 +33,10 @@ router.get("/userProfile", userAuth.isAuthenticated,userDetail.viewUserProfile)
 router.post("/updateUserProfile", userAuth.isAuthenticated,userDetail.updateUserProfile)
 router.post("/insertAddress", userAuth.isAuthenticated,userDetail.insertAddress)
 router.delete("/deleteAddress/:id", userAuth.isAuthenticated,userDetail.deleteAddress);
-router.post("/editAddress/:id", userAuth.isAuthenticated,userDetail.editAddress)
+router.patch("/editAddress/:id", userAuth.isAuthenticated,userDetail.editAddress)
 router.post("/changePassword", userAuth.isAuthenticated,userDetail.changePassword)
 router.post("/orderList", userAuth.isAuthenticated,userDetail.getUserOrders)
+router.post("/applyCoupon", userAuth.isAuthenticated,userDetail.applyCoupon)
 // router.get('/checkOutAddress',userAuth.isAuthenticated , userDetail.checkOutAddress);
 
 
@@ -47,6 +47,7 @@ router.post("/cart-update-quantity",userAuth.isAuthenticated , loadCart.updateCa
 router.get("/wishList", userAuth.isAuthenticated , loadCart.viewWishList)
 router.post("/addWishList" ,userAuth.isAuthenticated ,loadCart.addWishList)
 router.delete("/wishList-remove" ,userAuth.isAuthenticated, loadCart.removeWishList)
+router.post('/addFromWishlist' , userAuth.isAuthenticated, loadCart.addToCartFromWishList)
 
 router.get("/checkOut", userAuth.isAuthenticated , loadCart.viewCheckOut)
 

@@ -6,15 +6,6 @@ const Razorpay = require("razorpay")
 
 
 
-// instance.orders.create({
-// amount: 50000,
-// currency: "INR",
-// receipt: "receipt#1",
-// notes: {
-//     key1: "value3",
-//     key2: "value2"
-// }
-// })
 
 exports.viewOrder = async (req, res, next) => {
     try {
@@ -113,7 +104,7 @@ exports.placeOrder = async (req, res) => {
             return res.status(200).json({ orderId: savedOrder._id, success: 'Order placed successfully' });
         }
 
-        //creating a new instance of razorpay
+        // instance of razorpay
         const instance = new Razorpay({
             key_id: process.env.RAZOR_KEYID,
             key_secret: process.env.RAZOR_KEYSECRET
@@ -146,15 +137,14 @@ exports.placeOrder = async (req, res) => {
 exports.verifyPayment = async (req, res, next) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature, order_id } = req.body;
-        console.log(req.body); // Log the entire request body for debugging
+        console.log(req.body);
 
         const shasum = Crypto.createHmac('sha256', process.env.RAZOR_KEYSECRET);
         shasum.update(`${razorpay_order_id}|${razorpay_payment_id}`);
         const digest = shasum.digest('hex');
 
-        // CHECKING PAYMENT IS VERIFIED
         if (digest === razorpay_signature) {
-            // UPDATING FIELD
+
             const updatedOrder = await Order.findByIdAndUpdate(order_id, {
                 'orderItems.$[].orderStatus': 'Processing',
                 razorPayment_id: razorpay_payment_id

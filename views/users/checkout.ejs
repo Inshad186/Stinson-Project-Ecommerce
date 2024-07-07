@@ -636,6 +636,24 @@
 							<h3><strong>your order</strong></h3>
 							<hr />
 						</div>
+
+						<!-- Coupon Code Section -->
+						<div class="single-cart-form">
+							<div class="cart-form-title">
+								<h4>Coupon Discount</h4>
+							</div>
+						 <div class="cart-form-text custom-input">
+							<p>Enter your coupon code if you have one!</p>
+						    <form id="couponForm">
+								<input type="text" id="couponCode" name="couponCode" placeholder="Enter your code here..." />
+								<div class="submit-text coupon">
+									<button type="submit">Apply Coupon</button>
+								</div>
+							</form>
+						   </div>
+						</div>
+						<br>
+
 						<div class="place-text clearfix">
 							<table>
 								<thead>
@@ -646,38 +664,85 @@
 								</thead>
 								<tbody>
 									<% let subTotal=50; %>
-										<% cart.products.forEach(product=> { %>
-											<% const total=product.productVariantId.salePrice * product.quantity; %>
-												<% subTotal +=total; %>
-													<tr>
-														<th>
-															<%= product.productVariantId.productName %> x <%=
-																	product.quantity %>
-																	<span>Color: <%= product.productVariantId.colour %>
-																			& Size: <%= product.size %></span>
-														</th>
-														<td>
-															<%= total.toFixed(2) %>/-
-														</td>
-													</tr>
-													<% }); %>
-
+									<% cart.products.forEach(product=> { %>
+									<% const total=product.productVariantId.salePrice * product.quantity; %>
+									<% subTotal +=total; %>
+									<tr>
+									<th>
+									<%= product.productVariantId.productName %> x <%= product.quantity %>
+									<span>Color: <%= product.productVariantId.colour %> & Size: <%= product.size %></span>
+									</th>
+									<td>
+										<%= total.toFixed(2) %>/-
+									</td>
+									</tr>
+									<% }); %>
+									<tr>
+										<th>Coupon Discount : </th>
+										<td id="discountAmount">Nill</td>
+									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
 										<th>Subtotal</th>
-										<td>
+										<td id="subTotal">
 											<%= subTotal.toFixed(2) %>/-
 										</td>
 									</tr>
 								</tfoot>
 							</table>
 
+							<script>
+								document.getElementById('couponForm').addEventListener('submit', async function(event) {
+									event.preventDefault();
+							
+									const couponCode = document.getElementById('couponCode').value;
+									try {
+										const response = await fetch('/applyCoupon', {
+											method: 'POST',
+											headers: {
+												'Content-Type': 'application/json'
+											},
+											body: JSON.stringify({ couponCode })
+										});
+							
+										const responseData = await response.json();
+							
+										if (responseData) {
+											if (responseData.newTotal !== undefined) {
+												document.getElementById('discountAmount').textContent = (responseData.discount).toFixed(2) + '/-';
+												document.getElementById('subTotal').textContent = (responseData.newTotal).toFixed(2) + '/-';
+												Swal.fire({
+													icon: 'success',
+													title: 'Coupon Applied',
+													text: `Discount applied: ${responseData.discount.toFixed(2)}/-`
+												});
+											} else {
+												Swal.fire({
+													icon: 'error',
+													title: 'Coupon Error',
+													text: responseData.message
+												});
+											}
+										}
+									} catch (error) {
+										console.error('Error:', error);
+										Swal.fire({
+											icon: 'error',
+											title: 'Coupon Error',
+											text: 'An error occurred while applying the coupon.'
+										});
+									}
+								});
+							</script>
+							
+							
+
 							<ul id="accordion" class="panel-group clearfix">
 								<li class="panel panelimg">
 									<div data-bs-toggle="collapse" data-bs-target="#collapse3">
 										<label>
-											<input type="radio" name="paymentMethod" value="forever">
+											<input type="radio" name="paymentMethod" value="Online Payment">
 											Online Payments
 										</label>
 									</div>
@@ -685,7 +750,7 @@
 								<li class="panel panelimg">
 									<div data-bs-toggle="collapse" data-bs-target="#collapseCOD">
 										<label>
-											<input type="radio" name="paymentMethod" value="cod">
+											<input type="radio" name="paymentMethod" value="COD">
 											Cash on Delivery
 										</label>
 									</div>
@@ -695,10 +760,13 @@
 							<div class="submit-text place-order floatright">
 								<a id="placeOrderBtn" href="#">Place Order</a>
 							</div>
+							
 							<form id="orderForm" action="/place-order" method="POST" style="display: none;">
 								<input type="hidden" name="addressId" id="addressId" value="">
-								<input type="hidden" name="paymentMethod" value="Cash on Delivery (COD)">
+								<input type="hidden" name="paymentMethod" value="COD">
 							</form>
+						</div>
+                     </div>
 
 							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 							<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -758,7 +826,7 @@
 											.then(response => response.json())
 											.then(data => {
 												if (data.success) {
-													if (paymentMethod === 'Cash on Delivery (COD)') {
+													if (paymentMethod === 'COD') {
 														window.location.href = `/order?orderId=${data.orderId}`;
 													} else {
 														var options = {
@@ -790,10 +858,10 @@
 								
 																	if (verifyData.success) {
 																		Swal.fire({
-																			text: verifyData.success || "Success",
+																			text: verifyData.success  || "Success",
 																			icon: "success"
 																		}).then(() => {
-																			window.location.href = `/order?orderId=${data.order_id}`;
+																			window.location.href = `/order?orderId=${data.orderId}`;
 																		});
 																	} else if (verifyData.error) {
 																		Swal.fire({
@@ -842,10 +910,6 @@
 								});
 								</script>
 								
-
-
-						</div>
-					</div>
 
 
 					<!-- <script>
@@ -924,8 +988,6 @@
 							});
 						});
 					</script> -->
-
-
 
 
 

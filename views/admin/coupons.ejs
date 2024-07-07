@@ -847,12 +847,14 @@
                           </h6>            
                         </td>
                         <td>
-                          <a href="/admin/editCoupon?couponID=<%= couponList[i]._id %>"><span class="badge bg-primary" style="cursor: pointer;">EDIT</span></a>
+                          <a href="/admin/editCoupon?couponId=<%= couponList[i]._id %>">
+                              <span class="badge bg-primary" style="cursor: pointer;">EDIT</span>
+                          </a>
                           <span class="badge bg-<%= couponList[i].listed ? 'success' : 'danger' %>"
-                            onclick="toggleStatus('<%= couponList[i]._id %>', this)">
-                            <%= couponList[i].listed ? 'LIST' : 'UNLIST' %>
+                                onclick="toggleStatus('<%= couponList[i]._id %>', this, document.getElementById('<%= couponList[i]._id %>'))">
+                              <%= couponList[i].listed ? 'LIST' : 'UNLIST' %>
                           </span>
-                        </td>
+                      </td>
                         <td>
                           <div class="d-flex align-items-center gap-3 fs-6">
                             <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views">
@@ -891,60 +893,57 @@
             </button>
           </div>
 
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
           
-          <!-- <script>
+
+          <script>
             async function toggleStatus(couponId, button, statusElement) {
-
-              console.log(couponId)
-
-              try {
-                const response = await fetch("/admin/deleteCategory", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                    couponId: couponId,
-                  })
-                });
-
-                console.log('Response:', response);
-                const data = await response.json();
-
-                console.log("data------------",data);
-
-                if (data.success) {
-                  button.innerText = data.categoryState ? "LIST" : "UNLIST";
-                  button.classList.remove("bg-success", "bg-danger");
-                  button.classList.add(data.categoryState ? "bg-success" : "bg-danger");
-
-                  statusElement.innerText = data.categoryState ? "UNLISTED" : "LISTED";
-
-                  const result = await Swal.fire({
-                    title: "Updated!",
-                    text: "Category status has been updated",
-                    icon: "success"
-                  });
-                } else {
-                  await Swal.fire({
-                    title: "Error!",
-                    text: data.message || "An error occurred while updating the category status.",
-                    icon: "error"
-                  });
+                console.log("Coupon ID : ", couponId);
+            
+                try {
+                    const response = await fetch('/admin/deleteCoupon', {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                          couponId: couponId
+                        })
+                    });
+            
+                    const data = await response.json();
+                    console.log("data------------", data);
+            
+                    if(data.success) {
+                        button.innerText = data.couponState ? "LIST" : "UNLIST";
+                        button.classList.remove("bg-success", "bg-danger");
+                        button.classList.add(data.couponState ? "bg-success" : "bg-danger");
+            
+                        statusElement.innerText = data.couponState ? "LISTED" : "UNLISTED";
+            
+                        await Swal.fire({
+                            title: "Updated!",
+                            text: "Coupon status has been updated",
+                            icon: "success"
+                        });
+                    } else {
+                        await Swal.fire({
+                            title: "Error!",
+                            text: data.message || "An error occurred while updating the coupon status.",
+                            icon: "error"
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error updating coupon status:", error);
+                    await Swal.fire({
+                        title: "Error!",
+                        text: "An error occurred while updating the coupon status.",
+                        icon: "error"
+                    });
                 }
-              } catch (error) {
-                console.error("Error updating category status:", error);
-                await Swal.fire({
-                  title: "Error!",
-                  text: "An error occurred while updating the category status.",
-                  icon: "error"
-                });
-              }
             }
-          </script> -->
-
-          
-          
+            </script>
+        
 
 
 

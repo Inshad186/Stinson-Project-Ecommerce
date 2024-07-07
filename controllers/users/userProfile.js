@@ -2,6 +2,8 @@ const User = require("../../models/userModel");
 const bcrypt = require("bcrypt")
 const Address = require("../../models/addressModel")
 const Order = require("../../models/orderModel")
+const Coupons = require("../../models/couponModel")
+const Cart = require("../../models/cartModel")
 
 
 exports.viewUserProfile = async (req, res) => {
@@ -14,12 +16,50 @@ exports.viewUserProfile = async (req, res) => {
         const user = await User.findById(userId);
         const userAddress = await Address.find({userId:userId})
         const userOrders = await Order.find({ userId:userId })
+        const userCoupons = await Coupons.find({});
 
         if (!user) {
             return res.status(404).send("User not found");
         }
-        res.render("users/user-profile", { user ,userAddress ,userOrders });
+        res.render("users/user-profile", { user ,userAddress ,userOrders ,userCoupons });
         
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
+
+exports.applyCoupon = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+        const { couponCode } = req.body;
+
+        if (!userId) {
+            return res.status(401).send("User not authenticated");
+        }
+        const cart = await Cart.findOne({ userId }).populate({
+            path: 'products.productVariantId',
+            select: 'size salePrice stock colour image productName categoryName'
+        });
+        if (!cart) {
+            return res.status(404).send("Cart not found");
+        }
+        const subTotal = cart.products.reduce((acc, product) => acc + (product.productVariantId.salePrice * product.quantity), 50);
+
+        if (subTotal < 3000) {
+            return res.status(400).json({ message: "Purchase at least for 3000 to avail this coupon" });
+        }
+        const coupon = await Coupons.findOne({ couponCode });
+
+        if (!coupon) {
+            return res.status(404).json({ message: "Invalid coupon code" });
+        }
+
+        const discount = (subTotal * coupon.discountPercentage) / 100;
+        const newTotal = subTotal - discount;
+
+        res.status(200).json({ discount, newTotal });
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
@@ -29,7 +69,6 @@ exports.viewUserProfile = async (req, res) => {
 
 
 exports.updateUserProfile = async (req, res) => {
-
     try {
         const userId = req.session.userId;
 
@@ -115,13 +154,11 @@ exports.deleteAddress = async (req, res) => {
         if (!userId) {
             return res.status(401).send("Unavailable UserId");
         }
-
         const address = await Address.findOneAndDelete({ _id: addressId, userId: userId });
 
         if (!address) {
             return res.status(404).send("Address not found");
         }
-
         res.status(200).send("Address deleted successfully");
     } catch (error) {
         console.log(error.message);

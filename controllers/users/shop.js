@@ -31,7 +31,6 @@ exports.viewshopList = async (req, res) => {
 
 
 
-
 exports.productDetail = async (req, res) => {
     try {
         const variantId = req.query.id;

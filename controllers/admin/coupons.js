@@ -36,7 +36,6 @@ exports.addCoupon = async (req, res) => {
 }
 
 
-
 exports.couponsList = async(req,res)=>{
     try {
         const couponList = await Coupons.find({})
@@ -49,10 +48,9 @@ exports.couponsList = async(req,res)=>{
 }
 
 
-
 exports.viewEditCoupon = async(req,res)=>{
     try {
-        const couponId = req.query.couponID;
+        const couponId = req.query.couponId;
         const couponToEdit = await Coupons.findById(couponId)
         res.render("admin/editCoupon" , {couponToEdit})
     } catch (error) {
@@ -62,12 +60,10 @@ exports.viewEditCoupon = async(req,res)=>{
 }
 
 
-
-
 exports.editCoupon = async (req, res) => {
     try {
-        console.log("Edit Coupon: ", req.query.couponID);
-        const couponId = req.query.couponID; 
+        console.log("Edit Coupon: ", req.query.couponId);
+        const couponId = req.query.couponId; 
         const oldCoupon = await Coupons.findById(couponId);
         
         if (!oldCoupon) {
@@ -122,6 +118,24 @@ exports.editCoupon = async (req, res) => {
     }
 };
 
+
+exports.deleteCoupon = async (req, res) => {
+    try {
+        const coupon = await Coupons.findOne({ _id: req.body.couponId });
+        console.log("Coupon ID  : ", coupon);
+
+        if (!coupon) {
+            return res.status(404).json({ success: false, message: "Coupon not found" });
+        }
+        coupon.listed = !coupon.listed;
+        const saveData = await coupon.save();
+        return res.status(200).json({ success: true, couponState: saveData.listed });
+        
+    } catch (error) {
+        console.log("Error in deleteCoupon", error);
+        return res.status(500).json({ success: false, message: "Server Error" });
+    }
+};
 
 
 

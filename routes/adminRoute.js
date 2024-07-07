@@ -60,5 +60,6 @@ router.post('/addCoupon', loadCoupon.addCoupon)
 
 router.get("/editCoupon", loadCoupon.viewEditCoupon )
 router.post("/editCoupon", loadCoupon.editCoupon)
+router.delete("/deleteCoupon", loadCoupon.deleteCoupon)
 
 module.exports = router;

@@ -309,6 +309,46 @@ exports.removeWishList = async (req, res, next) => {
 };
 
 
+exports.addToCartFromWishList = async (req, res, next) => {
+    try {
+        const userId = req.session.userId;
+        if (!userId) {
+            return res.status(401).send('User not authenticated');
+        }
+        const { productId } = req.body;
+
+        // Find the product in the wishlist to get the size
+        const wishList = await WishList.findOne({ userId });
+        const productInWishlist = wishList.products.find(product => product.productVariantId.toString() === productId);
+
+        if (!productInWishlist) {
+            return res.status(404).json({ error: 'Product not found in wishlist' });
+        }
+        const { size } = productInWishlist;
+
+        // Find the user's cart or create a new one if it doesn't exist
+        let cart = await Cart.findOne({ userId });
+        if (!cart) {
+            cart = new Cart({ userId, products: [] });
+        }
+        // Check if the product already exists in the cart with the same size
+        const productInCart = cart.products.find(product => product.productVariantId.toString() === productId && product.size === size);
+
+        if (productInCart) {
+            productInCart.quantity += 1;
+        } else {
+            cart.products.push({ productVariantId: productId, size, quantity: 1 });
+        }
+        await cart.save();
+
+        res.json({ message: 'Item added to cart successfully' });
+    } catch (error) {
+        console.error("Error in addToCartFromWishList", error);
+        next(error);
+    }
+};
+
+
 
 
 

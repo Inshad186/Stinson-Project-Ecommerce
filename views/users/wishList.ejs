@@ -36,7 +36,7 @@
 											<li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li>
 										</ul>
 									</li>
-									<li><a href="cart.html"><i class="pe-7s-cart"></i><span>2</span></a>
+									<li><a href="/cart"><i class="pe-7s-cart"></i><span>2</span></a>
 										<ul class="drop-cart">
 											<!-- <li>
 												<a href="cart.html"><img src="img/cart/1.webp" alt="" /></a>
@@ -363,6 +363,7 @@
 									<tr>
 										<th>Items</th>
 										<th>Price</th>
+										<th>Action</th>
 										<th>Remove</th>
 									</tr>
 								   </thead>
@@ -379,7 +380,7 @@
 													</div>
 												</td>
                                                 <td><%= product.productVariantId.salePrice %></td>
-
+								                <td><button class="add-to-cart-btn">Add to Cart</button></td>
 												<td><i class="pe-7s-close" title="Remove this product"></i></td>
 
 											</tr>
@@ -427,6 +428,38 @@
 											}
 										});
 									});       
+
+									document.querySelectorAll(".add-to-cart-btn").forEach(addBtn => {
+									addBtn.addEventListener("click", async function(event) {
+										event.preventDefault();
+
+										const productId = this.closest('tr').dataset.productId;
+
+										const response = await fetch("/addFromWishlist", {
+											method: "POST",
+											headers: {
+												"Content-Type": "application/json"
+											},
+											body: JSON.stringify({ productId })
+										});
+
+										const responseData = await response.json();
+
+										if (response.ok) {
+											Swal.fire({
+												title: "Success",
+												text: responseData.message,
+												icon: "success"
+											})
+										} else {
+											Swal.fire({
+												title: "Error",
+												text: responseData.error || "Failed to add item to cart",
+												icon: "error"
+											});
+										}
+									});
+								});
                             </script>
 							
 									
