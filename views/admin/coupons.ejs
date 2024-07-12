@@ -815,33 +815,13 @@
                   <tbody id="user-table-body">
                     <% for(let i=couponList.length-1 ; i>=0 ; i--){ %>
                       <tr>
+                        <td><h6 class="product-name mb-1"><%= couponList[i].couponName %></h6></td>
+                        <td><h6><%= couponList[i].couponCode %></h6></td>
+                        <td><h6> <%= couponList[i].discountPercentage %></h6></td>
+                        <td><h6><%= couponList[i].minPurchaseAmount %></h6> </td>
+                        <td><h6> <%= couponList[i].maxRedeemAmount %></h6> </td>
                         <td>
-                          <h6 class="product-name mb-1">
-                           <%= couponList[i].couponName %>
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= couponList[i].couponCode %>
-                          </h6>            
-                        </td>
-                        <td>
-                          <h6> 
-                            <%= couponList[i].discountPercentage %>
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= couponList[i].minPurchaseAmount %>
-                          </h6>            
-                        </td>
-                        <td>
-                          <h6>
-                            <%= couponList[i].maxRedeemAmount %>
-                          </h6>            
-                        </td>
-                        <td>
-                          <h6>
+                           <h6>
                             <%= couponList[i].expiryDate.toLocaleDateString('en-US', {
                               weekday: 'short' , month: 'short' , day: 'numeric' , year:'numeric'})%>
                           </h6>            
@@ -851,7 +831,7 @@
                               <span class="badge bg-primary" style="cursor: pointer;">EDIT</span>
                           </a>
                           <span class="badge bg-<%= couponList[i].listed ? 'success' : 'danger' %>"
-                                onclick="toggleStatus('<%= couponList[i]._id %>', this, document.getElementById('<%= couponList[i]._id %>'))">
+                                onclick="toggleStatus('<%= couponList[i]._id %>', this)">
                               <%= couponList[i].listed ? 'LIST' : 'UNLIST' %>
                           </span>
                       </td>
@@ -874,7 +854,7 @@
                   </tbody>
                 </table>
               </div>
-              <div class="d-flex justify-content-between align-items-center mt-2">
+              <!-- <div class="d-flex justify-content-between align-items-center mt-2">
                 <div>
                   <button class="btn btn-secondary" onclick="prevPage()">Previous</button>
                   <button class="btn btn-secondary" onclick="nextPage()">Next</button>
@@ -882,7 +862,7 @@
                 <div>
                   <span>Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           
@@ -897,50 +877,47 @@
           
 
           <script>
-            async function toggleStatus(couponId, button, statusElement) {
-                console.log("Coupon ID : ", couponId);
+            async function toggleStatus(couponId, button) {
+              console.log("Coupon ID:", couponId);
             
-                try {
-                    const response = await fetch('/admin/deleteCoupon', {
-                        method: "DELETE",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                          couponId: couponId
-                        })
-                    });
+              try {
+                const response = await fetch('/admin/deleteCoupon', {
+                  method: "PATCH",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                    couponId: couponId
+                  })
+                });
             
-                    const data = await response.json();
-                    console.log("data------------", data);
+                const data = await response.json();
+                console.log("data------------", data);
             
-                    if(data.success) {
-                        button.innerText = data.couponState ? "LIST" : "UNLIST";
-                        button.classList.remove("bg-success", "bg-danger");
-                        button.classList.add(data.couponState ? "bg-success" : "bg-danger");
+                if (data.success) {
+                  button.innerText = data.couponState ? "LIST" : "UNLIST";
+                  button.classList.remove("bg-success", "bg-danger");
+                  button.classList.add(data.couponState ? "bg-success" : "bg-danger");
             
-                        statusElement.innerText = data.couponState ? "LISTED" : "UNLISTED";
-            
-                        await Swal.fire({
-                            title: "Updated!",
-                            text: "Coupon status has been updated",
-                            icon: "success"
-                        });
-                    } else {
-                        await Swal.fire({
-                            title: "Error!",
-                            text: data.message || "An error occurred while updating the coupon status.",
-                            icon: "error"
-                        });
-                    }
-                } catch (error) {
-                    console.error("Error updating coupon status:", error);
-                    await Swal.fire({
-                        title: "Error!",
-                        text: "An error occurred while updating the coupon status.",
-                        icon: "error"
-                    });
+                  Swal.fire({
+                    title: "Updated!",
+                    text: "Coupon status has been updated",
+                    icon: "success"
+                  });
+                } else {
+                  await Swal.fire({
+                    title: "Error!",
+                    text: "Failed to update the coupon status.",
+                    icon: "error"
+                  });
                 }
+              } catch (error) {
+                await Swal.fire({
+                  title: "Error!",
+                  text: "An error occurred while updating the coupon status.",
+                  icon: "error"
+                });
+              }
             }
             </script>
         

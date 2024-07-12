@@ -23,6 +23,32 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
+        .error {
+            color: red;
+            font-size: 14px; 
+            margin-top: 5px; 
+        }
+    </style>
+
+    <style>
+    .wallet-heading {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #fff;
+        background: linear-gradient(90deg, #ff7e5f, #feb47b);
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', sans-serif;
+    }
+   </style>
+
+    </style>
+
+    <style>
         /* Basic Modal Styling */
         .modal {
             display: none;
@@ -115,6 +141,33 @@
             background-color: #e64a19;
         }
     </style>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .pagination a.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .pagination a:hover {
+        background-color: #ddd;
+    }
+
+</style>
 
 </head>
 
@@ -1107,6 +1160,19 @@ Baby Shop
 Payment Method
 </span>
 </button> -->
+                        <button class="nav-link" id="v-pills-wallet-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-wallet" type="button" role="tab" aria-controls="v-pills-wallet"
+                            aria-selected="false">
+                            <span>
+                                <svg width="15" height="18" viewBox="0 0 15 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.8571 0C11.7198 0 10.8092 0.910714 10.8092 2.04762H1.30952C0.585714 2.04762 0 2.63333 0 3.35714V14.6429C0 15.3667 0.585714 15.9524 1.30952 15.9524H10.8333C11.5714 15.9524 12.1905 16.5714 12.1905 17.3095C12.1905 17.7548 12.5262 18 12.8571 18C13.1881 18 13.5238 17.7548 13.5238 17.3095V17.0952H14.8571C14.9524 17.0952 15 17.0476 15 16.9524V8.66667C15 8.57143 14.9524 8.52381 14.8571 8.52381H12.8571V6.61905C12.8571 5.48115 13.7678 4.57143 14.9048 4.57143C15.2381 4.57143 15.5714 4.52381 15.5714 4.35714C15.5714 3.45238 14.7857 2.66667 13.8809 2.66667C13.2857 2.66667 12.8571 3.09524 12.8571 3.69048V2.04762C12.8571 0.910714 12.0952 0 12.8571 0ZM10.8092 14.2857V3.33333H1.30952V14.2857H10.8092ZM13.4286 15.2381V8.90476H11.9048V15.2381H13.4286ZM12.8571 8.09524C12.8587 8.09524 12.8571 8.09286 12.8571 8.09524Z" />
+                                </svg>
+                            </span>
+                            <span class="text">My Wallet</span>
+                        </button>
+
                         <button class="nav-link" id="v-pills-order-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-order" type="button" role="tab" aria-controls="v-pills-order"
                             aria-selected="false">
@@ -1673,90 +1739,268 @@ too.Max 5mb.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-order" role="tabpanel"
-                            aria-labelledby="v-pills-order-tab" tabindex="0">
-                            <div class="cart-section">
+                        
+         <!-------------------------------- This  is  for  Wallet ------------------------------------------>
+
+                        <!-- <div class="tab-pane fade" id="v-pills-wallet" role="tabpanel"
+                            aria-labelledby="v-pills-wallet-tab" tabindex="0">
+                            <div class="wallet-section">
                                 <table>
                                     <tbody>
                                         <tr class="table-row table-top-row">
-                                            <td class="table-wrapper wrapper-product">
-                                                <h5 class="table-heading">PRODUCT</h5>
+                                            <td class="table-wrapper wrapper-date">
+                                                <h5 class="table-heading">DATE</h5>
                                             </td>
-                                            <td class="table-wrapper">
+                                            <td class="table-wrapper wrapper-status">
                                                 <div class="table-wrapper-center">
-                                                    <h5 class="table-heading">PRICE</h5>
+                                                    <h5 class="table-heading">STATUS</h5>
                                                 </div>
                                             </td>
-                                            <td class="table-wrapper">
+                                            <td class="table-wrapper wrapper-amount">
                                                 <div class="table-wrapper-center">
-                                                    <h5 class="table-heading">QUANTITY</h5>
+                                                    <h5 class="table-heading">AMOUNT</h5>
                                                 </div>
                                             </td>
-                                            <td class="table-wrapper wrapper-total">
+                                            <td class="table-wrapper wrapper-description">
                                                 <div class="table-wrapper-center">
-                                                    <h5 class="table-heading">TOTAL</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="table-heading">ACTION</h5>
+                                                    <h5 class="table-heading">DESCRIPTION</h5>
                                                 </div>
                                             </td>
                                         </tr>
+                                        
+                                            <tr class="table-row transaction-row">
+                                                <td class="table-wrapper wrapper-date">
+                                                    <div class="wrapper-content">
+                                                        <h5 class="heading">
+                                                            Date
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                                <td class="table-wrapper wrapper-status">
+                                                    <div class="table-wrapper-center">
+                                                        <h5 class="heading">
+                                                            status
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                                <td class="table-wrapper wrapper-amount">
+                                                    <div class="table-wrapper-center">
+                                                        <h5 class="heading">
+                                                            amount
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                                <td class="table-wrapper wrapper-description">
+                                                    <div class="table-wrapper-center">
+                                                        <h5 class="heading">
+                                                            Description
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                        <div class="tab-pane fade" id="v-pills-wallet" role="tabpanel" aria-labelledby="v-pills-wallet-tab" tabindex="0">
+                            <h5 class="total-amount-heading">Total Amount: 
+                                <% if (wallet && wallet.transactions && wallet.transactions.length > 0) { 
+                                    const totalAmount = wallet.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+                                %>
+                                    <%= totalAmount.toFixed(2) %>
+                                <% } else { %>
+                                    0.00
+                                <% } %>
+                            </h5>
+                            <h5 class="wallet-heading">My Wallet</h5>
+                            <div class="wallet-section">
+                                <table>
+                                    <tbody>
+                                        <tr class="table-row table-top-row">
+                                            <td class="table-wrapper wrapper-date">
+                                                <h5 class="table-heading">DATE</h5>
+                                            </td>
+                                            <td class="table-wrapper wrapper-status">
+                                                <div class="table-wrapper-center">
+                                                    <h5 class="table-heading">STATUS</h5>
+                                                </div>
+                                            </td>
+                                            <td class="table-wrapper wrapper-amount">
+                                                <div class="table-wrapper-center">
+                                                    <h5 class="table-heading">AMOUNT</h5>
+                                                </div>
+                                            </td>
+                                            <td class="table-wrapper wrapper-description">
+                                                <div class="table-wrapper-center">
+                                                    <h5 class="table-heading">DESCRIPTION</h5>
+                                                </div>
+                                            </td>
                                         </tr>
-                                        <% userOrders.forEach(order=> { %>
-                                            <tr class="table-row ticket-row">
-                                                <td class="table-wrapper wrapper-product">
-                                                    <div class="wrapper">
-                                                        <div class="wrapper-content">
-                                                            <h5 class="heading">
-                                                                <%= order.orderItems[0].variantName %>
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="table-wrapper">
-                                                    <div class="table-wrapper-center">
-                                                        <h5 class="heading">
-                                                            <%= order.subTotal.toFixed(2) %>
+                                        <% if (wallet && wallet.transactions && wallet.transactions.length > 0) { %>
+                                            <% wallet.transactions.forEach(transaction => { %>
+                                            <tr class="table-row transaction-row">
+                                                <td class="table-wrapper wrapper-date">
+                                                    <div class="wrapper-content">
+                                                        <h5 class="table-heading">
+                                                            <%= transaction.date.toLocaleDateString() %>
                                                         </h5>
                                                     </div>
                                                 </td>
-                                                <td class="table-wrapper">
+                                                <td class="table-wrapper wrapper-status">
                                                     <div class="table-wrapper-center">
-                                                        <div class="quantity">
-                                                            <span class="number">
-                                                                <%= order.orderItems[0].quantity %>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="table-wrapper wrapper-total">
-                                                    <div class="table-wrapper-center">
-                                                        <h5 class="heading">
-                                                            <%= order.grandTotal.toFixed(2) %>
+                                                        <h5 class="table-heading">
+                                                            <%= transaction.transactionMethod %>
                                                         </h5>
                                                     </div>
                                                 </td>
-                                                <td class="table-wrapper">
+                                                <td class="table-wrapper wrapper-amount">
                                                     <div class="table-wrapper-center">
-                                                        <span>
-                                                            <!-- Your action buttons/icons -->
-                                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path
-                                                                    d="M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z"
-                                                                    fill="#AAAAAA"></path>
-                                                            </svg>
-                                                        </span>
+                                                        <h5 class="table-heading">
+                                                            <%= transaction.amount.toFixed(2) %>
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                                <td class="table-wrapper wrapper-description">
+                                                    <div class="table-wrapper-center">
+                                                        <h5 class="table-heading">
+                                                            <%= transaction.description || "No description" %>
+                                                        </h5>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <% }); %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="4" class="table-wrapper wrapper-no-transactions">
+                                                    <div class="wrapper-content">
+                                                        <h5 class="heading">No transactions found</h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        
+
+
+     <!----------------------------  This  is  for  orders  List  ----------------------------->
+
+                        <div class="tab-pane fade" id="v-pills-order" role="tabpanel"
+                        aria-labelledby="v-pills-order-tab" tabindex="0">
+                        <div class="cart-section">
+                            <table>
+                                <tbody>
+                                    <tr class="table-row table-top-row">
+                                        <td class="table-wrapper wrapper-product">
+                                            <h5 class="table-heading">PRODUCT</h5>
+                                        </td>
+                                        <td class="table-wrapper">
+                                            <div class="table-wrapper-center">
+                                                <h5 class="table-heading">PRICE</h5>
+                                            </div>
+                                        </td>
+                                        <td class="table-wrapper">
+                                            <div class="table-wrapper-center">
+                                                <h5 class="table-heading">QUANTITY</h5>
+                                            </div>
+                                        </td>
+                                        <td class="table-wrapper wrapper-total">
+                                            <div class="table-wrapper-center">
+                                                <h5 class="table-heading">TOTAL</h5>
+                                            </div>
+                                        </td>
+                                        <td class="table-wrapper">
+                                            <div class="table-wrapper-center">
+                                                <h5 class="table-heading">ACTION</h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% userOrders.forEach(order => { %>
+                                    <tr class="table-row ticket-row">
+                                        <td class="table-wrapper wrapper-product">
+                                            <div class="wrapper">
+                                                <div class="wrapper-content">
+                                                    <h5 class="heading">
+                                                        <a href="/order?orderId=<%= order._id %>"><%= order.orderItems[0].variantName %></a>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="table-wrapper">
+                                            <div class="table-wrapper-center">
+                                                <h5 class="heading">
+                                                    <%= order.subTotal.toFixed(2) %>
+                                                </h5>
+                                            </div>
+                                        </td>
+                                        <td class="table-wrapper">
+                                            <div class="table-wrapper-center">
+                                                <div class="quantity">
+                                                    <span class="number">
+                                                        <%= order.orderItems[0].quantity %>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="table-wrapper wrapper-total">
+                                            <div class="table-wrapper-center">
+                                                <h5 class="heading">
+                                                    <%= order.grandTotal.toFixed(2) %>
+                                                </h5>
+                                            </div>
+                                        </td>
+                                        <td class="table-wrapper">
+                                            <div class="table-wrapper-center">
+                                                <% if (order.status !== 'canceled') { %>
+                                                <button onclick="cancelOrder('<%= order._id %>')"><h5 class="heading">Cancel</h5></button>
+                                                <% } else { %>
+                                                <span>Order Canceled</span>
+                                                <% } %>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                            <div class="pagination">
+                                <% if (currentPage > 1) { %>
+                                <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+                                <% } %>
+                                <% for (let i = 1; i <= totalPages; i++) { %>
+                                <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                                <% } %>
+                                <% if (currentPage < totalPages) { %>
+                                <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function cancelOrder(orderId) {
+                            fetch('/cancelOrder', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ orderId: orderId })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.message) {
+                                    alert(data.message);
+                                    location.reload();
+                                } else if (data.error) {
+                                    alert(data.error);
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                        }
+                        </script>
+                    
                         <!-- <div class="tab-pane fade" id="v-pills-wishlist" role="tabpanel"
                             aria-labelledby="v-pills-wishlist-tab" tabindex="0">
                             <div class="wishlist">
@@ -1927,12 +2171,14 @@ too.Max 5mb.</p>
                                                             <p>Code:</p>
                                                             <p>CouponName:</p>
                                                             <p>Discount:</p>
+                                                            <p>Redeem Amount</p>
                                                             <p>Expiration Date:</p>
                                                         </div>
                                                         <div class="info-details">
                                                             <p><%= coupon.couponCode %></p>
                                                             <p><%= coupon.couponName %></p>
                                                             <p><%= coupon.discountPercentage %>%</p>
+                                                            <p><%= coupon.maxRedeemAmount %></p>
                                                             <p><%= new Date(coupon.expiryDate).toLocaleDateString() %></p>
                                                         </div>
                                                     </div>
@@ -2728,45 +2974,54 @@ too.Max 5mb.</p>
                                         <form id="changePasswordForm" action="/changePassword" method="POST">
                                             <div class="currentpass form-item">
                                                 <label for="currentpass" class="form-label">Current Password</label>
-                                                <input type="password" class="form-control" id="currentpass"
-                                                    name="currentpass" placeholder="****" required>
+                                                <input type="password" class="form-control" id="currentpass" name="currentpass" required>
+                                                <span id="currentpassError" class="error"></span> <!-- Error message placeholder -->
                                             </div>
                                             <div class="password form-item">
                                                 <label for="newPassword" class="form-label">New Password</label>
-                                                <input type="password" class="form-control" id="newPassword"
-                                                    name="newPassword" placeholder="****" required>
+                                                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                                <span id="newPasswordError" class="error"></span> <!-- Error message placeholder -->
                                             </div>
                                             <div class="re-password form-item">
-                                                <label for="confirmPassword" class="form-label">Confirm New
-                                                    Password</label>
-                                                <input type="password" class="form-control" id="confirmPassword"
-                                                    name="confirmPassword" placeholder="****" required>
+                                                <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                                                <span id="confirmPasswordError" class="error"></span> <!-- Error message placeholder -->
                                             </div>
                                             <div class="form-btn">
                                                 <button type="submit" class="shop-btn">Update Password</button>
-                                                <button type="button" class="shop-btn cancel-btn"
-                                                    onclick="cancelPasswordChange()">Cancel</button>
+                                                <button type="button" class="shop-btn cancel-btn" onclick="cancelPasswordChange()">Cancel</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-
+                                
                                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
                                 <script>
                                     document.getElementById('changePasswordForm').addEventListener('submit', async function (event) {
                                         event.preventDefault();
-
+                                
                                         const currentpass = document.getElementById('currentpass').value;
                                         const newPassword = document.getElementById('newPassword').value;
                                         const confirmPassword = document.getElementById('confirmPassword').value;
-
+                                
+                                        // Clear previous error messages
+                                        document.getElementById('currentpassError').textContent = '';
+                                        document.getElementById('newPasswordError').textContent = '';
+                                        document.getElementById('confirmPasswordError').textContent = '';
+                                
                                         // Perform basic validation
                                         if (newPassword !== confirmPassword) {
-                                            alert('New password and confirm password must match.');
+                                            document.getElementById('confirmPasswordError').textContent = 'New password and confirm password must match.';
                                             return;
                                         }
-
+                                
+                                        // Check if current password and new password are the same
+                                        if (currentpass === newPassword) {
+                                            document.getElementById('newPasswordError').textContent = 'Current password and new password must be different.';
+                                            return;
+                                        }
+                                
                                         // Submit the form to server
                                         try {
                                             const response = await fetch('/changePassword', {
@@ -2776,7 +3031,7 @@ too.Max 5mb.</p>
                                                 },
                                                 body: JSON.stringify({ currentpass, newPassword })
                                             });
-
+                                
                                             if (response.ok) {
                                                 await Swal.fire({
                                                     title: 'Success',
@@ -2800,8 +3055,8 @@ too.Max 5mb.</p>
                                             });
                                         }
                                     });
-
                                 </script>
+                                
 
 
 
@@ -3203,7 +3458,7 @@ too.Max 5mb.</p>
 
     <section class="product footer">
         <div class="container">
-            <div class="footer-service-section">
+            <!-- <div class="footer-service-section">
                 <div class="row gy-4">
                     <div class="col-lg-3  col-sm-6">
                         <div class="service-wrapper free-shipping">
@@ -3306,7 +3561,7 @@ too.Max 5mb.</p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="footer-section">
                 <div class="row gy-5">
                     <div class="col-lg-3 col-sm-6">

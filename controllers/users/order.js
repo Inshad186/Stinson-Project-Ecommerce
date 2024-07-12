@@ -1,6 +1,7 @@
 const Address = require("../../models/addressModel")
 const Cart = require("../../models/cartModel")
 const Order = require("../../models/orderModel")
+const Coupon = require("../../models/couponModel")
 const Crypto = require("crypto")
 const Razorpay = require("razorpay")
 
@@ -12,17 +13,22 @@ exports.viewOrder = async (req, res, next) => {
         const userId = req.session.userId;
         const orderId = req.query.orderId;
 
-        const authCheck = await Order.findOne({ userId: userId, _id: orderId }).select('userId');
+        const orderInfo = await Order.findOne({ userId: userId, _id: orderId }).populate({
+            path: 'orderItems.variantId',
+            model: 'Varients',
+            populate: {
+                path: 'productId',
+                model: 'Product'
+            }
+        });
 
-        if (authCheck) {
-            const orderInfo = await Order.findOne({ _id: orderId })
-
-            const address = await Address.findOne({ userId: userId });
-
-            res.render('users/order', { orders: orderInfo, address: address });
-        } else {
+        if (!orderInfo) {
             return res.status(400).json({ error: 'Invalid operation' });
         }
+
+        const address = await Address.findOne({ userId });
+
+        res.render('users/order', { orders: orderInfo, address });
     } catch (error) {
         next(error);
     }
@@ -33,7 +39,11 @@ exports.viewOrder = async (req, res, next) => {
 exports.placeOrder = async (req, res) => {
     try {
         const userId = req.session.userId;
-        const { addressId, paymentMethod } = req.body;
+        const { addressId, paymentMethod, couponId } = req.body;
+
+        console.log("Address ID: ", addressId);
+        console.log("Payment Method: ", paymentMethod);
+        console.log("Coupon ID: ", couponId);
 
         if (!userId) {
             return res.status(401).send("User not authenticated");
@@ -70,8 +80,32 @@ exports.placeOrder = async (req, res) => {
             quantity: product.quantity,
         }));
 
-        const subTotal = orderItems.reduce((acc, item) => acc + item.variantPrice * item.quantity, 0);
-        const deliveryCharge = 50;
+        let subTotal = orderItems.reduce((acc, item) => acc + item.variantPrice * item.quantity, 0);
+        let deliveryCharge = 50;
+        let discountPercentage = 0;
+        let claimedAmount = 0;
+        let coupon = null;
+
+        if (couponId) {
+            coupon = await Coupon.findOne({ _id: couponId });
+
+            if (!coupon) {
+                return res.status(400).send("Invalid coupon code");
+            }
+            if (subTotal >= coupon.minPurchaseAmount) {
+
+                discountPercentage = coupon.discountPercentage;
+                console.log("Discount Percentage  :  ",discountPercentage);
+
+                claimedAmount = Math.min(subTotal * (discountPercentage / 100), coupon.maxRedeemAmount);
+                console.log("Claimed Amount  :  ",claimedAmount);
+
+                subTotal -= claimedAmount;
+            } else {
+                return res.status(400).send(`Minimum purchase amount for this coupon is ${coupon.minPurchaseAmount}`);
+            }
+        }
+
         const grandTotal = subTotal + deliveryCharge;
 
         const newOrder = new Order({
@@ -93,37 +127,40 @@ exports.placeOrder = async (req, res) => {
                 landmark: address.landMark,
                 postoffice: address.postOffice,
                 addressType: address.addressType
+            },
+            couponDetails: {
+                discountPercentage,
+                claimedAmount,
+                couponId,
+                minPurchaseAmount: coupon ? coupon.minPurchaseAmount : 0,
+                maxDiscountAmount: coupon ? coupon.maxRedeemAmount : 0,
             }
         });
-
         const savedOrder = await newOrder.save();
-        console.log("NEW  ORDER  :: ", newOrder);
 
         if (paymentMethod === 'COD') {
             await Cart.deleteOne({ userId: userId });
             return res.status(200).json({ orderId: savedOrder._id, success: 'Order placed successfully' });
         }
 
-        // instance of razorpay
+        // instance of Razorpay
         const instance = new Razorpay({
             key_id: process.env.RAZOR_KEYID,
             key_secret: process.env.RAZOR_KEYSECRET
-        })
+        });
 
-        //CREATING RAZORPAY ORDER
+        // Creating Razorpay order
         const razorpayOrder = await instance.orders.create({
             amount: grandTotal * 100,
             currency: 'INR',
             receipt: savedOrder._id.toString(),
             payment_capture: 1
         });
-        console.log("RAZARPAY   ORDER  :",razorpayOrder);
-        // Update the order with the Razorpay order ID
+
         savedOrder.razorpayOrder_id = razorpayOrder.id;
         await savedOrder.save();
 
-        const deleteee = await Cart.deleteOne({ userId: userId });
-        console.log("DELETE  :  ", deleteee);
+        await Cart.deleteOne({ userId: userId });
 
         return res.status(200).json({ success: 'Ok', orderId: savedOrder._id, razorpayOrderId: razorpayOrder.id, grandTotal });
     } catch (error) {
@@ -131,6 +168,7 @@ exports.placeOrder = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+
 
 
 

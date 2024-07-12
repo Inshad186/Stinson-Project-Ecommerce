@@ -88,13 +88,13 @@
               <div class="menu-title">Users</div>
             </a>
             <ul>
-              <li><a href="/admin/userList">
-                  <ion-icon name="ellipse-outline"></ion-icon>User List
-                </a>
-              </li>
-            </ul>
+            <li><a href="/admin/userList">
+              <ion-icon name="ellipse-outline"></ion-icon>User List
+            </a>
           </li>
-
+        </ul>
+          </li>
+  
           <li>
             <a class="has-arrow" href="javascript:;">
               <div class="parent-icon">
@@ -102,14 +102,14 @@
               </div>
               <div class="menu-title">Categories</div>
             </a>
-            <ul>
-              <li><a href="/admin/categoryList">
+              <ul>
+                <li><a href="/admin/categoryList">
                   <ion-icon name="ellipse-outline"></ion-icon>Categories
-              </li>
-              <li><a href="/admin/addCategory">
+                </li>
+                <li><a href="/admin/addCategory">
                   <ion-icon name="ellipse-outline"></ion-icon>Add Category
-              </li>
-            </ul>
+                </li>
+              </ul>
             </a>
           </li>
           <li>
@@ -119,14 +119,42 @@
               </div>
               <div class="menu-title">Products</div>
             </a>
-            <ul>
-              <li><a href="/admin/productList">
+              <ul>
+                <li><a href="/admin/productList">
                   <ion-icon name="ellipse-outline"></ion-icon>Products
-              </li>
-              <li><a href="/admin/addProduct">
+                </li>
+                <li><a href="/admin/addProduct">
                   <ion-icon name="ellipse-outline"></ion-icon>Add Product
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </a>
+          </li>
+          <li>
+            <a class="has-arrow" href="javascript:;">
+              <div class="parent-icon">
+                <ion-icon name="gift-outline"></ion-icon>
+              </div>
+              <div class="menu-title">Orders</div>
+            </a>
+              <ul>
+                <li><a href="/admin/order">
+                  <ion-icon name="ellipse-outline"></ion-icon>Orders List
+                </li>
+              </ul>
+            </a>
+          </li>
+          <li>
+            <a class="has-arrow" href="javascript:;">
+              <div class="parent-icon">
+                <ion-icon name="gift-outline"></ion-icon>
+              </div>
+              <div class="menu-title">Coupons</div>
+            </a>
+              <ul>
+                <li><a href="/admin/coupons">
+                  <ion-icon name="ellipse-outline"></ion-icon>Coupon List
+                </li>
+              </ul>
             </a>
           </li>
 
@@ -791,78 +819,77 @@
 
 
 
-
-
-
                     <div class="container d-flex justify-content-center align-items-center min-vh-100">
                       <div class="card w-100" style="max-width: 600px;">
                         <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center">
                           <h5 class="card-title">Edit Coupon</h5>
                           <hr class="w-100" />
-                          <form id="addCouponForm" action="/admin/editCoupon" enctype="multipart/form-data"  method="POST">
+                          <form id="addCouponForm" action="/admin/editCoupon" enctype="multipart/form-data" method="POST">
                             <div class="form-body mt-4 w-100">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="border border-3 p-4 rounded d-flex flex-column align-items-center">
-                                            <div class="mb-3 w-100">
-                                                <label for="CouponName" class="form-label">Coupon Name</label>
-                                                <input name="couponName" type="text" class="form-control" id="CouponName" value="<%= couponToEdit.couponName%>" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                              <label for="CouponCode" class="form-label">Coupon Code</label>
-                                              <input name="CouponCode" type="text" class="form-control" id="CouponCode" value="<%= couponToEdit.couponCode%>" required>
-                                          </div>
-                                            <div class="mb-3 w-100">
-                                                <label for="DiscountPercentage" class="form-label">Discount Percentage</label>
-                                                <input name="discountPercentage" type="number" step="0.01" class="form-control" id="DiscountPercentage" value="<%= couponToEdit.discountPercentage%>" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                                <label for="MinPurchaseAmt" class="form-label">Min Purchase Amount</label>
-                                                <input name="minPurchaseAmount" type="number" step="0.01" class="form-control" id="MinPurchaseAmt" value="<%= couponToEdit.minPurchaseAmount%>" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                                <label for="MaxRedeemAmt" class="form-label">Max Redeem Amount</label>
-                                                <input name="maxRedeemAmount" type="number" step="0.01" class="form-control" id="MaxRedeemAmt" value="<%= couponToEdit.maxRedeemAmount%>" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                              <label for="ExpDate" class="form-label">Expiry Date</label>
-                                              <input name="expiryDate" type="date" class="form-control" id="ExpDate" value="<%= new Date(couponToEdit.expiryDate).toISOString().split('T')[0] %>" required>
-                                          </div>
-                                        </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="border border-3 p-4 rounded d-flex flex-column align-items-center">
+                                    <div class="mb-3 w-100">
+                                      <label for="CouponName" class="form-label">Coupon Name</label>
+                                      <input name="couponName" type="text" class="form-control" id="CouponName" value="<%= couponToEdit.couponName%>" required>
                                     </div>
-                                    <div class="col-12 d-flex justify-content-center mt-3">
-                                        <button type="submit" id="addCouponButton" class="btn btn-primary">Update Coupon</button>
+                                    <div class="mb-3 w-100">
+                                      <label for="CouponCode" class="form-label">Coupon Code</label>
+                                      <input name="CouponCode" type="text" class="form-control" id="CouponCode" value="<%= couponToEdit.couponCode%>" required>
                                     </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="DiscountPercentage" class="form-label">Discount Percentage</label>
+                                      <input name="discountPercentage" type="number" step="0.01" class="form-control" id="DiscountPercentage" value="<%= couponToEdit.discountPercentage%>" required>
+                                      <span id="discountError" class="text-danger" style="display: none;">Discount percentage must be between 0 and 70.</span>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="MinPurchaseAmt" class="form-label">Min Purchase Amount</label>
+                                      <input name="minPurchaseAmount" type="number" step="0.01" class="form-control" id="MinPurchaseAmt" value="<%= couponToEdit.minPurchaseAmount%>" required>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="MaxRedeemAmt" class="form-label">Max Redeem Amount</label>
+                                      <input name="maxRedeemAmount" type="number" step="0.01" class="form-control" id="MaxRedeemAmt" value="<%= couponToEdit.maxRedeemAmount%>" required>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="ExpDate" class="form-label">Expiry Date</label>
+                                      <input name="expiryDate" type="date" class="form-control" id="ExpDate" value="<%= new Date(couponToEdit.expiryDate).toISOString().split('T')[0] %>" required>
+                                    </div>
+                                  </div>
                                 </div>
+                                <div class="col-12 d-flex justify-content-center mt-3">
+                                  <button type="submit" id="addCouponButton" class="btn btn-primary">Update Coupon</button>
+                                </div>
+                              </div>
                             </div>
-                        </form>
-                        
+                          </form>
                         </div>
                       </div>
                     </div>
-
+                    
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+                    
                     <script>
                       document.getElementById("addCouponForm").addEventListener("submit", async function(event){
-                        event.preventDefault()
-
-                          const couponName = document.getElementById("CouponName").value;
-                          const couponCode = document.getElementById("CouponCode").value;
-                          const discountPercentage = document.getElementById("DiscountPercentage").value;
-                          const minPurchaseAmount = document.getElementById("MinPurchaseAmt").value;
-                          const maxRedeemAmount = document.getElementById("MaxRedeemAmt").value;
-                          const expiryDate = document.getElementById("ExpDate").value;
-                          console.log(couponName);
-                          console.log(couponCode);
-                          console.log(discountPercentage);
-                          console.log(maxRedeemAmount);
-                          console.log(expiryDate);
-
-                          const couponId = "<%= couponToEdit._id %>"
-                          console.log("Coupon ID : ",couponId );
-
-                          try {
+                        event.preventDefault();
+                    
+                        const discountPercentage = parseFloat(document.getElementById("DiscountPercentage").value);
+                        const discountError = document.getElementById("discountError");
+                    
+                        if (discountPercentage <= 0 || discountPercentage > 70) {
+                          discountError.style.display = "block";
+                          return;
+                        } else {
+                          discountError.style.display = "none";
+                        }
+                    
+                        const couponName = document.getElementById("CouponName").value;
+                        const couponCode = document.getElementById("CouponCode").value;
+                        const minPurchaseAmount = document.getElementById("MinPurchaseAmt").value;
+                        const maxRedeemAmount = document.getElementById("MaxRedeemAmt").value;
+                        const expiryDate = document.getElementById("ExpDate").value;
+                        const couponId = "<%= couponToEdit._id %>";
+                    
+                        try {
                           const response = await fetch(`/admin/editcoupon?couponId=${couponId}`, {
                             method: "POST",
                             headers: {
@@ -878,10 +905,10 @@
                               expiryDate: expiryDate
                             })
                           });
-                      
+                    
                           const data = await response.json();
                           console.log(data);
-                      
+                    
                           if (data.success) {
                             await Swal.fire({
                               title: "Updated",
@@ -904,8 +931,13 @@
                             icon: "error"
                           });
                         }
-                      })
+                      });
                     </script>
+                    
+
+
+
+
 
                     <!-- <script>
                       document.getElementById("addCouponButton").addEventListener("click", async function(event){

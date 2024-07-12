@@ -4,6 +4,7 @@ const Address = require("../../models/addressModel")
 const Order = require("../../models/orderModel")
 const Coupons = require("../../models/couponModel")
 const Cart = require("../../models/cartModel")
+const Wallet = require("../../models/walletModel")
 
 
 exports.viewUserProfile = async (req, res) => {
@@ -13,21 +14,88 @@ exports.viewUserProfile = async (req, res) => {
         if (!userId) {
             return res.status(401).send("Unavailable UserId");
         }
+
         const user = await User.findById(userId);
-        const userAddress = await Address.find({userId:userId})
-        const userOrders = await Order.find({ userId:userId })
-        const userCoupons = await Coupons.find({});
+        const userAddress = await Address.find({ userId: userId });
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5; 
+        const skip = (page - 1) * limit;
+
+        const userOrders = await Order.find({ userId: userId })
+            .sort({createdAt:-1})
+            .skip(skip)
+            .limit(limit);
+        const totalOrders = await Order.countDocuments({ userId: userId });
+
+        const userCoupons = await Coupons.find({listed:false});
+
+        const wallet = await Wallet.findOne({ userId: userId });
+
 
         if (!user) {
             return res.status(404).send("User not found");
         }
-        res.render("users/user-profile", { user ,userAddress ,userOrders ,userCoupons });
-        
+
+        res.render("users/user-profile", {
+            user,
+            userAddress,
+            userOrders,
+            userCoupons,
+            currentPage: page,
+            totalPages: Math.ceil(totalOrders / limit),
+            limit,
+            wallet
+        });
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
     }
 };
+
+
+exports.cancelOrder = async (req, res, next) => {
+    try {
+        const userId = req.session.userId;
+        const orderId = req.body.orderId;
+
+        const order = await Order.findOne({ userId: userId, _id: orderId });
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        order.status = 'canceled';
+        await order.save();
+
+        let wallet = await Wallet.findOne({ userId: userId });
+        const refundAmount = order.grandTotal;
+        const transaction = {
+            amount: refundAmount,
+            transactionMethod: 'Refund',
+            date: new Date()
+        };
+
+        if (wallet) {
+            wallet.balance += refundAmount;
+            wallet.transactions.push(transaction);
+        } else {
+            wallet = new Wallet({
+                userId: userId,
+                balance: refundAmount,
+                transactions: [transaction]
+            });
+        }
+
+        await wallet.save();
+
+        res.json({ message: 'Order canceled and refund added to wallet' });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 
 
 exports.applyCoupon = async (req, res) => {
@@ -38,33 +106,40 @@ exports.applyCoupon = async (req, res) => {
         if (!userId) {
             return res.status(401).send("User not authenticated");
         }
+
         const cart = await Cart.findOne({ userId }).populate({
             path: 'products.productVariantId',
             select: 'size salePrice stock colour image productName categoryName'
         });
+
         if (!cart) {
             return res.status(404).send("Cart not found");
         }
-        const subTotal = cart.products.reduce((acc, product) => acc + (product.productVariantId.salePrice * product.quantity), 50);
+
+        let subTotal = 0;
+        cart.products.forEach(product => {
+            subTotal += product.productVariantId.salePrice * product.quantity;
+        });
 
         if (subTotal < 3000) {
             return res.status(400).json({ message: "Purchase at least for 3000 to avail this coupon" });
         }
+
         const coupon = await Coupons.findOne({ couponCode });
 
         if (!coupon) {
             return res.status(404).json({ message: "Invalid coupon code" });
         }
-
         const discount = (subTotal * coupon.discountPercentage) / 100;
         const newTotal = subTotal - discount;
 
-        res.status(200).json({ discount, newTotal });
+        res.status(200).json({ discount, newTotal, couponId: coupon._id });
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
     }
 };
+
 
 
 
@@ -96,6 +171,7 @@ exports.updateUserProfile = async (req, res) => {
 
 exports.getUserOrders = async (req, res) => {
     try {
+        console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"  );
         const userId = req.session.userId;
 
         if (!userId) {
@@ -106,6 +182,7 @@ exports.getUserOrders = async (req, res) => {
             path: 'orderItems.variantId',
             select: 'productName'
         });
+        console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO     :     ",orders);
 
         res.status(200).json({ success: true, orders });
     } catch (error) {
@@ -204,6 +281,10 @@ exports.changePassword = async (req, res) => {
 
         if (!isMatch) {
             return res.status(400).send("Current password is incorrect");
+        }
+
+        if(currentpass === newPassword){
+            return res.status(400).send("Current password and new password must be different")
         }
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);

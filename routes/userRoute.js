@@ -3,6 +3,7 @@ const router = express.Router();
 
 router.use(express.static('public/users/assets'));
 
+const errorHandler = require("../middleware/errorHandler")
 const loadSignup = require("../controllers/users/signup");
 const loadHome = require("../controllers/users/home");
 const loadshopList = require("../controllers/users/shop")
@@ -37,6 +38,7 @@ router.patch("/editAddress/:id", userAuth.isAuthenticated,userDetail.editAddress
 router.post("/changePassword", userAuth.isAuthenticated,userDetail.changePassword)
 router.post("/orderList", userAuth.isAuthenticated,userDetail.getUserOrders)
 router.post("/applyCoupon", userAuth.isAuthenticated,userDetail.applyCoupon)
+router.post('/cancelOrder', userDetail.cancelOrder);
 // router.get('/checkOutAddress',userAuth.isAuthenticated , userDetail.checkOutAddress);
 
 
@@ -55,6 +57,7 @@ router.get("/order",userAuth.isAuthenticated , loadOrder.viewOrder)
 router.post('/place-order',userAuth.isAuthenticated , loadOrder.placeOrder)
 router.post("/payment-success", userAuth.isAuthenticated ,loadOrder.verifyPayment)
 
+router.use(errorHandler)
 
 module.exports = router;
 

@@ -663,22 +663,22 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% let subTotal=50; %>
-									<% cart.products.forEach(product=> { %>
-									<% const total=product.productVariantId.salePrice * product.quantity; %>
-									<% subTotal +=total; %>
-									<tr>
-									<th>
-									<%= product.productVariantId.productName %> x <%= product.quantity %>
-									<span>Color: <%= product.productVariantId.colour %> & Size: <%= product.size %></span>
-									</th>
-									<td>
-										<%= total.toFixed(2) %>/-
-									</td>
-									</tr>
+									<% let subTotal = 0; %>
+									<% cart.products.forEach(product => { %>
+										<% const total = product.productVariantId.salePrice * product.quantity; %>
+										<% subTotal += total; %>
+										<tr>
+											<th>
+												<%= product.productVariantId.productName %> x <%= product.quantity %>
+												<span>Color: <%= product.productVariantId.colour %> & Size: <%= product.size %></span>
+											</th>
+											<td>
+												<%= total.toFixed(2) %>/-
+											</td>
+										</tr>
 									<% }); %>
 									<tr>
-										<th>Coupon Discount : </th>
+										<th>Coupon Discount:</th>
 										<td id="discountAmount">Nill</td>
 									</tr>
 								</tbody>
@@ -691,50 +691,53 @@
 									</tr>
 								</tfoot>
 							</table>
-
-							<script>
-								document.getElementById('couponForm').addEventListener('submit', async function(event) {
-									event.preventDefault();
-							
-									const couponCode = document.getElementById('couponCode').value;
-									try {
-										const response = await fetch('/applyCoupon', {
-											method: 'POST',
-											headers: {
-												'Content-Type': 'application/json'
-											},
-											body: JSON.stringify({ couponCode })
-										});
-							
-										const responseData = await response.json();
-							
-										if (responseData) {
-											if (responseData.newTotal !== undefined) {
-												document.getElementById('discountAmount').textContent = (responseData.discount).toFixed(2) + '/-';
-												document.getElementById('subTotal').textContent = (responseData.newTotal).toFixed(2) + '/-';
-												Swal.fire({
-													icon: 'success',
-													title: 'Coupon Applied',
-													text: `Discount applied: ${responseData.discount.toFixed(2)}/-`
-												});
-											} else {
-												Swal.fire({
-													icon: 'error',
-													title: 'Coupon Error',
-													text: responseData.message
-												});
-											}
+						</div>
+						
+						<script>
+							document.getElementById('couponForm').addEventListener('submit', async function(event) {
+								event.preventDefault();
+						
+								const couponCode = document.getElementById('couponCode').value;
+								try {
+									const response = await fetch('/applyCoupon', {
+										method: 'POST',
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										body: JSON.stringify({ couponCode })
+									});
+						
+									const responseData = await response.json();
+						
+									if (responseData) {
+										if (responseData.newTotal !== undefined) {
+											document.getElementById('discountAmount').textContent = (responseData.discount).toFixed(2) + '/-';
+											document.getElementById('subTotal').textContent = (responseData.newTotal).toFixed(2) + '/-';
+											document.getElementById('couponId').value = responseData.couponId;
+											Swal.fire({
+												icon: 'success',
+												title: 'Coupon Applied',
+												text: `Discount applied: ${responseData.discount.toFixed(2)}/-`
+											});
+										} else {
+											Swal.fire({
+												icon: 'error',
+												title: 'Coupon Error',
+												text: responseData.message
+											});
 										}
-									} catch (error) {
-										console.error('Error:', error);
-										Swal.fire({
-											icon: 'error',
-											title: 'Coupon Error',
-											text: 'An error occurred while applying the coupon.'
-										});
 									}
-								});
-							</script>
+								} catch (error) {
+									console.error('Error:', error);
+									Swal.fire({
+										icon: 'error',
+										title: 'Coupon Error',
+										text: 'An error occurred while applying the coupon.'
+									});
+								}
+							});
+						</script>
+						
 							
 							
 
@@ -764,6 +767,7 @@
 							<form id="orderForm" action="/place-order" method="POST" style="display: none;">
 								<input type="hidden" name="addressId" id="addressId" value="">
 								<input type="hidden" name="paymentMethod" value="COD">
+								<input type="hidden" name="couponId" id="couponId" value="">
 							</form>
 						</div>
                      </div>
@@ -800,6 +804,7 @@
 								
 									const addressId = selectedAddress.value;
 									const paymentMethod = selectedPaymentMethod.value;
+									const couponId = document.getElementById('couponId') ? document.getElementById('couponId').value : null;
 								
 									// If COD is selected, proceed with COD order
 									Swal.fire({
@@ -820,10 +825,16 @@
 												},
 												body: JSON.stringify({
 													addressId: addressId,
-													paymentMethod: paymentMethod
+													paymentMethod: paymentMethod,
+													couponId: couponId
 												})
 											})
-											.then(response => response.json())
+											.then(response => {
+												if (!response.ok) {
+													throw new Error('Network response was not ok');
+												}
+												return response.json();
+											})
 											.then(data => {
 												if (data.success) {
 													if (paymentMethod === 'COD') {
@@ -835,7 +846,6 @@
 															"currency": "INR",
 															"name": "Acme Corp",
 															"order_id": data.razorpayOrderId,
-								
 															"handler": async function (response) {
 																const paymentData = {
 																	razorpay_order_id: response.razorpay_order_id,
@@ -904,11 +914,19 @@
 														icon: "error"
 													});
 												}
+											})
+											.catch(error => {
+												console.error('There has been a problem with your fetch operation:', error);
+												Swal.fire({
+													text: "An error occurred while placing the order.",
+													icon: "error"
+												});
 											});
 										}
 									});
 								});
-								</script>
+							</script>
+							
 								
 
 

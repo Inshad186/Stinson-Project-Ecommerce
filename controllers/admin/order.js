@@ -5,17 +5,31 @@ const Variant = require("../../models/varientModel")
 exports.loadOrder = async (req, res) => {
     try {
         const userId = req.session.userId;
-        console.log("User idddd : ",userId);
 
         if (!userId) {
             return res.status(401).send("User not authenticated");
         }
 
-        const orders = await Order.find({})
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 8;
+        const skip = (page - 1) * limit;
 
-        console.log("Ordersassss  ",orders);
+        const ordersCount = await Order.countDocuments({ userId: userId });
+        const totalPages = Math.ceil(ordersCount / limit);
 
-        res.render("admin/order",{orders})
+        const orders = await Order.find({ userId: userId })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        console.log("Ordersassss  ", orders);
+
+        res.render("admin/order", {
+            orders,
+            currentPage: page,
+            totalPages: totalPages,
+            limit: limit
+        });
     } catch (error) {
         console.log("Error in getUserOrders", error);
         return res.status(500).json({ success: false, message: "Server Error" });

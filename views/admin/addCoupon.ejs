@@ -129,6 +129,34 @@
             </ul>
             </a>
           </li>
+          <li>
+            <a class="has-arrow" href="javascript:;">
+              <div class="parent-icon">
+                <ion-icon name="gift-outline"></ion-icon>
+              </div>
+              <div class="menu-title">Orders</div>
+            </a>
+              <ul>
+                <li><a href="/admin/order">
+                  <ion-icon name="ellipse-outline"></ion-icon>Orders List
+                </li>
+              </ul>
+            </a>
+          </li>
+          <li>
+            <a class="has-arrow" href="javascript:;">
+              <div class="parent-icon">
+                <ion-icon name="gift-outline"></ion-icon>
+              </div>
+              <div class="menu-title">Coupons</div>
+            </a>
+              <ul>
+                <li><a href="/admin/coupons">
+                  <ion-icon name="ellipse-outline"></ion-icon>Coupon List
+                </li>
+              </ul>
+            </a>
+          </li>
 
           <!-- <li class="menu-label">Forms & Tables</li>
         <li>
@@ -791,9 +819,6 @@
 
 
 
-
-
-
                     <div class="container d-flex justify-content-center align-items-center min-vh-100">
                       <div class="card w-100" style="max-width: 600px;">
                         <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center">
@@ -801,103 +826,113 @@
                           <hr class="w-100" />
                           <form id="addCouponForm" action="/admin/addCoupon" enctype="multipart/form-data" method="POST">
                             <div class="form-body mt-4 w-100">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="border border-3 p-4 rounded d-flex flex-column align-items-center">
-                                            <div class="mb-3 w-100">
-                                                <label for="CouponName" class="form-label">Coupon Name</label>
-                                                <input name="couponName" type="text" class="form-control" id="CouponName" placeholder="Enter coupon name" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                              <label for="CouponCode" class="form-label">Coupon Code</label>
-                                              <input name="couponCode" type="text" class="form-control" id="CouponCode" placeholder="Enter coupon Code" required>
-                                          </div>
-                                            <div class="mb-3 w-100">
-                                                <label for="DiscountPercentage" class="form-label">Discount Percentage</label>
-                                                <input name="discountPercentage" type="number" step="0.01" class="form-control" id="DiscountPercentage" placeholder="00.00" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                                <label for="MinPurchaseAmt" class="form-label">Min Purchase Amount</label>
-                                                <input name="minPurchaseAmount" type="number" step="0.01" class="form-control" id="MinPurchaseAmt" placeholder="00.00" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                                <label for="MaxRedeemAmt" class="form-label">Max Redeem Amount</label>
-                                                <input name="maxRedeemAmount" type="number" step="0.01" class="form-control" id="MaxRedeemAmt" placeholder="00.00" required>
-                                            </div>
-                                            <div class="mb-3 w-100">
-                                                <label for="ExpDate" class="form-label">Expiry Date</label>
-                                                <input name="expiryDate" type="date" class="form-control" id="ExpDate" required>
-                                            </div>
-                                        </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="border border-3 p-4 rounded d-flex flex-column align-items-center">
+                                    <div class="mb-3 w-100">
+                                      <label for="CouponName" class="form-label">Coupon Name</label>
+                                      <input name="couponName" type="text" class="form-control" id="CouponName" placeholder="Enter coupon name" required>
                                     </div>
-                                    <div class="col-12 d-flex justify-content-center mt-3">
-                                        <button type="submit" id="addCouponButton" class="btn btn-primary">ADD Coupon</button>
+                                    <div class="mb-3 w-100">
+                                      <label for="CouponCode" class="form-label">Coupon Code</label>
+                                      <input name="couponCode" type="text" class="form-control" id="CouponCode" placeholder="Enter coupon Code" required>
                                     </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="DiscountPercentage" class="form-label">Discount Percentage</label>
+                                      <input name="discountPercentage" type="number" step="0.01" class="form-control" id="DiscountPercentage" placeholder="00.00" required>
+                                      <span id="discountError" class="text-danger" style="display: none;">Discount percentage must be between 0 and 70.</span>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="MinPurchaseAmt" class="form-label">Min Purchase Amount</label>
+                                      <input name="minPurchaseAmount" type="number" step="0.01" class="form-control" id="MinPurchaseAmt" placeholder="00.00" required>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="MaxRedeemAmt" class="form-label">Max Redeem Amount</label>
+                                      <input name="maxRedeemAmount" type="number" step="0.01" class="form-control" id="MaxRedeemAmt" placeholder="00.00" required>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="ExpDate" class="form-label">Expiry Date</label>
+                                      <input name="expiryDate" type="date" class="form-control" id="ExpDate" required>
+                                    </div>
+                                  </div>
                                 </div>
+                                <div class="col-12 d-flex justify-content-center mt-3">
+                                  <button type="submit" id="addCouponButton" class="btn btn-primary">ADD Coupon</button>
+                                </div>
+                              </div>
                             </div>
-                        </form>
-                        
+                          </form>
                         </div>
                       </div>
                     </div>
-
+                    
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+                    
                     <script>
                       document.getElementById("addCouponButton").addEventListener("click", async function(event){
-                          event.preventDefault();
-                      
-                          const couponName = document.getElementById("CouponName").value;
-                          const couponCode = document.getElementById("CouponCode").value;
-                          const discountPercentage = document.getElementById("DiscountPercentage").value;
-                          const minPurchaseAmount = document.getElementById("MinPurchaseAmt").value;
-                          const maxRedeemAmount = document.getElementById("MaxRedeemAmt").value;
-                          const expiryDate = document.getElementById("ExpDate").value;
-                      
-                          try {
-                              const response = await fetch('/admin/addCoupon', {
-                                  method: 'POST',
-                                  headers: {
-                                      'Content-Type': 'application/json'
-                                  },
-                                  body: JSON.stringify({
-                                      couponName: couponName,
-                                      couponCode: couponCode,
-                                      discountPercentage: discountPercentage,
-                                      minPurchaseAmount: minPurchaseAmount,
-                                      maxRedeemAmount: maxRedeemAmount,
-                                      expiryDate: expiryDate
-                                  })
-                              });
+                        event.preventDefault();
                     
-                              const data = await response.json();
-                      
-                              if (data.success) {
-                                const result = await Swal.fire({
-                                  title: "Added",
-                                  text: "Coupon added successfully",
-                                  icon: "success"
-                                });
-                                if (result.isConfirmed) {
-                                  window.location.href = "/admin/coupons";
-                                }
-                              } else {
-                              await Swal.fire({
-                                title: "Error",
-                                text: "Failed to add Coupon",
-                                icon: "error"
-                              });
+                        const discountPercentage = parseFloat(document.getElementById("DiscountPercentage").value);
+                        const discountError = document.getElementById("discountError");
+                    
+                        if (discountPercentage <= 0 || discountPercentage > 70) {
+                          discountError.style.display = "block";
+                          return;
+                        } else {
+                          discountError.style.display = "none";
+                        }
+                    
+                        const couponName = document.getElementById("CouponName").value;
+                        const couponCode = document.getElementById("CouponCode").value;
+                        const minPurchaseAmount = document.getElementById("MinPurchaseAmt").value;
+                        const maxRedeemAmount = document.getElementById("MaxRedeemAmt").value;
+                        const expiryDate = document.getElementById("ExpDate").value;
+                    
+                        try {
+                          const response = await fetch('/admin/addCoupon', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                              couponName: couponName,
+                              couponCode: couponCode,
+                              discountPercentage: discountPercentage,
+                              minPurchaseAmount: minPurchaseAmount,
+                              maxRedeemAmount: maxRedeemAmount,
+                              expiryDate: expiryDate
+                            })
+                          });
+                    
+                          const data = await response.json();
+                    
+                          if (data.success) {
+                            const result = await Swal.fire({
+                              title: "Added",
+                              text: "Coupon added successfully",
+                              icon: "success"
+                            });
+                            if (result.isConfirmed) {
+                              window.location.href = "/admin/coupons";
                             }
-                          } catch (error) {
-                              console.error('Error:', error);
-                              await Swal.fire({
+                          } else {
+                            await Swal.fire({
                               title: "Error",
-                              text: "An error occurred. Please try again later.",
+                              text: "Failed to add Coupon",
                               icon: "error"
                             });
                           }
+                        } catch (error) {
+                          console.error('Error:', error);
+                          await Swal.fire({
+                            title: "Error",
+                            text: "An error occurred. Please try again later.",
+                            icon: "error"
+                          });
+                        }
                       });
                     </script>
+                    
                     
 
 

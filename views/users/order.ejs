@@ -506,10 +506,10 @@
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="pages-title-text">
-							<h3>Order Complete</h3>
+							<h3>Track Orders</h3>
 							<ul>
 								<li><a href="/">Home</a></li>
-								<li><span>/</span>Order Complete</li>
+								<li><span>/</span>Track Order</li>
 							</ul>
 						</div>
 					</div>
@@ -523,21 +523,25 @@
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="complete-title">
-							<p>thank you. your order has been received.</p>
+							<p>Thank you. Your order has been received.</p>
 						</div>
 						<div class="order-no">
 							<ul>
-								<li>order no <span>m 2653257</span></li>
+								<li>Order no <span>m 2653257</span></li>
 								<li>Date <span><%= new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span></li>
-								<% let grandTotal = 50; %>
+								<% let grandTotal = 50; %> 
 								<% orders.orderItems.forEach(item => { %>
 									<% const total = item.variantPrice * item.quantity; %>
 									<% grandTotal += total; %>
 								<% }); %>
-								<li>total<span><%= grandTotal %>/-</span></li>
-								<li>payment method<span><%= orders.paymentMethod %></span></li>
+								<% if (orders.couponDetails && orders.couponDetails.claimedAmount) { %>
+									<% grandTotal -= orders.couponDetails.claimedAmount; %>
+								<% } %>
+								<li>Total <span><%= grandTotal.toFixed(2) %>/-</span></li>
+								<li>Payment Method <span><%= orders.paymentMethod %></span></li>
 							</ul>
 						</div>
+						
 					</div>
 				</div>
 				<div class="row section-padding-top">
@@ -547,7 +551,6 @@
 							<hr />
 						</div>
 						<div class="place-text clearfix">
-
 							<table>
 								<thead>
 									<tr>
@@ -556,7 +559,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% let subTotal = 50; %>
+									<% let subTotal = 0; %>
 									<% orders.orderItems.forEach(item => { %>
 										<% const total = item.variantPrice * item.quantity; %>
 										<% subTotal += total; %>
@@ -565,15 +568,22 @@
 											<th><%= total.toFixed(2) %>/-</th>
 										</tr>
 									<% }); %>
+									<tr>
+										<th>Coupon Discount:</th>
+										<th id="discountAmount"><%= orders.couponDetails ? (orders.couponDetails.claimedAmount || 0).toFixed(2) : 'Nill' %>/-</th>
+									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
-										<th>Sub Total + shipping charge</th>
-										<td><%= subTotal.toFixed(2) %>/-</td>
+										<th>Sub Total + Shipping Charge</th>
+										<td><%= (subTotal + parseFloat(orders.deliveryCharge) - (orders.couponDetails ? parseFloat(orders.couponDetails.claimedAmount) : 0)).toFixed(2) %>/-</td>
+									</tr>
+									<tr>
+										<th>Grand Total</th>
+										<td><%= orders.grandTotal.toFixed(2) %>/-</td>
 									</tr>
 								</tfoot>
 							</table>
-							
 						</div>
 					</div>
 					<div class="col-md-4 offset-lg-1 col-lg-3">

@@ -71,16 +71,6 @@ const orderSchema = new mongoose.Schema({
             required: true
         },
 
-        // locality: {
-        //     type: String,
-        //     required: true
-        // },
-
-        // address: {
-        //     type: String,
-        //     required: true
-        // },
-
         city: {
             type: String,
             required: true
@@ -100,15 +90,26 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-
-        // addressType: {
-        //     type: String,
-        //     required: true
-        // }
-
     },
-},
 
-{timestamps: true});
+    couponDetails: {
+        discountPercentage: {
+            type: Number
+        },
+        claimedAmount: {
+            type: Number
+        },
+        couponCode: {
+            type: String
+        },
+        minPurchaseAmount: {
+            type: Number
+        },
+        maxDiscountAmount: {
+            type: Number
+        },
+    }
+
+}, {timestamps: true});
 
 module.exports = mongoose.model('Order',orderSchema);

@@ -1,7 +1,7 @@
 const Product = require("../../models/productModel")
 const Variant = require("../../models/varientModel")
 
-exports.viewshopList = async (req, res) => {
+exports.viewshopList = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 6;
@@ -26,18 +26,21 @@ exports.viewshopList = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Server Error");
+        next(error)
     }
 };
 
 
 
-exports.productDetail = async (req, res) => {
+exports.productDetail = async (req, res, next) => {
     try {
         const variantId = req.query.id;
         const variant = await Variant.findOne({ _id: variantId });
 
         if (!variant) {
-            return res.status(404).send("Variant not found");
+            const error = new Error("Variant not found");
+            error.status = 404;
+            throw error;
         }
 
         const stockWithStatus = variant.size.map((size, index) => ({
@@ -54,7 +57,8 @@ exports.productDetail = async (req, res) => {
         res.render("users/productDetail", { variant, stockWithStatus, colors, sizes, otherVariants });
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Server Error");
+        error.status = 500;
+        next(error);
     }
 };
 
