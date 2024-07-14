@@ -57,7 +57,7 @@ exports.viewUserProfile = async (req, res) => {
 exports.cancelOrder = async (req, res, next) => {
     try {
         const userId = req.session.userId;
-        const orderId = req.body.orderId;
+        const { orderId, variantId } = req.body;
 
         const order = await Order.findOne({ userId: userId, _id: orderId });
 
@@ -65,11 +65,22 @@ exports.cancelOrder = async (req, res, next) => {
             return res.status(404).json({ error: 'Order not found' });
         }
 
-        order.status = 'canceled';
-        await order.save();
+        const product = order.orderItems[0]
+
+        if (!product) {
+            return res.status(404).json({ error: 'Order item not found' });
+        }
+
+        let refundAmount = product.variantPrice * product.quantity;
+
+        if (order.couponDetails && order.couponDetails.couponCode) {
+            const coupon = order.couponDetails;
+            const discount = (product.variantPrice * (coupon.discountPercentage / 100)) * product.quantity;
+            const maxDiscount = Math.min(discount, coupon.maxDiscountAmount);
+            refundAmount -= maxDiscount / order.orderItems.length;
+        }
 
         let wallet = await Wallet.findOne({ userId: userId });
-        const refundAmount = order.grandTotal;
         const transaction = {
             amount: refundAmount,
             transactionMethod: 'Refund',
@@ -89,6 +100,14 @@ exports.cancelOrder = async (req, res, next) => {
 
         await wallet.save();
 
+        order.orderItems = order.orderItems.filter(item => !item.variantId.equals(variantId));
+
+        if (order.orderItems.length === 0) {
+            order.status = 'Cancelled';
+        }
+
+        await order.save();
+
         res.json({ message: 'Order canceled and refund added to wallet' });
     } catch (error) {
         next(error);
@@ -96,6 +115,35 @@ exports.cancelOrder = async (req, res, next) => {
 };
 
 
+exports.returnOrder = async (req, res) => {
+    try {
+        const { orderId, variantId } = req.body;
+        const order = await Order.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        const orderItem = order.orderItems.find(item => item._id.toString() === variantId);
+        if (!orderItem) {
+            return res.status(404).json({ error: 'Order item not found' });
+        }
+
+        if (orderItem.orderStatus !== 'Delivered') {
+            return res.status(400).json({ error: 'Order is not delivered yet' });
+        }
+
+        await Order.findOneAndUpdate(
+            { _id: orderId, 'orderItems._id': variantId },
+            { $set: { 'orderItems.$.orderStatus': 'Return requested'}}
+        );
+        
+        res.json({ message: 'Your return request placed successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
 
 
 exports.applyCoupon = async (req, res) => {
@@ -121,16 +169,17 @@ exports.applyCoupon = async (req, res) => {
             subTotal += product.productVariantId.salePrice * product.quantity;
         });
 
-        if (subTotal < 3000) {
-            return res.status(400).json({ message: "Purchase at least for 3000 to avail this coupon" });
-        }
-
         const coupon = await Coupons.findOne({ couponCode });
 
         if (!coupon) {
             return res.status(404).json({ message: "Invalid coupon code" });
         }
-        const discount = (subTotal * coupon.discountPercentage) / 100;
+
+        if (subTotal < coupon.minPurchaseAmount) {
+            return res.status(400).json({ message: "Purchase at least for 3000 to avail this coupon" });
+        }
+
+        const discount = Math.min(subTotal * (coupon.discountPercentage / 100), coupon.maxRedeemAmount);
         const newTotal = subTotal - discount;
 
         res.status(200).json({ discount, newTotal, couponId: coupon._id });
@@ -139,8 +188,6 @@ exports.applyCoupon = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
-
-
 
 
 exports.updateUserProfile = async (req, res) => {
@@ -166,7 +213,6 @@ exports.updateUserProfile = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
-
 
 
 exports.getUserOrders = async (req, res) => {

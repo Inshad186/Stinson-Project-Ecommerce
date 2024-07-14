@@ -39,6 +39,8 @@ router.post("/changePassword", userAuth.isAuthenticated,userDetail.changePasswor
 router.post("/orderList", userAuth.isAuthenticated,userDetail.getUserOrders)
 router.post("/applyCoupon", userAuth.isAuthenticated,userDetail.applyCoupon)
 router.post('/cancelOrder', userDetail.cancelOrder);
+router.post('/returnOrder', userDetail.returnOrder);
+
 // router.get('/checkOutAddress',userAuth.isAuthenticated , userDetail.checkOutAddress);
 
 

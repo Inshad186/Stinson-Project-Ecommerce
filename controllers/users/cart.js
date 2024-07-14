@@ -11,13 +11,27 @@ exports.viewCart = async (req, res, next) => {
         }
         const cart = await Cart.findOne({ userId }).populate({
             path: 'products.productVariantId',
-            select: 'size salePrice stock colour image productName categoryName',
+            select: 'size salePrice stock colour image productName categoryName offerDiscount',
             populate: {
                 path: 'productId',
                 model: 'Product',
                 select: 'categoryId'
             }
         });
+
+        if (cart && cart.products) {
+            cart.products = cart.products.map(product => {
+                const variant = product.productVariantId;
+                if (variant.offerDiscount) {
+                    const discountPrice = variant.salePrice - (variant.salePrice * (variant.offerDiscount) / 100);
+                    product.discountPrice = parseInt(discountPrice)
+                } else {
+                    product.discountPrice = variant.salePrice;
+                }
+                return product;
+            });
+        }
+
         res.render('users/cart', { cart });
 
     } catch (error) {
@@ -162,6 +176,35 @@ exports.removeCart = async (req, res, next) => {
 ///////////////////////      CheckOut     ////////////////////////
 
 
+// exports.viewCheckOut = async (req, res) => {
+//     try {
+//         const userId = req.session.userId;
+//         if (!userId) {
+//             return res.status(401).send("User not authenticated");
+//         }
+//         const cartItem = await Cart.findOne({ userId }).populate({
+//             path: 'products.productVariantId',
+//             select: 'size salePrice stock colour image productName categoryName ',
+//             populate: {
+//                 path: 'productId',
+//                 model: 'Product',
+//                 select: 'categoryId'
+//             }
+//         });
+
+//         const addresses = await Address.find({ userId });
+
+//         if (!cartItem || cartItem.products.length === 0) {
+//             return res.status(400).redirect('/cart');
+//         }
+
+//         res.render("users/checkout", { cart: cartItem, addresses });
+//     } catch (error) {
+//         console.log("error in viewCheckOut", error);
+//         res.status(500).send("Server Error");
+//     }
+// };
+
 exports.viewCheckOut = async (req, res) => {
     try {
         const userId = req.session.userId;
@@ -170,7 +213,7 @@ exports.viewCheckOut = async (req, res) => {
         }
         const cartItem = await Cart.findOne({ userId }).populate({
             path: 'products.productVariantId',
-            select: 'size salePrice stock colour image productName categoryName',
+            select: 'size salePrice stock colour image productName categoryName offerDiscount',
             populate: {
                 path: 'productId',
                 model: 'Product',
@@ -178,18 +221,37 @@ exports.viewCheckOut = async (req, res) => {
             }
         });
 
+        if (cartItem && cartItem.products) {
+            cartItem.products = cartItem.products.map(product => {
+                const variant = product.productVariantId;
+                if (variant.offerDiscount) {
+                    const discountPrice = variant.salePrice - (variant.salePrice * variant.offerDiscount / 100);
+                    product.discountPrice = parseInt(discountPrice);
+                } else {
+                    product.discountPrice = variant.salePrice;
+                }
+                return product;
+            });
+        }
+
         const addresses = await Address.find({ userId });
 
         if (!cartItem || cartItem.products.length === 0) {
             return res.status(400).redirect('/cart');
         }
 
-        res.render("users/checkout", { cart: cartItem, addresses });
+        let couponDiscount = 0;
+        if (req.session.couponDiscount) {
+            couponDiscount = req.session.couponDiscount;
+        }
+
+        res.render("users/checkout", { cart: cartItem, addresses, couponDiscount });
     } catch (error) {
         console.log("error in viewCheckOut", error);
         res.status(500).send("Server Error");
     }
 };
+
 
 
 //////////////////////      WishList     //////////////////////////

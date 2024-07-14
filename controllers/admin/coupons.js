@@ -30,7 +30,7 @@ exports.addCoupon = async (req, res) => {
 
         res.status(200).json({success:true , couponId: saveCoupon._id })
     } catch (error) {
-        console.log("Error in createCoupon", error);
+        console.log("Error in addCoupon", error);
         res.status(500).send("Server Error");
     }
 }

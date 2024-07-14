@@ -157,6 +157,20 @@
             </ul>
           </a>
         </li>
+        <li>
+          <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon">
+              <ion-icon name="gift-outline"></ion-icon>
+            </div>
+            <div class="menu-title">Offer</div>
+          </a>
+            <ul>
+              <li><a href="/admin/offer">
+                <ion-icon name="ellipse-outline"></ion-icon>Offer List
+              </li>
+            </ul>
+          </a>
+        </li>
 
           <!-- <li class="menu-label">Forms & Tables</li>
           <li>
@@ -802,8 +816,7 @@
                       <th>USER ID</th>
                       <th>DATE</th>
                       <th>CUSTOMER</th>
-                      <th>PAYMENT STATUS</th>
-                      <th>FULFILMENT STATUS</th>
+                      <th>ORDER STATUS</th>
                       <th>PAYMENT METHOD</th>
                       <th>TOTAL</th>
                       <th>DETAILS</th>
@@ -830,18 +843,7 @@
                           <h6><%= order.shippingAddress.name %></h6>
                         </td>
                         <td>
-                          <h6><%= order.paymentMethod %></h6>
-                        </td>
-                        <td>
-                          <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="statusButton-<%= order._id %>" aria-haspopup="true" aria-expanded="false">
-                              Pending
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="statusButton-<%= order._id %>">
-                              <a class="dropdown-item" href="#" data-status="Shipped">Shipped</a>
-                              <a class="dropdown-item" href="#" data-status="Delivered">Delivered</a>
-                            </div>
-                          </div>
+                          <h6><%= order.orderItems.length > 0 ? order.orderItems[0].orderStatus : 'N/A' %></h6>
                         </td>
                         <td>
                           <h6><%= order.paymentMethod %></h6>
@@ -851,7 +853,7 @@
                         </td>
                         <td>
                           <h6>
-                            <button type="button" class="btn btn-success">SHOW</button>
+                            <a href="/admin/orderDetail?orderId=<%= order._id %>" class="btn btn-success">SHOW</a>
                           </h6>
                         </td>
                         <td>
@@ -930,114 +932,6 @@
               window.location.href = "?page=<%= currentPage + 1 %>&limit=<%= limit %>";
             }
           </script>
-          
-                
-
-
-               <!-- <div class="input-group mb-3 mt-2">
-                <input type="text" id="search-input" class="form-control" placeholder="Search...">
-                <button class="btn btn-primary" type="button" onclick="searchTable()">Search</button>
-              </div> -->
-          
-          <!-- <script>
-            let currentPage = 1;
-            const itemsPerPage = 5; // Number of items to display per page
-            let originalRows = []; // Store the original unfiltered rows
-          
-            function paginateTable(filteredRows = null) {
-              const rows = filteredRows || originalRows;
-              const totalItems = rows.length;
-              const totalPages = Math.ceil(totalItems / itemsPerPage);
-          
-              // Update page info
-              document.getElementById('current-page').innerText = currentPage;
-              document.getElementById('total-pages').innerText = totalPages;
-          
-              // Hide all rows
-              originalRows.forEach(row => row.style.display = 'none');
-          
-              // Show rows for the current page
-              const start = (currentPage - 1) * itemsPerPage;
-              const end = start + itemsPerPage;
-          
-              for (let i = start; i < end && i < totalItems; i++) {
-                rows[i].style.display = '';
-              }
-          
-              // Disable previous button on first page
-              document.querySelector('.btn.btn-secondary[onclick="prevPage()"]').disabled = currentPage === 1;
-              // Disable next button on last page
-              document.querySelector('.btn.btn-secondary[onclick="nextPage()"]').disabled = currentPage === totalPages;
-            }
-          
-            function prevPage() {
-              if (currentPage > 1) {
-                currentPage--;
-                paginateTable();
-              }
-            }
-          
-            function nextPage() {
-              const totalPages = Math.ceil(originalRows.length / itemsPerPage);
-              if (currentPage < totalPages) {
-                currentPage++;
-                paginateTable();
-              }
-            }
-          
-            function searchTable() {
-              const searchValue = document.getElementById('search-input').value.toLowerCase();
-              const rows = Array.from(originalRows);
-          
-              const filteredRows = rows.filter(row => {
-                const cells = Array.from(row.querySelectorAll('td'));
-                return cells.some(cell => cell.innerText.toLowerCase().includes(searchValue));
-              });
-          
-              currentPage = 1;
-              paginateTable(filteredRows);
-            }
-          
-            // Initialize pagination on page load
-            document.addEventListener('DOMContentLoaded', () => {
-              originalRows = Array.from(document.querySelectorAll('tbody tr'));
-              paginateTable();
-            });
-          </script> -->
-          
-          
-
-          <!-- <script>
-
-            async function toggleStatus(userId, button, status) {
-
-              const response = await fetch("/admin/blockUser", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  userId: userId,
-                })
-              });
-              const data = await response.json();
-
-              if (data.success) {
-                button.innerText = data.userState ? "UNBLOCK" : "BLOCK";
-                button.classList.remove("bg-success", "bg-danger");
-                button.classList.add(data.userState ? "bg-success" : "bg-danger");
-
-                status.innerText = data.userState ? "INACTIVE" : "ACTIVE";
-
-                const result = await Swal.fire({
-                  title: "Updated!",
-                  text: "User data has been updated",
-                  icon: "success"
-                });
-              }
-            }
-
-          </script> -->
 
 
 

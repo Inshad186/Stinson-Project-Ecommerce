@@ -665,7 +665,7 @@
 								<tbody>
 									<% let subTotal = 0; %>
 									<% cart.products.forEach(product => { %>
-										<% const total = product.productVariantId.salePrice * product.quantity; %>
+										<% const total = product.discountPrice * product.quantity; %>
 										<% subTotal += total; %>
 										<tr>
 											<th>
@@ -673,25 +673,36 @@
 												<span>Color: <%= product.productVariantId.colour %> & Size: <%= product.size %></span>
 											</th>
 											<td>
-												<%= total.toFixed(2) %>/-
+												<%= parseInt(total) %>/-
 											</td>
 										</tr>
 									<% }); %>
 									<tr>
 										<th>Coupon Discount:</th>
-										<td id="discountAmount">Nill</td>
+										<td id="discountAmount">
+											<% if (typeof couponDiscount !== 'undefined' && couponDiscount > 0) { %>
+												<%= parseInt(couponDiscount) %>/-
+											<% } else { %>
+												Nill
+											<% } %>
+										</td>
 									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
 										<th>Subtotal</th>
 										<td id="subTotal">
-											<%= subTotal.toFixed(2) %>/-
+											<% if (typeof couponDiscount !== 'undefined' && couponDiscount > 0) { %>
+												<%= parseInt(subTotal - couponDiscount) %>/-
+											<% } else { %>
+												<%= parseInt(subTotal) %>/-
+											<% } %>
 										</td>
 									</tr>
 								</tfoot>
 							</table>
 						</div>
+						
 						
 						<script>
 							document.getElementById('couponForm').addEventListener('submit', async function(event) {
@@ -711,13 +722,13 @@
 						
 									if (responseData) {
 										if (responseData.newTotal !== undefined) {
-											document.getElementById('discountAmount').textContent = (responseData.discount).toFixed(2) + '/-';
-											document.getElementById('subTotal').textContent = (responseData.newTotal).toFixed(2) + '/-';
+											document.getElementById('discountAmount').textContent = parseInt(responseData.discount) + '/-';
+											document.getElementById('subTotal').textContent = parseInt(responseData.newTotal) + '/-';
 											document.getElementById('couponId').value = responseData.couponId;
 											Swal.fire({
 												icon: 'success',
 												title: 'Coupon Applied',
-												text: `Discount applied: ${responseData.discount.toFixed(2)}/-`
+												text:`Discount applied: ${parseInt(responseData.discount)}/-`
 											});
 										} else {
 											Swal.fire({

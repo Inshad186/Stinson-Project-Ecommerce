@@ -25,7 +25,7 @@ exports.verifySignin = async (req, res) => {
             return res.status(401).json({ success: false, message: "No admin with this email" });
         }
 
-        console.log(adminData);
+        if(adminData.is_Admin === true){
 
         const isPasswordMatch = await bcrypt.compare(password, adminData.password);
         if (!isPasswordMatch) {
@@ -34,8 +34,13 @@ exports.verifySignin = async (req, res) => {
 
         req.session.userId = adminData._id; 
         req.session.isAuthenticated = true;
+        req.session.isAdmin = true;
 
-        res.json({ success:true });
+        return res.json({ success:true });
+    }else{
+
+        return res.status(401).json({success:false , message : "Incorrect password or email"});
+    }
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({ success: false, message: "Internal Server Error" });

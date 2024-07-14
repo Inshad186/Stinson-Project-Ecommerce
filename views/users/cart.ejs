@@ -380,7 +380,29 @@
 														<h6 class="itemcolor">Size  : <span><%= product.size %></span></h6>
 													</div>
 												</td>
-												<td><%= product.productVariantId.salePrice %></td>
+												<td>
+													<% 
+													let finalPrice = product.productVariantId.salePrice;
+													if (product.productVariantId.offerDiscount) {
+														finalPrice = product.productVariantId.salePrice - (product.productVariantId.salePrice * product.productVariantId.offerDiscount / 100);
+													}
+													%>
+													<% if (product.productVariantId.offerDiscount) { %>
+														<div class="price-section">
+															<span class="original-price">
+																<del><%= product.productVariantId.salePrice %>/-</del>
+															</span>
+															<span class="discounted-price">
+																<%= finalPrice.toFixed(2) %>/- 
+															</span>
+															<span class="discount-label" style="color: red;">
+																<%= product.productVariantId.offerDiscount %>% off
+															</span>
+														</div>
+													<% } else { %>
+														<%= finalPrice.toFixed(2) %>/-
+													<% } %>
+												</td>
 												<td>
 													<div class="plus-minus">
 														<a class="dec qtybutton">-</a>
@@ -390,7 +412,7 @@
 												</td>
 												<td>
 													<div class="total-price">
-														<%= product.productVariantId.salePrice * product.quantity %>
+														<%= parseInt(finalPrice * product.quantity) %>/-
 													</div>
 												</td>
 												<td><i class="pe-7s-close" title="Remove this product"></i></td>

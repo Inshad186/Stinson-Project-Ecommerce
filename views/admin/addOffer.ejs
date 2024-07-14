@@ -88,13 +88,13 @@
               <div class="menu-title">Users</div>
             </a>
             <ul>
-            <li><a href="/admin/userList">
-              <ion-icon name="ellipse-outline"></ion-icon>User List
-            </a>
+              <li><a href="/admin/userList">
+                  <ion-icon name="ellipse-outline"></ion-icon>User List
+                </a>
+              </li>
+            </ul>
           </li>
-        </ul>
-          </li>
-  
+
           <li>
             <a class="has-arrow" href="javascript:;">
               <div class="parent-icon">
@@ -102,14 +102,14 @@
               </div>
               <div class="menu-title">Categories</div>
             </a>
-              <ul>
-                <li><a href="/admin/categoryList">
+            <ul>
+              <li><a href="/admin/categoryList">
                   <ion-icon name="ellipse-outline"></ion-icon>Categories
-                </li>
-                <li><a href="/admin/addCategory">
+              </li>
+              <li><a href="/admin/addCategory">
                   <ion-icon name="ellipse-outline"></ion-icon>Add Category
-                </li>
-              </ul>
+              </li>
+            </ul>
             </a>
           </li>
           <li>
@@ -119,14 +119,14 @@
               </div>
               <div class="menu-title">Products</div>
             </a>
-              <ul>
-                <li><a href="/admin/productList">
+            <ul>
+              <li><a href="/admin/productList">
                   <ion-icon name="ellipse-outline"></ion-icon>Products
-                </li>
-                <li><a href="/admin/addProduct">
+              </li>
+              <li><a href="/admin/addProduct">
                   <ion-icon name="ellipse-outline"></ion-icon>Add Product
-                </li>
-              </ul>
+              </li>
+            </ul>
             </a>
           </li>
           <li>
@@ -148,20 +148,6 @@
               <div class="parent-icon">
                 <ion-icon name="gift-outline"></ion-icon>
               </div>
-              <div class="menu-title">Coupons</div>
-            </a>
-              <ul>
-                <li><a href="/admin/coupons">
-                  <ion-icon name="ellipse-outline"></ion-icon>Coupon List
-                </li>
-              </ul>
-            </a>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon">
-                <ion-icon name="gift-outline"></ion-icon>
-              </div>
               <div class="menu-title">Offer</div>
             </a>
               <ul>
@@ -171,6 +157,8 @@
               </ul>
             </a>
           </li>
+
+
           <!-- <li class="menu-label">Forms & Tables</li>
         <li>
           <a class="has-arrow" href="javascript:;">
@@ -760,7 +748,7 @@
                 <ol class="breadcrumb mb-0 p-0 align-items-center">
                   <li class="breadcrumb-item"><a href="javascript:;"><ion-icon name="home-outline"></ion-icon></a>
                   </li>
-                  <li class="breadcrumb-item active" aria-current="page">Variant Details</li>
+                  <li class="breadcrumb-item active" aria-current="page">Shop List View</li>
                 </ol>
               </nav>
             </div>
@@ -782,283 +770,321 @@
           </div>
           <!--end breadcrumb-->
 
+          <!--start shop area-->
+          <section class="shop-page">
+            <div class="shop-container">
+              <div class="card shadow-sm border-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="toolbox d-flex flex-row align-items-center gap-2">
+                            <div class="d-flex flex-wrap flex-grow-1 gap-1">
+                              <div class="d-flex align-items-center flex-nowrap">
+                                <p class="mb-0 font-13 text-nowrap">Sort By:</p>
+                                <select class="form-select ms-3">
+                                  <option value="menu_order" selected="selected">Default sorting</option>
+                                  <option value="popularity">Sort by popularity</option>
+                                  <option value="rating">Sort by average rating</option>
+                                  <option value="date">Sort by newness</option>
+                                  <option value="price">Sort by price: low to high</option>
+                                  <option value="price-desc">Sort by price: high to low</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                              <div class="d-flex align-items-center flex-nowrap">
+                                <p class="mb-0 font-13 text-nowrap">Show:</p>
+                                <select class="form-select ms-3">
+                                  <option>9</option>
+                                  <option>12</option>
+                                  <option>16</option>
+                                  <option>20</option>
+                                  <option>50</option>
+                                  <option>100</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="btn-group">
+                              <a href="ecommerce-shop-grid-view.html" class="btn btn-primary"><i
+                                  class='bx bxs-grid mx-0'></i></a>
+                              <a href="ecommerce-shop-list-view.html" class="btn btn-outline-primary"><i
+                                  class='bx bx-list-ul mx-0'></i></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-          <div class="card radius-10" style="width: 50%;">
-            <div class="card-body">
-              <div class="table-responsive mt-2">
-                <table class="table align-middle mb-0">
-                  <thead class="table-light">
-                    <tr>
-                      <th>Product</th>
-                      <th>Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    <tr>
-                      <td style="display: flex; align-items: center;">
-                        <img src="<%= productDetails.image %>" alt="Variant Image"
-                          style="width: 100px; height: 100px; margin-right: 10px;">
-                        <span style="margin-left: auto;">
-                          <%= productDetails.name %>
-                        </span>
-                      </td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
 
 
 
+                    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+                      <div class="card w-100" style="max-width: 600px;">
+                        <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center">
+                          <h5 class="card-title">Add New Offer</h5>
+                          <hr class="w-100" />
+                          <form id="addOfferForm" action="/admin/addOffer" enctype="multipart/form-data" method="POST">
+                            <div class="form-body mt-4 w-100">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="border border-3 p-4 rounded d-flex flex-column align-items-center">
+                                    <div class="mb-3 w-100">
+                                      <label for="offerName" class="form-label">Offer Name</label>
+                                      <input name="offerName" type="text" class="form-control" id="offerName" placeholder="Enter offer name" required>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="offerType" class="form-label">Offer Type</label>
+                                      <select name="offerType" class="form-control" id="offerType" required>
+                                        <option value="">Select Offer Type</option>
+                                        <option value="Product Offer">Product Offer</option>
+                                        <option value="Category Offer">Category Offer</option>
+                                      </select>
+                                    </div>
+                                    <div class="mb-3 w-100" id="productSelectContainer" style="display: none;">
+                                      <label for="selectProduct" class="form-label">Select Product</label>
+                                      <select name="selectProduct" class="form-control" id="selectProduct">
+                                        <option value="">Select Product</option>
+                                        <% variants.forEach(variant => { %>
+                                          <option value="<%= variant._id %>"><%= variant.productName %></option>
+                                        <% }); %>
+                                      </select>
+                                    </div>
+                                    <div class="mb-3 w-100" id="categorySelectContainer" style="display: none;">
+                                      <label for="selectCategory" class="form-label">Select Category</label>
+                                      <select name="selectCategory" class="form-control" id="selectCategory">
+                                        <option value="">Select Category</option>
+                                        <% categories.forEach(category => { %>
+                                          <option value="<%= category._id %>"><%= category.name %></option>
+                                        <% }); %>
+                                      </select>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="DiscountPercentage" class="form-label">Discount Percentage</label>
+                                      <input name="discountPercentage" type="number" step="0.01" class="form-control" id="DiscountPercentage" placeholder="00.00" required>
+                                      <span id="discountError" class="text-danger" style="display: none;">Discount percentage must be between 0 and 70.</span>
+                                    </div>
+                                    <div class="mb-3 w-100">
+                                      <label for="ExpDate" class="form-label">Expiry Date</label>
+                                      <input name="expiryDate" type="date" class="form-control" id="ExpDate" required>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center mt-3">
+                                  <button type="submit" id="addOfferButton" class="btn btn-primary">Add New Offer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    
+                    <script>
 
-          <div class="card radius-10 w-100">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <h6 class="mb-0">Variant Details</h6>
-                <div class="fs-5 ms-auto dropdown">
-                  <div class="dropdown-toggle dropdown-toggle-nocaret cursor-pointer" data-bs-toggle="dropdown">
-                    <i class="bi bi-three-dots"></i>
-                  </div>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
+                      document.getElementById('offerType').addEventListener('change', function() {
+                          var productSelectContainer = document.getElementById('productSelectContainer');
+                          var categorySelectContainer = document.getElementById('categorySelectContainer');
+
+                          if (this.value === 'Product Offer') {
+                            productSelectContainer.style.display = 'block';
+                            categorySelectContainer.style.display = 'none';
+                          } else if (this.value === 'Category Offer') {
+                            productSelectContainer.style.display = 'none';
+                            categorySelectContainer.style.display = 'block';
+                          } else {
+                            productSelectContainer.style.display = 'none';
+                            categorySelectContainer.style.display = 'none';
+                          }
+                        });
+
+                      document.getElementById("addOfferButton").addEventListener("click", async function(event){
+                        event.preventDefault();
+                    
+                        const discountPercentage = parseFloat(document.getElementById("DiscountPercentage").value);
+                        const discountError = document.getElementById("discountError");
+                    
+                        if (discountPercentage <= 0 || discountPercentage > 70) {
+                          discountError.style.display = "block";
+                          return;
+                        } else {
+                          discountError.style.display = "none";
+                        }
+                    
+                        const offerName = document.getElementById("offerName").value;
+                        const expiryDate = document.getElementById("ExpDate").value;
+                    
+                        try {
+                          const response = await fetch('/admin/addOffer', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                              offerName: offerName,
+                              discountPercentage: discountPercentage,
+                              expiryDate: expiryDate,
+                              offerType: document.getElementById('offerType').value,
+                              selectProduct: document.getElementById('selectProduct').value,
+                              selectCategory: document.getElementById('selectCategory').value
+                            })
+                          });
+                    
+                          const data = await response.json();
+                    
+                          if (data.success) {
+                            const result = await Swal.fire({
+                              title: "Added",
+                              text: "Coupon added successfully",
+                              icon: "success"
+                            });
+                            if (result.isConfirmed) {
+                              window.location.href = "/admin/offer";
+                            }
+                          } else {
+                            await Swal.fire({
+                              title: "Error",
+                              text: "Failed to add Offeer",
+                              icon: "error"
+                            });
+                          }
+                        } catch (error) {
+                          console.error('Error:', error);
+                          await Swal.fire({
+                            title: "Error",
+                            text: "An error occurred. Please try again later.",
+                            icon: "error"
+                          });
+                        }
+                      });
+                    </script>
+                    
+
+
+
+                    <!-- <div style="text-align: center;">
+                    <button
+                      style=" border: none;  font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s, transform 0.3s;">
+                      <a href="/admin/addProduct" class="btn btn-primary"><i class="bx bxs-cart-add"></i>Add Product</a>
+                    </button>
+                  </div> -->
+
+
+                    <!-- <script>
+                    function toggleDelete(element) {
+                      element.classList.toggle('active');
+
+                      const trashIcon = element.querySelector('.fa-trash');
+                      const checkIcon = element.querySelector('.fa-check');
+
+                      if (element.classList.contains('active')) {
+
+                        element.classList.remove('text-danger');
+                        element.classList.add('text-success');
+                        trashIcon.style.display = 'none';
+                        checkIcon.style.display = 'inline';
+                      } else {
+
+                        element.classList.remove('text-success');
+                        element.classList.add('text-danger');
+                        trashIcon.style.display = 'inline';
+                        checkIcon.style.display = 'none';
+                      }
+
+                      console.log('Delete state:', element.classList.contains('active'));
+                    }
+                  </script> -->
+
+
+
+                  </div><!--end row-->
                 </div>
               </div>
-              <div class="table-responsive mt-2">
-                <table class="table align-middle mb-0">
-                  <thead class="table-light">
-                    <tr>
-                      <th>Varient</th>
-                      <th>Size</th>
-                      <th>Colour</th>
-                      <th>Price</th>
-                      <th>Quantity</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% for(let i=variantDetails.length-1 ; i>= 0 ; i--) { %>
-                      <tr>
-                        <td>
-                          <% variantDetails[i].image.forEach(img=> { %>
-                            <img src="<%= img %>" alt="Variant Image"
-                              style="width: 50px; height: 50px; margin-right: 5px;">
-                            <% }); %>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= variantDetails[i].size %>
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= variantDetails[i].colour %>
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= variantDetails[i].salePrice %>
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>
-                            <%= variantDetails[i].stock %>
-                          </h6>
-                        </td>
-                        <td id="<%= variantDetails[i]._id %>">
-                          <%= variantDetails[i].is_Delete ? 'UNLISTED' : 'LISTED' %>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center gap-3 fs-6">
-                            <a href="/admin/editVariant/<%= variantDetails[i]._id %>">
-                              <span class="badge bg-primary" style="cursor: pointer;">EDIT</span>
-                            </a>
-                            <span class="badge bg-<%= variantDetails[i].is_Delete ? 'success' : 'danger' %>"
-                              onclick="toggleStatus('<%= variantDetails[i]._id %>', this, document.getElementById('<%= variantDetails[i]._id %>'))">
-                              <%= variantDetails[i].is_Delete ? 'LIST' : 'UNLIST' %>
-                            </span>
-                          </div>
-                          <div class="d-flex align-items-center gap-3 fs-6">
-                            <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="View detail"
-                              aria-label="Views">
-                              <ion-icon name="eye-outline"></ion-icon>
-                            </a>
-                            <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit">
-                              <ion-icon name="pencil-outline"></ion-icon>
-                            </a>
-                            <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete">
-                              <ion-icon name="trash-outline"></ion-icon>
-                            </a>
-                          </div>
-                        </td>
-                      </tr>
-                      <% } %>
-                  </tbody>
-                </table>
-              </div>
             </div>
-          </div>
-
-          <div style="text-align: center;">
-            <button
-              style="background-color: transparent; border: none; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s, transform 0.3s;">
-              <a href="/admin/loadVarients/<%= productId %>" class="btn btn-primary"><i class="bx bxs-cart-add"></i>Add
-                Variant</a>
-            </button>
-          </div>
-
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-          <script>
-            async function toggleStatus(variantId, button, statusElement) {
-              console.log(variantId);
-
-              try {
-                const response = await fetch("/admin/deleteVariant", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({ variantId: variantId })
-                });
-
-                console.log('Response:', response);
-
-                const data = await response.json();
-
-                if (data.success) {
-                  button.innerText = data.variantState ? "LIST" : "UNLIST";
-                  button.classList.remove("bg-success", "bg-danger");
-                  button.classList.add(data.variantState ? "bg-success" : "bg-danger");
-
-                  statusElement.innerText = data.variantState ? "UNLISTED" : "LISTED";
-
-                  await Swal.fire({
-                    title: "Updated!",
-                    text: "Variant status has been updated.",
-                    icon: "success"
-                  });
-                } else {
-                  await Swal.fire({
-                    title: "Error!",
-                    text: data.message || "An error occurred while updating the variant status.",
-                    icon: "error"
-                  });
-                }
-              } catch (error) {
-                console.error("Error updating variant status:", error);
-                await Swal.fire({
-                  title: "Error!",
-                  text: "An error occurred while updating the variant status.",
-                  icon: "error"
-                });
-              }
-            }
-          </script>
-
-
-
-
-
-
-
-        </div><!--end row-->
-      </div>
-    </div>
-    </div>
-    </section>
-    <!--end shop area-->
-
-    </div>
-    <!-- end page content-->
-    </div>
-
-
-
-    <!--Start Back To Top Button-->
-    <a href="javaScript:;" class="back-to-top"><ion-icon name="arrow-up-outline"></ion-icon></a>
-    <!--End Back To Top Button-->
-
-    <!--start switcher-->
-    <div class="switcher-body">
-      <button class="btn btn-primary btn-switcher shadow-sm" type="button" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><ion-icon name="color-palette-sharp"
-          class="me-0"></ion-icon></button>
-      <div class="offcanvas offcanvas-end shadow border-start-0 p-2" data-bs-scroll="true" data-bs-backdrop="false"
-        tabindex="-1" id="offcanvasScrolling">
-        <div class="offcanvas-header border-bottom">
-          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Theme Customizer</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-          <h6 class="mb-0">Theme Variation</h6>
-          <hr>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="LightTheme" value="option1"
-              checked>
-            <label class="form-check-label" for="LightTheme">Light</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="DarkTheme" value="option2">
-            <label class="form-check-label" for="DarkTheme">Dark</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="SemiDark" value="option3">
-            <label class="form-check-label" for="SemiDark">Semi Dark</label>
-          </div>
-          <hr />
-          <h6 class="mb-0">Header Colors</h6>
-          <hr />
-          <div class="header-colors-indigators">
-            <div class="row row-cols-auto g-3">
-              <div class="col">
-                <div class="indigator headercolor1" id="headercolor1"></div>
-              </div>
-              <div class="col">
-                <div class="indigator headercolor2" id="headercolor2"></div>
-              </div>
-              <div class="col">
-                <div class="indigator headercolor3" id="headercolor3"></div>
-              </div>
-              <div class="col">
-                <div class="indigator headercolor4" id="headercolor4"></div>
-              </div>
-              <div class="col">
-                <div class="indigator headercolor5" id="headercolor5"></div>
-              </div>
-              <div class="col">
-                <div class="indigator headercolor6" id="headercolor6"></div>
-              </div>
-              <div class="col">
-                <div class="indigator headercolor7" id="headercolor7"></div>
-              </div>
-              <div class="col">
-                <div class="indigator headercolor8" id="headercolor8"></div>
-              </div>
-            </div>
-          </div>
+          </section>
+          <!--end shop area-->
 
         </div>
+        <!-- end page content-->
       </div>
-    </div>
-    <!--end switcher-->
 
 
-    <!--start overlay-->
-    <div class="overlay nav-toggle-icon"></div>
-    <!--end overlay-->
+
+      <!--Start Back To Top Button-->
+      <a href="javaScript:;" class="back-to-top"><ion-icon name="arrow-up-outline"></ion-icon></a>
+      <!--End Back To Top Button-->
+
+      <!--start switcher-->
+      <div class="switcher-body">
+        <button class="btn btn-primary btn-switcher shadow-sm" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><ion-icon name="color-palette-sharp"
+            class="me-0"></ion-icon></button>
+        <div class="offcanvas offcanvas-end shadow border-start-0 p-2" data-bs-scroll="true" data-bs-backdrop="false"
+          tabindex="-1" id="offcanvasScrolling">
+          <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Theme Customizer</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+          </div>
+          <div class="offcanvas-body">
+            <h6 class="mb-0">Theme Variation</h6>
+            <hr>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="LightTheme" value="option1"
+                checked>
+              <label class="form-check-label" for="LightTheme">Light</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="DarkTheme" value="option2">
+              <label class="form-check-label" for="DarkTheme">Dark</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="SemiDark" value="option3">
+              <label class="form-check-label" for="SemiDark">Semi Dark</label>
+            </div>
+            <hr />
+            <h6 class="mb-0">Header Colors</h6>
+            <hr />
+            <div class="header-colors-indigators">
+              <div class="row row-cols-auto g-3">
+                <div class="col">
+                  <div class="indigator headercolor1" id="headercolor1"></div>
+                </div>
+                <div class="col">
+                  <div class="indigator headercolor2" id="headercolor2"></div>
+                </div>
+                <div class="col">
+                  <div class="indigator headercolor3" id="headercolor3"></div>
+                </div>
+                <div class="col">
+                  <div class="indigator headercolor4" id="headercolor4"></div>
+                </div>
+                <div class="col">
+                  <div class="indigator headercolor5" id="headercolor5"></div>
+                </div>
+                <div class="col">
+                  <div class="indigator headercolor6" id="headercolor6"></div>
+                </div>
+                <div class="col">
+                  <div class="indigator headercolor7" id="headercolor7"></div>
+                </div>
+                <div class="col">
+                  <div class="indigator headercolor8" id="headercolor8"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--end switcher-->
+
+
+      <!--start overlay-->
+      <div class="overlay nav-toggle-icon"></div>
+      <!--end overlay-->
 
     </div>
     <!--end wrapper-->

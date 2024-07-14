@@ -28,6 +28,9 @@ const categorySchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
+    },
+    offerDiscount: {
+        type: Number
     }
 });
 

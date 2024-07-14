@@ -10,6 +10,7 @@ const varient = require("../controllers/admin/varients")
 const adminAuth = require("../middleware/adminMiddleware")
 const loadOrder = require("../controllers/admin/order")
 const loadCoupon = require("../controllers/admin/coupons")
+const loadOffer = require("../controllers/admin/offer")
 
 
 const generateStorage = require("../utils/multer")
@@ -53,6 +54,8 @@ router.post("/deleteVariant" ,adminAuth.isAuthenticated ,varient.deleteVariant)
 router.get("/productDetail" ,adminAuth.isAuthenticated ,loadProduct.viewProductDetails)
 
 router.get("/order" ,adminAuth.isAuthenticated ,loadOrder.loadOrder)
+router.get("/orderDetail", adminAuth.isAuthenticated, loadOrder.loadOrderDetails)
+router.post('/updateOrderStatus', adminAuth.isAuthenticated, loadOrder.updateOrderStatus)
 
 router.get("/coupons" ,adminAuth.isAuthenticated ,loadCoupon.couponsList)
 router.get("/addCoupon" ,adminAuth.isAuthenticated , loadCoupon.viewAddCoupons)
@@ -61,5 +64,13 @@ router.post('/addCoupon' ,adminAuth.isAuthenticated , loadCoupon.addCoupon)
 router.get("/editCoupon" ,adminAuth.isAuthenticated ,loadCoupon.viewEditCoupon )
 router.post("/editCoupon" ,adminAuth.isAuthenticated ,loadCoupon.editCoupon)
 router.patch("/deleteCoupon" ,adminAuth.isAuthenticated ,loadCoupon.deleteCoupon)
+
+router.get("/offer", adminAuth.isAuthenticated, loadOffer.viewOfferList)
+router.get("/addOffer", adminAuth.isAuthenticated, loadOffer.viewAddOffer)
+router.post("/addOffer", adminAuth.isAuthenticated, loadOffer.addOffer)
+
+router.get("/editOffer", adminAuth.isAuthenticated, loadOffer.viewEditOffer)
+router.post("/editOffer", adminAuth.isAuthenticated, loadOffer.editOffer)
+router.patch("/deleteOffer", adminAuth.isAuthenticated, loadOffer.deleteOffer)
 
 module.exports = router;

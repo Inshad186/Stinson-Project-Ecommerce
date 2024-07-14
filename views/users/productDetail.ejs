@@ -555,7 +555,26 @@
 									<a href="#">Add review</a>
 								</div>
 								<br>
-								<h4><%= variant.salePrice %>/-</h4>
+								<%
+								const discountPrice = variant.salePrice - (variant.salePrice * (variant.offerDiscount) / 100);
+								%>
+								<div class="product-dsc">
+									<% if (variant.offerDiscount) { %>
+										<div class="price-section">
+											<span class="original-price">
+												<del><%= variant.salePrice %>/-</del>
+											</span>
+											<span class="discounted-price">
+												<%= parseInt(discountPrice) %>/- 
+											</span>
+											<span class="discount-label" style="color: red;">
+												Big <%= variant.offerDiscount %>% off
+											</span>
+										</div>
+									<% } else { %>
+										<h4 class="regular-price"><%= variant.salePrice %>/-</h4>
+									<% } %>
+								</div>
 								<br>
 								<br>
 								<h3>Variants</h3>

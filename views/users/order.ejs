@@ -537,7 +537,7 @@
 								<% if (orders.couponDetails && orders.couponDetails.claimedAmount) { %>
 									<% grandTotal -= orders.couponDetails.claimedAmount; %>
 								<% } %>
-								<li>Total <span><%= grandTotal.toFixed(2) %>/-</span></li>
+								<li>Total <span><%= parseInt(grandTotal) %>/-</span></li>
 								<li>Payment Method <span><%= orders.paymentMethod %></span></li>
 							</ul>
 						</div>
@@ -565,22 +565,22 @@
 										<% subTotal += total; %>
 										<tr>
 											<th><%= item.variantName %> x <%= item.quantity %></th>
-											<th><%= total.toFixed(2) %>/-</th>
+											<th><%= parseInt(total) %>/-</th>
 										</tr>
 									<% }); %>
 									<tr>
 										<th>Coupon Discount:</th>
-										<th id="discountAmount"><%= orders.couponDetails ? (orders.couponDetails.claimedAmount || 0).toFixed(2) : 'Nill' %>/-</th>
+										<th id="discountAmount"><%= orders.couponDetails ? parseInt(orders.couponDetails.claimedAmount || 0) : 'Nill' %>/-</th>
 									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
 										<th>Sub Total + Shipping Charge</th>
-										<td><%= (subTotal + parseFloat(orders.deliveryCharge) - (orders.couponDetails ? parseFloat(orders.couponDetails.claimedAmount) : 0)).toFixed(2) %>/-</td>
-									</tr>
+										<td><%= parseInt(subTotal + parseFloat(orders.deliveryCharge) - (orders.couponDetails ? parseFloat(orders.couponDetails.claimedAmount) : 0)) %>/-</td>
+									</tr>									
 									<tr>
 										<th>Grand Total</th>
-										<td><%= orders.grandTotal.toFixed(2) %>/-</td>
+										<td><%= parseInt(orders.grandTotal) %>/-</td>
 									</tr>
 								</tfoot>
 							</table>

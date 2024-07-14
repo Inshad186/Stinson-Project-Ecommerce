@@ -1808,7 +1808,7 @@ too.Max 5mb.</p>
                                 <% if (wallet && wallet.transactions && wallet.transactions.length > 0) { 
                                     const totalAmount = wallet.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
                                 %>
-                                    <%= totalAmount.toFixed(2) %>
+                                    <%= parseInt(totalAmount) %>
                                 <% } else { %>
                                     0.00
                                 <% } %>
@@ -1857,7 +1857,7 @@ too.Max 5mb.</p>
                                                 <td class="table-wrapper wrapper-amount">
                                                     <div class="table-wrapper-center">
                                                         <h5 class="table-heading">
-                                                            <%= transaction.amount.toFixed(2) %>
+                                                            <%= parseInt(transaction.amount) %>
                                                         </h5>
                                                     </div>
                                                 </td>
@@ -1888,118 +1888,169 @@ too.Max 5mb.</p>
 
      <!----------------------------  This  is  for  orders  List  ----------------------------->
 
-                        <div class="tab-pane fade" id="v-pills-order" role="tabpanel"
-                        aria-labelledby="v-pills-order-tab" tabindex="0">
-                        <div class="cart-section">
-                            <table>
-                                <tbody>
-                                    <tr class="table-row table-top-row">
-                                        <td class="table-wrapper wrapper-product">
-                                            <h5 class="table-heading">PRODUCT</h5>
-                                        </td>
-                                        <td class="table-wrapper">
-                                            <div class="table-wrapper-center">
-                                                <h5 class="table-heading">PRICE</h5>
-                                            </div>
-                                        </td>
-                                        <td class="table-wrapper">
-                                            <div class="table-wrapper-center">
-                                                <h5 class="table-heading">QUANTITY</h5>
-                                            </div>
-                                        </td>
-                                        <td class="table-wrapper wrapper-total">
-                                            <div class="table-wrapper-center">
-                                                <h5 class="table-heading">TOTAL</h5>
-                                            </div>
-                                        </td>
-                                        <td class="table-wrapper">
-                                            <div class="table-wrapper-center">
-                                                <h5 class="table-heading">ACTION</h5>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <% userOrders.forEach(order => { %>
-                                    <tr class="table-row ticket-row">
-                                        <td class="table-wrapper wrapper-product">
-                                            <div class="wrapper">
-                                                <div class="wrapper-content">
-                                                    <h5 class="heading">
-                                                        <a href="/order?orderId=<%= order._id %>"><%= order.orderItems[0].variantName %></a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="table-wrapper">
-                                            <div class="table-wrapper-center">
-                                                <h5 class="heading">
-                                                    <%= order.subTotal.toFixed(2) %>
-                                                </h5>
-                                            </div>
-                                        </td>
-                                        <td class="table-wrapper">
-                                            <div class="table-wrapper-center">
-                                                <div class="quantity">
-                                                    <span class="number">
-                                                        <%= order.orderItems[0].quantity %>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="table-wrapper wrapper-total">
-                                            <div class="table-wrapper-center">
-                                                <h5 class="heading">
-                                                    <%= order.grandTotal.toFixed(2) %>
-                                                </h5>
-                                            </div>
-                                        </td>
-                                        <td class="table-wrapper">
-                                            <div class="table-wrapper-center">
-                                                <% if (order.status !== 'canceled') { %>
-                                                <button onclick="cancelOrder('<%= order._id %>')"><h5 class="heading">Cancel</h5></button>
-                                                <% } else { %>
-                                                <span>Order Canceled</span>
-                                                <% } %>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <% }); %>
-                                </tbody>
-                            </table>
-                            <div class="pagination">
-                                <% if (currentPage > 1) { %>
-                                <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
-                                <% } %>
-                                <% for (let i = 1; i <= totalPages; i++) { %>
-                                <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
-                                <% } %>
-                                <% if (currentPage < totalPages) { %>
-                                <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
-                                <% } %>
-                            </div>
-                        </div>
-                    </div>
 
-                    <script>
-                        function cancelOrder(orderId) {
-                            fetch('/cancelOrder', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ orderId: orderId })
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.message) {
-                                    alert(data.message);
-                                    location.reload();
-                                } else if (data.error) {
-                                    alert(data.error);
-                                }
-                            })
-                            .catch(error => console.error('Error:', error));
+     <div class="tab-pane fade" id="v-pills-order" role="tabpanel" aria-labelledby="v-pills-order-tab" tabindex="0">
+        <div class="cart-section">
+            <table>
+                <tbody>
+                    <tr class="table-row table-top-row">
+                        <td class="table-wrapper wrapper-product">
+                            <h5 class="table-heading">PRODUCT</h5>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">PRICE</h5>
+                            </div>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">QUANTITY</h5>
+                            </div>
+                        </td>
+                        <td class="table-wrapper wrapper-total">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">TOTAL</h5>
+                            </div>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">ACTION</h5>
+                            </div>
+                        </td>
+                    </tr>
+                    <% userOrders.forEach(order => { %>
+                        <% order.orderItems.forEach(item => { %>
+                            <tr class="table-row ticket-row" data-order-id="<%= order._id %>" data-variant-id="<%= item.variantId %>">
+                                <td class="table-wrapper wrapper-product">
+                                    <div class="wrapper">
+                                        <div class="wrapper-content">
+                                            <h5 class="heading">
+                                                <a href="/order?orderId=<%= order._id %>"><%= item.variantName %></a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="table-wrapper">
+                                    <div class="table-wrapper-center">
+                                        <h5 class="heading">
+                                            <%= parseInt(item.variantPrice) %>
+                                        </h5>
+                                    </div>
+                                </td>
+                                <td class="table-wrapper">
+                                    <div class="table-wrapper-center">
+                                        <div class="quantity">
+                                            <span class="number">
+                                                <%= item.quantity %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="table-wrapper wrapper-total">
+                                    <div class="table-wrapper-center">
+                                        <h5 class="heading">
+                                            <%= parseInt(item.variantPrice * item.quantity) %>
+                                        </h5>
+                                    </div>
+                                </td>
+                                <td class="table-wrapper">
+                                    <div class="table-wrapper-center">
+                                        <% if (item.orderStatus === 'Processing') { %>
+                                            <button id="actionButton-<%= item.variantId %>" data-action="cancel" class="btn btn-danger"><h5 class="heading">Cancel</h5></button>
+                                        <% } else if (item.orderStatus === 'Delivered') { %>
+                                            <button id="actionButton-<%= item.variantId %>" data-action="return" class="btn btn-warning"><h5 class="heading">Request Return</h5></button>
+                                        <% } else { %>
+                                            <h5 class="heading"><%= item.orderStatus %></h5>
+                                        <% } %>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% }); %>
+                    
+                </tbody>
+            </table>
+            <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+                <% } %>
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                <% } %>
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function cancelOrder(orderId, variantId) {
+                fetch('/cancelOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ orderId: orderId, variantId: variantId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        // Remove the canceled product from the DOM
+                        const productRow = document.querySelector(`[data-order-id="${orderId}"][data-variant-id="${variantId}"]`);
+                        if (productRow) {
+                            productRow.remove();
                         }
-                        </script>
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+    
+            function returnOrder(orderId, variantId) {
+                fetch('/returnOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ orderId: orderId, variantId: variantId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        location.reload();
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+    
+            // Attach event listeners to action buttons
+            const actionButtons = document.querySelectorAll('[id^="actionButton-"]');
+            actionButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    const action = this.getAttribute('data-action');
+                    const orderId = this.closest('tr').getAttribute('data-order-id');
+                    const variantId = this.getAttribute('id').split('-')[1];
+    
+                    if (action === 'cancel') {
+                        cancelOrder(orderId, variantId);
+                    } else if (action === 'return') {
+                        returnOrder(orderId, variantId);
+                    }
+                });
+            });
+        });
+    </script>
+    
+    
                     
                         <!-- <div class="tab-pane fade" id="v-pills-wishlist" role="tabpanel"
                             aria-labelledby="v-pills-wishlist-tab" tabindex="0">
@@ -3057,8 +3108,6 @@ too.Max 5mb.</p>
                                     });
                                 </script>
                                 
-
-
 
 
                                 <div class="col-lg-6">
