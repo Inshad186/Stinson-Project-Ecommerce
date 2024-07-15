@@ -1,7 +1,7 @@
 
 const isAuthenticated = async(req,res,next) => {
     try {
-        if(!req.session.userId) {
+        if(!req.session.adminId) {
             return res.redirect('/admin/signin')
         }
         next();
@@ -13,7 +13,7 @@ const isAuthenticated = async(req,res,next) => {
 
 const isUnAuthenticated = (req, res, next) => {
     try {
-        if (req.session.userId) {
+        if (req.session.adminId) {
             return res.redirect('/admin/dashboard');
         }
         next();

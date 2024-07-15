@@ -393,14 +393,14 @@
 																<del><%= product.productVariantId.salePrice %>/-</del>
 															</span>
 															<span class="discounted-price">
-																<%= finalPrice.toFixed(2) %>/- 
+																<%= parseInt(finalPrice) %>/- 
 															</span>
 															<span class="discount-label" style="color: red;">
 																<%= product.productVariantId.offerDiscount %>% off
 															</span>
 														</div>
 													<% } else { %>
-														<%= finalPrice.toFixed(2) %>/-
+														<%= parseInt(finalPrice) %>/-
 													<% } %>
 												</td>
 												<td>
@@ -439,8 +439,8 @@
 										const shipping = (subtotal === 0) ? 0 : 50.00; 
 										const grandTotal = subtotal + shipping;
 							
-										document.querySelector('td[data-subtotal]').textContent = subtotal.toFixed(2);
-										document.querySelector('td[data-grand-total]').textContent = grandTotal.toFixed(2);
+										document.querySelector('td[data-subtotal]').textContent = parseInt(subtotal)
+										document.querySelector('td[data-grand-total]').textContent = parseInt(grandTotal)
 									}
 
 										async function updateCartQuantity(productId, size, quantity) {

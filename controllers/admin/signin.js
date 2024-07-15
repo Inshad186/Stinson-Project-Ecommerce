@@ -20,7 +20,8 @@ exports.verifySignin = async (req, res) => {
             return res.status(400).json({ success: false, message: "Email and Password are required" });
         }
 
-        const adminData = await AdminUser.findOne({ email: email });
+        const adminData = await AdminUser.findOne({ email: email, is_Admin: true });
+        console.log("Admin DATA  :  ",adminData);
         if (!adminData) {
             return res.status(401).json({ success: false, message: "No admin with this email" });
         }
@@ -32,7 +33,7 @@ exports.verifySignin = async (req, res) => {
             return res.status(401).json({success:false , message : "Incorrect password"});
         }
 
-        req.session.userId = adminData._id; 
+        req.session.adminId = adminData._id; 
         req.session.isAuthenticated = true;
         req.session.isAdmin = true;
 

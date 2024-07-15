@@ -31,7 +31,9 @@ const orderSchema = new mongoose.Schema({
             enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Returned', 'Completed', 'Return requested', 'Return approved', 'Return Rejected', 'Refunded'],
         },
     }],
-
+    offerDiscount: {
+        type: Number
+    },
     orderDate: {
         type: Date,
         default: Date.now

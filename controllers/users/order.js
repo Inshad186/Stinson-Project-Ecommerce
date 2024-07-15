@@ -22,13 +22,32 @@ exports.viewOrder = async (req, res, next) => {
             }
         });
 
+        console.log("ORDER INFOOOOOOO  :  ",orderInfo);
+
         if (!orderInfo) {
             return res.status(400).json({ error: 'Invalid operation' });
         }
 
+        let subTotal = 0;
+        orderInfo.orderItems.forEach(item => {
+            subTotal += item.variantPrice * item.quantity;
+        });
+
+        // Calculate grandTotal
+        const deliveryCharge = parseFloat(orderInfo.deliveryCharge) || 0;
+        const claimedAmount = orderInfo.couponDetails?.claimedAmount || 0;
+        const offerDiscount = orderInfo.orderItems[0].variantId.offerDiscount || 0;
+        const grandTotal = subTotal + deliveryCharge - claimedAmount - offerDiscount;
+
+        console.log("OFFER DISCOUNT  :  ",offerDiscount);
+
+        // Update orderInfo
+        orderInfo.subTotal = subTotal;
+        orderInfo.grandTotal = grandTotal;
+
         const address = await Address.findOne({ userId });
 
-        res.render('users/order', { orders: orderInfo, address });
+        res.render('users/order', { orders: orderInfo, address ,offerDiscount});
     } catch (error) {
         next(error);
     }

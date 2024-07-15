@@ -2,6 +2,49 @@
 
   <body>
 
+<style>
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+</style>
+    
     <!--start wrapper-->
     <div class="wrapper">
 
@@ -802,154 +845,48 @@
           </div>
           <!--end breadcrumb-->
 
-
-
-
-          <div class="card radius-10 w-100">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <h6 class="mb-0">Recent Details</h6>
-                <div class="fs-5 ms-auto dropdown">
-                  <div class="dropdown-toggle dropdown-toggle-nocaret cursor-pointer" data-bs-toggle="dropdown">
-                    <i class="bi bi-three-dots"></i>
-                  </div>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="input-group mb-3 mt-2">
-                <input type="text" id="search-input" class="form-control" placeholder="Search...">
-                <button class="btn btn-primary" type="button">Search</button>
-              </div>
-              <div class="table-responsive mt-2">
-                <table class="table align-middle mb-0">
-                  <thead class="table-light">
-                    <tr>
-                      <th>NAME</th>
-                      <th>COUPON CODE</th>
-                      <th>DIS PERCENTAGE</th>
-                      <th>MIN PURCHASEAMOUNT</th>
-                      <th>MAX REEDEMAMOUNT</th>
-                      <th>EXPIRY DATE</th>
-                      <th>ACTION</th>
-                    </tr>
-                  </thead>
-                  <tbody id="user-table-body">
-                    <% for(let i=couponList.length-1 ; i>=0 ; i--){ %>
-                      <tr>
-                        <td><h6 class="product-name mb-1"><%= couponList[i].couponName %></h6></td>
-                        <td><h6><%= couponList[i].couponCode %></h6></td>
-                        <td><h6> <%= couponList[i].discountPercentage %></h6></td>
-                        <td><h6><%= couponList[i].minPurchaseAmount %></h6> </td>
-                        <td><h6> <%= couponList[i].maxRedeemAmount %></h6> </td>
-                        <td>
-                           <h6>
-                            <%= couponList[i].expiryDate.toLocaleDateString('en-US', {
-                              weekday: 'short' , month: 'short' , day: 'numeric' , year:'numeric'})%>
-                          </h6>            
-                        </td>
-                        <td>
-                          <a href="/admin/editCoupon?couponId=<%= couponList[i]._id %>">
-                              <span class="badge bg-primary" style="cursor: pointer;">EDIT</span>
-                          </a>
-                          <span class="badge bg-<%= couponList[i].listed ? 'success' : 'danger' %>"
-                                onclick="toggleStatus('<%= couponList[i]._id %>', this)">
-                              <%= couponList[i].listed ? 'LIST' : 'UNLIST' %>
-                          </span>
-                      </td>
-                        <td>
-                          <div class="d-flex align-items-center gap-3 fs-6">
-                            <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views">
-                              <ion-icon name="eye-outline"></ion-icon>
-                            </a>
-                            <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit">
-                              <ion-icon name="pencil-outline"></ion-icon>
-                            </a>
-                            <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete">
-                              <ion-icon name="trash-outline"></ion-icon>
-                            </a>
-                          </div>
-                          <br><br><br>
-                        </td>
-                      </tr>
-                      <% } %>
-                  </tbody>
-                </table>
-              </div>
-              <!-- <div class="d-flex justify-content-between align-items-center mt-2">
-                <div>
-                  <button class="btn btn-secondary" onclick="prevPage()">Previous</button>
-                  <button class="btn btn-secondary" onclick="nextPage()">Next</button>
-                </div>
-                <div>
-                  <span>Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
-                </div>
-              </div> -->
-            </div>
-          </div>
           
-          <div style="text-align: center;">
-            <button
-              style="background-color: transparent; border: none; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s, transform 0.3s;">
-              <a href="/admin/addCoupon" class="btn btn-primary"><i class="bx bxs-cart-add"></i>Add Coupon</a>
-            </button>
+          <h1>Sales Report</h1>
+
+          <div>
+            <h2>Overall Sales Summary</h2>
+            <p>Total Sales Count: <%= overallSalesCount %></p>
+            <p>Total Order Amount: ₹<%= overallOrderAmount.toFixed(2) %></p>
+            <p>Total Discount Given: ₹<%= overallDiscount.toFixed(2) %></p>
           </div>
-
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-          
-
-          <script>
-            async function toggleStatus(couponId, button) {
-              console.log("Coupon ID:", couponId);
-            
-              try {
-                const response = await fetch('/admin/deleteCoupon', {
-                  method: "PATCH",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                    couponId: couponId
-                  })
-                });
-            
-                const data = await response.json();
-                console.log("data------------", data);
-            
-                if (data.success) {
-                  button.innerText = data.couponState ? "LIST" : "UNLIST";
-                  button.classList.remove("bg-success", "bg-danger");
-                  button.classList.add(data.couponState ? "bg-success" : "bg-danger");
-            
-                  Swal.fire({
-                    title: "Updated!",
-                    text: "Coupon status has been updated",
-                    icon: "success"
-                  });
-                } else {
-                  await Swal.fire({
-                    title: "Error!",
-                    text: "Failed to update the coupon status.",
-                    icon: "error"
-                  });
-                }
-              } catch (error) {
-                await Swal.fire({
-                  title: "Error!",
-                  text: "An error occurred while updating the coupon status.",
-                  icon: "error"
-                });
-              }
-            }
-            </script>
         
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Product Name</th>
+                <th>Customer</th>
+                <th>Payment Mode</th>
+                <th>Status</th>
+                <th>Offer Discount</th>
+                <th>Coupon Discount</th>
+                <th>Product Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% orders.forEach(order => { %>
+                <tr>
+                  <td><%= order.orderId %></td>
+                  <td><%= order.orderDate %></td>
+                  <td><%= order.productName %></td>
+                  <td><%= order.customer %></td>
+                  <td><%= order.paymentMode %></td>
+                  <td><%= order.status %></td>
+                  <td><%= order.offerDiscount %></td>
+                  <td><%= order.couponDiscount %></td>
+                  <td><%= order.productSubtotal %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
 
+      
 
 
           <!--start footer-->

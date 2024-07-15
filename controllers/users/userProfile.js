@@ -120,11 +120,14 @@ exports.returnOrder = async (req, res) => {
         const { orderId, variantId } = req.body;
         const order = await Order.findById(orderId);
 
+        console.log("ORDERRRR  :  ",order);
+
         if (!order) {
             return res.status(404).json({ error: 'Order not found' });
         }
 
-        const orderItem = order.orderItems.find(item => item._id.toString() === variantId);
+        const orderItem = order.orderItems[0]
+        console.log("OORRDEER  ITTEEEMM  : ",orderItem);
         if (!orderItem) {
             return res.status(404).json({ error: 'Order item not found' });
         }
@@ -133,10 +136,13 @@ exports.returnOrder = async (req, res) => {
             return res.status(400).json({ error: 'Order is not delivered yet' });
         }
 
-        await Order.findOneAndUpdate(
-            { _id: orderId, 'orderItems._id': variantId },
-            { $set: { 'orderItems.$.orderStatus': 'Return requested'}}
-        );
+        // await Order.findOneAndUpdate(
+        //     { _id: orderId, 'orderItems._id': variantId },
+        //     { $set: { 'orderItems.$.orderStatus': 'Return requested'}}
+        // );
+
+        orderItem.orderStatus = 'Return requested'
+        await order.save()
         
         res.json({ message: 'Your return request placed successfully' });
     } catch (error) {

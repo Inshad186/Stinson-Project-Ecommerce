@@ -38,8 +38,8 @@ router.patch("/editAddress/:id", userAuth.isAuthenticated,userDetail.editAddress
 router.post("/changePassword", userAuth.isAuthenticated,userDetail.changePassword)
 router.post("/orderList", userAuth.isAuthenticated,userDetail.getUserOrders)
 router.post("/applyCoupon", userAuth.isAuthenticated,userDetail.applyCoupon)
-router.post('/cancelOrder', userDetail.cancelOrder);
-router.post('/returnOrder', userDetail.returnOrder);
+router.post('/cancelOrder',userAuth.isAuthenticated, userDetail.cancelOrder);
+router.post('/returnOrder',userAuth.isAuthenticated, userDetail.returnOrder);
 
 // router.get('/checkOutAddress',userAuth.isAuthenticated , userDetail.checkOutAddress);
 

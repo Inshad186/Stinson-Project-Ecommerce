@@ -3,6 +3,7 @@ const Wallet = require("../../models/walletModel")
 const User = require("../../models/userModel")
 const Address = require("../../models/addressModel")
 const Variant = require("../../models/varientModel")
+const asyncHandler = require("express-async-handler");
 
 
 exports.loadOrder = async (req, res) => {
@@ -24,8 +25,6 @@ exports.loadOrder = async (req, res) => {
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
-
-        console.log("Ordersassss  ", orders);
 
         res.render("admin/order", {
             orders,
@@ -91,15 +90,16 @@ exports.updateOrderStatus = async (req, res) => {
             return res.status(404).send("Order item not found");
         }
 
-        if(newStatus === "Delivered"){
+        // if(newStatus === "Delivered"){
 
-            await Order.findOneAndUpdate(
-                { _id: orderId, 'orderItems.variantId': variantId },
-                { $set: { 'orderItems.$.orderStatus': 'Request Return' } }
-            );
-            console.log("Status changed to Request Return successfully.");
+        //     await Order.findOneAndUpdate(
+        //         { _id: orderId, 'orderItems.variantId': variantId },
+        //         { $set: { 'orderItems.$.orderStatus': 'Request Return' } }
+        //     );
+        //     console.log("Status changed to Request Return successfully.");
 
-        } else if(newStatus === "Refunded"){
+        // } else 
+        if(newStatus === "Refunded"){
 
             const orderDetail = await Order.findOne({_id: orderId,'orderItems.variantId': variantId})
 
@@ -141,5 +141,70 @@ exports.updateOrderStatus = async (req, res) => {
         return res.status(500).send("Server Error");
     }
 };
+
+
+
+exports.viewSalesReport = asyncHandler(async (req, res) => {
+    let orders = await Order.find().populate('userId');
+  
+    if (req.query.startDate && req.query.endDate) {
+      const startDate = new Date(req.query.startDate);
+      const endDate = new Date(req.query.endDate);
+      orders = await Order.find({
+        createdAt: { $gte: startDate, $lte: endDate }
+      }).populate('userId');
+    } else if (['day', 'week', 'month'].includes(req.query.range)) {
+      const ranges = {
+        day: 1,
+        week: 7,
+        month: 30
+      };
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - ranges[req.query.range]);
+      orders = await Order.find({
+        createdAt: { $gte: startDate }
+      }).populate('userId');
+    }
+  
+    const filteredOrders = [];
+    let overallSalesCount = 0;
+    let overallOrderAmount = 0;
+    let overallDiscount = 0;
+  
+    for (const order of orders) {
+      const deliveredProducts = order.orderItems.filter(product => product.orderStatus === 'Delivered');
+  
+      for (const product of deliveredProducts) {
+        const productVariant = await Variant.findById(product.variantId);
+        const offerDiscount = productVariant.offerDiscount ? productVariant.offerDiscount : 0;
+        const offerAmount = (product.variantPrice * offerDiscount) / 100;
+  
+        overallSalesCount += product.quantity;
+        overallOrderAmount += product.quantity * product.variantPrice;
+        overallDiscount += offerAmount * product.quantity;
+  
+        filteredOrders.push({
+          orderId: order._id,
+          orderDate: new Date(order.createdAt).toLocaleDateString(),
+          productName: product.variantName,
+          customer: order.shippingAddress.name,
+          paymentMode: order.paymentMethod,
+          status: product.orderStatus,
+          offerDiscount: `₹${offerAmount.toFixed(2)} (${offerDiscount}%)`,
+          couponDiscount: order.couponDetails ? `₹${order.couponDetails.claimedAmount}` : '₹0',
+          productSubtotal: `₹${(product.quantity * product.variantPrice).toFixed(2)}`
+        });
+      }
+    }
+  
+    res.status(200).render('admin/salesReport', {
+      orders: filteredOrders,
+      overallSalesCount,
+      overallOrderAmount,
+      overallDiscount
+    });
+  });
+  
+  
 
 

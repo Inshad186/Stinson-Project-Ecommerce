@@ -572,11 +572,17 @@
 										<th>Coupon Discount:</th>
 										<th id="discountAmount"><%= orders.couponDetails ? parseInt(orders.couponDetails.claimedAmount || 0) : 'Nill' %>/-</th>
 									</tr>
+									<% if (offerDiscount) { %>
+									<tr>
+										<th>Calculated Offer Discount:</th>
+										<th id="offerDiscount"><%= parseInt(offerDiscount) %>% /-</th>
+									</tr>
+									<% } %>
 								</tbody>
 								<tfoot>
 									<tr>
 										<th>Sub Total + Shipping Charge</th>
-										<td><%= parseInt(subTotal + parseFloat(orders.deliveryCharge) - (orders.couponDetails ? parseFloat(orders.couponDetails.claimedAmount) : 0)) %>/-</td>
+										<td><%= parseInt(subTotal + parseFloat(orders.deliveryCharge) - (orders.couponDetails ? parseFloat(orders.couponDetails.claimedAmount) : 0) - (offerDiscount || 0)) %>/-</td>
 									</tr>									
 									<tr>
 										<th>Grand Total</th>

@@ -73,4 +73,6 @@ router.get("/editOffer", adminAuth.isAuthenticated, loadOffer.viewEditOffer)
 router.post("/editOffer", adminAuth.isAuthenticated, loadOffer.editOffer)
 router.patch("/deleteOffer", adminAuth.isAuthenticated, loadOffer.deleteOffer)
 
+router.get("/salesReport", adminAuth.isAuthenticated, loadOrder.viewSalesReport)
+
 module.exports = router;
