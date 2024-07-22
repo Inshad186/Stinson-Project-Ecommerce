@@ -15,6 +15,8 @@ const loadOrder = require("../controllers/users/order")
 
 router.get("/", loadHome);
 
+router.post("/google-authentication", loadSignup.googleSignin)
+
 router.get("/signup", userAuth.isUnAuthenticated, loadSignup.loadSignup);
 router.post("/signup", userAuth.isUnAuthenticated, loadSignup.insertUser);
 
@@ -56,8 +58,10 @@ router.post('/addFromWishlist' , userAuth.isAuthenticated, loadCart.addToCartFro
 router.get("/checkOut", userAuth.isAuthenticated , loadCart.viewCheckOut)
 
 router.get("/order",userAuth.isAuthenticated , loadOrder.viewOrder)
+router.get('/check-wallet-balance', userAuth.isAuthenticated, loadOrder.checkWalletBalance)
 router.post('/place-order',userAuth.isAuthenticated , loadOrder.placeOrder)
 router.post("/payment-success", userAuth.isAuthenticated ,loadOrder.verifyPayment)
+router.get("/userInvoice",userAuth.isAuthenticated, loadOrder.invoice)
 
 router.use(errorHandler)
 

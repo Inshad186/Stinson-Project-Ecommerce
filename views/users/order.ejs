@@ -94,16 +94,8 @@
 								<nav>
 									<ul>
 										<li><a href="/">Home</a>
-											<ul>
-												<li><a href="index.html">Home Version One</a></li>
-												<li><a href="index-2.html">Home Version Two</a></li>
-											</ul>
 										</li>
-										<li><a href="#">Shop</a>
-											<ul>
-												<li><a href="/shopList">All Product</a></li>
-												<li><a href="/shopList">New Product</a></li>				
-											</ul>
+										<li><a href="/shopList">Shop</a>
 										</li>
 										<li><a href="/userProfile">My Account</a>
 										<!-- <li><a href="product-grid-left.html">Shop</a>
@@ -541,57 +533,20 @@
 								<li>Payment Method <span><%= orders.paymentMethod %></span></li>
 							</ul>
 						</div>
-						
 					</div>
 				</div>
 				<div class="row section-padding-top">
-					<div class="col-md-4">
-						<div class="log-title">
-							<h3><strong>your order</strong></h3>
-							<hr />
-						</div>
-						<div class="place-text clearfix">
-							<table>
-								<thead>
-									<tr>
-										<th>Product</th>
-										<th>Total</th>
-									</tr>
-								</thead>
-								<tbody>
-									<% let subTotal = 0; %>
-									<% orders.orderItems.forEach(item => { %>
-										<% const total = item.variantPrice * item.quantity; %>
-										<% subTotal += total; %>
-										<tr>
-											<th><%= item.variantName %> x <%= item.quantity %></th>
-											<th><%= parseInt(total) %>/-</th>
-										</tr>
-									<% }); %>
-									<tr>
-										<th>Coupon Discount:</th>
-										<th id="discountAmount"><%= orders.couponDetails ? parseInt(orders.couponDetails.claimedAmount || 0) : 'Nill' %>/-</th>
-									</tr>
-									<% if (offerDiscount) { %>
-									<tr>
-										<th>Calculated Offer Discount:</th>
-										<th id="offerDiscount"><%= parseInt(offerDiscount) %>% /-</th>
-									</tr>
-									<% } %>
-								</tbody>
-								<tfoot>
-									<tr>
-										<th>Sub Total + Shipping Charge</th>
-										<td><%= parseInt(subTotal + parseFloat(orders.deliveryCharge) - (orders.couponDetails ? parseFloat(orders.couponDetails.claimedAmount) : 0) - (offerDiscount || 0)) %>/-</td>
-									</tr>									
-									<tr>
-										<th>Grand Total</th>
-										<td><%= parseInt(orders.grandTotal) %>/-</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+					<div class="col-md-4 offset-lg-1 col-lg-3">
+						<div class="order-address">
+							<div class="log-title">
+								<h3><strong>shipping address</strong></h3>
+								<hr />
+							</div>
+							<div class="por-dse">
+								<h6>Customer Datails : <%=orders.shippingAddress.name %> , <%=orders.shippingAddress.city%> , <%=orders.shippingAddress.pinCode%> , <%=orders.shippingAddress.postoffice%> , <%=orders.shippingAddress.landmark%> , <%=orders.shippingAddress.state%></h6>
+							</div>
 					</div>
+				</div>
 					<div class="col-md-4 offset-lg-1 col-lg-3">
 						<div class="order-details">
 							<div class="log-title">
@@ -607,19 +562,122 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 offset-lg-1 col-lg-3">
-						<div class="order-address">
-							<div class="log-title">
-								<h3><strong>shipping address</strong></h3>
-								<hr />
-							</div>
-							<div class="por-dse">
-								<h6>Customer Datails : <%=orders.shippingAddress.name %> , <%=orders.shippingAddress.city%> , <%=orders.shippingAddress.pinCode%> , <%=orders.shippingAddress.postoffice%> , <%=orders.shippingAddress.landmark%> , <%=orders.shippingAddress.state%></h6>
-							</div>
+					<div class="col-md-4">
+						<div class="log-title">
+							<h3><strong>your order</strong></h3>
+							<hr />
+						</div>
+						<div class="place-text clearfix">
+							<table>
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% let subTotal = 0; %>
+									<% let totalOfferDiscount = 0; %> <!-- Initialize totalOfferDiscount variable -->
+									<% orders.orderItems.forEach(item => { %>
+										<% const total = item.variantPrice * item.quantity; %>
+										<% const offerDiscountPercentage = item.variantId.offerDiscount || 0; %>
+										<% const discountAmount = (total * offerDiscountPercentage) / 100; %>
+										<% subTotal += total; %>
+										<% totalOfferDiscount += discountAmount; %>
+										<tr>
+											<th><%= item.variantName %> x <%= item.quantity %></th>
+											<th><%= parseInt(total - discountAmount) %>/-</th> <!-- Display total after discount -->
+										</tr>
+									<% }); %>
+									<tr>
+										<th>Coupon Discount:</th>
+										<th id="discountAmount"><%= orders.couponDetails ? parseInt(orders.couponDetails.claimedAmount || 0) : 'Nill' %>/-</th>
+									</tr>
+									<% if (totalOfferDiscount > 0) { %>
+									<tr>
+										<th>Calculated Offer Discount:</th>
+										<th id="offerDiscount"><%= parseInt(totalOfferDiscount) %>/-</th>
+									</tr>
+									<% } %>
+								</tbody>
+								<tfoot>
+									<tr>
+										<th>Sub Total + Shipping Charge</th>
+										<td><%= parseInt(subTotal + parseFloat(orders.deliveryCharge) - (orders.couponDetails ? parseFloat(orders.couponDetails.claimedAmount) : 0) - totalOfferDiscount) %>/-</td>
+									</tr>
+									<tr>
+										<th>Grand Total</th>
+										<td><%= parseInt(orders.grandTotal) %>/-</td>
+									</tr>
+								</tfoot>
+							</table>							
+						</div>
+						<% if (orders.orderItems.some(item => item.orderStatus === "Delivered")) { %>
+							<button id="downloadInvoice" class="btn btn-primary">Download Invoice</button>
+						<% } %>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+
+			<script>
+				document.getElementById('downloadInvoice').addEventListener('click', function() {
+					const orderId = '<%= orders._id %>'; // Use the order ID from the template
+			
+					fetch(`/userInvoice?orderId=${orderId}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Accept': 'application/pdf'
+						}
+					})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return response.blob();
+					})
+					.then(blob => {
+						const url = window.URL.createObjectURL(blob);
+						const a = document.createElement('a');
+						a.style.display = 'none';
+						a.href = url;
+						a.download = 'invoice.pdf';
+						document.body.appendChild(a);
+						a.click();
+						window.URL.revokeObjectURL(url);
+					})
+					.catch(error => console.error('Error downloading the invoice:', error));
+				});
+			</script>
+
+		<!-- <script>
+			document.getElementById('downloadInvoice').addEventListener('click',async function() {
+				const orderId = '<%= orders._id %>'; 
+				console.log("ORDER  ID  : ",orderId);
+		
+				const response = await fetch(`/userInvoice?orderId=${orderId}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/pdf'
+					}
+				})
+				.then(response => response.blob())
+				.then(blob => {
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.style.display = 'none';
+					a.href = url;
+					a.download = 'invoice.pdf';
+					document.body.appendChild(a);
+					a.click();
+					window.URL.revokeObjectURL(url);
+				})
+				.catch(error => console.error('Error downloading the invoice:', error));
+			});
+		</script> -->
+		
+
 		<!-- order-complete content section end -->
         <!-- footer section start -->
 		<footer class="section-padding-top">

@@ -20,13 +20,13 @@ exports.addVarients = async (req, res) => {
         const { colour, salePrice, sizes, stocks, productId } = req.body;
 
         // Fetch productName and categoryName based on productId
-        const product = await Product.findById(productId);
+        const product = await Product.findById(productId).populate('categoryId', 'name');
         if (!product) {
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
 
         const productName = product.name;  // Replace with the actual field name from Product model
-        const categoryName = product.categoryId;  // Replace with the actual field name from Product model
+        const categoryName = product.categoryId.name  // Replace with the actual field name from Product model
 
         const sizesArray = Array.isArray(sizes) ? sizes : [sizes];
         const stocksArray = Array.isArray(stocks) ? stocks.map(stock => parseInt(stock, 10)) : [parseInt(stocks, 10)];
@@ -52,8 +52,8 @@ exports.addVarients = async (req, res) => {
             colour,
             salePrice: parseFloat(salePrice),
             image: imagePaths,
-            productName,  // Assign productName
-            categoryName  // Assign categoryName
+            productName, 
+            categoryName 
         });
 
         const savedVariant = await newVariant.save();

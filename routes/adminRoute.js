@@ -21,6 +21,7 @@ router.get("/signin",adminAuth.isUnAuthenticated,loadSignin.signin)
 router.post("/signin",adminAuth.isUnAuthenticated,loadSignin.verifySignin)
 
 router.get("/dashboard" ,adminAuth.isAuthenticated ,loadDashboard.Dashboard)
+router.get('/chart-data', adminAuth.isAuthenticated, loadDashboard.getChartData);
 
 router.get("/userList",adminAuth.isAuthenticated,loadUserList.user)
 
@@ -74,5 +75,8 @@ router.post("/editOffer", adminAuth.isAuthenticated, loadOffer.editOffer)
 router.patch("/deleteOffer", adminAuth.isAuthenticated, loadOffer.deleteOffer)
 
 router.get("/salesReport", adminAuth.isAuthenticated, loadOrder.viewSalesReport)
+// router.get("/excelDownload", adminAuth.isAuthenticated, loadOrder.downloadExcel)
+router.get('/salesReport/download-excel', adminAuth.isAuthenticated, loadOrder.downloadExcel);
+router.get("/pdfDownload", adminAuth.isAuthenticated, loadOrder.downloadPdf);
 
 module.exports = router;

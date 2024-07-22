@@ -169,6 +169,89 @@
 
 </style>
 
+<style>
+    .coupon-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid #ccc;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #e8eaf6 50%, rgb(0, 195, 255) 50%);
+    border-radius: 15px;
+}
+
+.coupon-left {
+    background: #fff;
+    padding: 20px;
+    width: 50%;
+    text-align: left;
+    color: #007bff;
+}
+
+.coupon-left h5,
+.coupon-left p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.coupon-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.coupon-code,
+.discount,
+.redeem-amount {
+    font-size: 1.5rem;
+}
+
+.coupon-right {
+    background: rgb(0, 195, 255);
+    padding: 20px;
+    width: 50%;
+    text-align: center;
+    color: #fff;
+}
+
+.type {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+}
+
+.voucher {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color:white;
+    margin: 0;
+}
+
+.copy-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #28a746;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.copy-button:hover {
+    background: #218838;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -1808,7 +1891,7 @@ too.Max 5mb.</p>
                                 <% if (wallet && wallet.transactions && wallet.transactions.length > 0) { 
                                     const totalAmount = wallet.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
                                 %>
-                                    <%= parseInt(totalAmount) %>
+                                    <%= parseInt(wallet.balance) %>
                                 <% } else { %>
                                     0.00
                                 <% } %>
@@ -1984,9 +2067,105 @@ too.Max 5mb.</p>
         </div>
     </div>
 
-    
 
     <script>
+        function requestReturn(orderId, variantId, reason) {
+        fetch('/returnOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ orderId: orderId, variantId: variantId, reason: reason })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                location.reload();
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        function cancelOrder(orderId, variantId) {
+            fetch('/cancelOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ orderId: orderId, variantId: variantId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    // Remove the canceled product from the DOM
+                    const productRow = document.querySelector(`[data-order-id="${orderId}"][data-variant-id="${variantId}"]`);
+                    if (productRow) {
+                        productRow.remove();
+                    }
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function showReturnModal(orderId, variantId) {
+            Swal.fire({
+                title: 'Return Reason',
+                input: 'select',
+                inputOptions: {
+                    'Poor Quality': 'Poor Quality',
+                    'Wrong Product': 'Wrong Product',
+                    'Damaged Product': 'Damaged Product',
+                    'Not as Described': 'Not as Described',
+                    'Received Too Late': 'Received Too Late',
+                    'Ordered by Mistake': 'Ordered by Mistake',
+                    'Other': 'Other'
+                },
+                inputPlaceholder: 'Select a reason',
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'You need to select a reason!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    requestReturn(orderId, variantId, result.value);
+                }
+            });
+        }
+
+        function returnOrder(orderId, variantId) {
+            showReturnModal(orderId, variantId);
+        }
+
+        // Attach event listeners to action buttons
+        const actionButtons = document.querySelectorAll('[id^="actionButton-"]');
+        actionButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                const action = this.getAttribute('data-action');
+                const orderId = this.closest('tr').getAttribute('data-order-id');
+                const variantId = this.getAttribute('id').split('-')[1];
+
+                if (action === 'cancel') {
+                    cancelOrder(orderId, variantId);
+                } else if (action === 'return') {
+                    returnOrder(orderId, variantId);
+                }
+            });
+        });
+    });
+
+    </script>
+    
+
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function () {
             function cancelOrder(orderId, variantId) {
                 fetch('/cancelOrder', {
@@ -2011,6 +2190,33 @@ too.Max 5mb.</p>
                 })
                 .catch(error => console.error('Error:', error));
             }
+
+            function showReturnModal(orderId, variantId) {
+            Swal.fire({
+                title: 'Return Reason',
+                input: 'select',
+                inputOptions: {
+                    'Poor Quality': 'Poor Quality',
+                    'Wrong Product': 'Wrong Product',
+                    'Damaged Product': 'Damaged Product',
+                    'Not as Described': 'Not as Described',
+                    'Received Too Late': 'Received Too Late',
+                    'Ordered by Mistake': 'Ordered by Mistake',
+                    'Other': 'Other'
+                },
+                inputPlaceholder: 'Select a reason',
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'You need to select a reason!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    requestReturn(orderId, variantId, result.value);
+                }
+            });
+        }
     
             function returnOrder(orderId, variantId) {
                 fetch('/returnOrder', {
@@ -2048,7 +2254,8 @@ too.Max 5mb.</p>
                 });
             });
         });
-    </script>
+    </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     
                     
@@ -2208,30 +2415,22 @@ too.Max 5mb.</p>
                         </div> -->
 
 
-                        <div class="tab-pane fade" id="v-pills-coupon" role="tabpanel"
-                            aria-labelledby="v-pills-coupon-tab" tabindex="0">
+                        <div class="tab-pane fade" id="v-pills-coupon" role="tabpanel" aria-labelledby="v-pills-coupon-tab" tabindex="0">
                             <div class="profile-section coupon-section coupons">
                                 <div class="row gy-md-0 g-5">
                                     <% if (userCoupons && userCoupons.length > 0) { %>
                                         <% userCoupons.forEach((coupon, index) => { %>
                                             <div class="col-md-6" id="coupon-<%= coupon._id %>">
-                                                <div class="coupon-info">
-                                                    <h5 class="heading">Coupon <%= index + 1 %></h5>
-                                                    <div class="info-list">
-                                                        <div class="info-title">
-                                                            <p>Code:</p>
-                                                            <p>CouponName:</p>
-                                                            <p>Discount:</p>
-                                                            <p>Redeem Amount</p>
-                                                            <p>Expiration Date:</p>
-                                                        </div>
-                                                        <div class="info-details">
-                                                            <p><%= coupon.couponCode %></p>
-                                                            <p><%= coupon.couponName %></p>
-                                                            <p><%= coupon.discountPercentage %>%</p>
-                                                            <p><%= coupon.maxRedeemAmount %></p>
-                                                            <p><%= new Date(coupon.expiryDate).toLocaleDateString() %></p>
-                                                        </div>
+                                                <div class="coupon-info coupon-card">
+                                                    <div class="coupon-left">
+                                                        <h5 class="coupon-name"><%= coupon.couponName %></h5>
+                                                        <p class="coupon-code">Code: <%= coupon.couponCode %></p>
+                                                        <p class="discount">Discount: <%= coupon.discountPercentage %>%</p>
+                                                        <p class="redeem-amount">Redeem Amount: <%= coupon.maxRedeemAmount %>/-</p>
+                                                    </div>
+                                                    <div class="coupon-right">
+                                                        <h5 class="type">GIFT</h5>
+                                                        <h5 class="voucher">VOUCHER</h5>
                                                     </div>
                                                     <button type="button" class="btn btn-success copy-button" data-coupon-code="<%= coupon.couponCode %>">COPY</button>
                                                 </div>

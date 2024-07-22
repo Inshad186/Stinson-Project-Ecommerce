@@ -173,37 +173,7 @@ exports.removeCart = async (req, res, next) => {
 };
 
 
-///////////////////////      CheckOut     ////////////////////////
-
-
-// exports.viewCheckOut = async (req, res) => {
-//     try {
-//         const userId = req.session.userId;
-//         if (!userId) {
-//             return res.status(401).send("User not authenticated");
-//         }
-//         const cartItem = await Cart.findOne({ userId }).populate({
-//             path: 'products.productVariantId',
-//             select: 'size salePrice stock colour image productName categoryName ',
-//             populate: {
-//                 path: 'productId',
-//                 model: 'Product',
-//                 select: 'categoryId'
-//             }
-//         });
-
-//         const addresses = await Address.find({ userId });
-
-//         if (!cartItem || cartItem.products.length === 0) {
-//             return res.status(400).redirect('/cart');
-//         }
-
-//         res.render("users/checkout", { cart: cartItem, addresses });
-//     } catch (error) {
-//         console.log("error in viewCheckOut", error);
-//         res.status(500).send("Server Error");
-//     }
-// };
+////////////////!    view CheckOut    /////////////////
 
 exports.viewCheckOut = async (req, res) => {
     try {
@@ -240,12 +210,13 @@ exports.viewCheckOut = async (req, res) => {
             return res.status(400).redirect('/cart');
         }
 
-        let couponDiscount = 0;
-        if (req.session.couponDiscount) {
-            couponDiscount = req.session.couponDiscount;
-        }
+        // Calculate subtotal
+        const subTotal = cartItem.products.reduce((acc, product) => {
+            return acc + (product.discountPrice * product.quantity);
+        }, 0);
 
-        res.render("users/checkout", { cart: cartItem, addresses, couponDiscount });
+        console.log("SubTotal : ",subTotal);
+        res.render("users/checkout", { cart: cartItem, addresses, subTotal:subTotal });
     } catch (error) {
         console.log("error in viewCheckOut", error);
         res.status(500).send("Server Error");
@@ -254,7 +225,7 @@ exports.viewCheckOut = async (req, res) => {
 
 
 
-//////////////////////      WishList     //////////////////////////
+//////////////////////!      WishList     //////////////////////////
 
 
 exports.viewWishList = async (req, res, next) => {

@@ -861,87 +861,72 @@
                                 <div class="col-12">
                                   <div class="border border-3 p-4 rounded d-flex flex-column align-items-center">
                                     <div class="mb-3 w-100">
-                                      <label for="inputProductTitle" class="form-label">Product
-                                        Name</label>
-                                      <input name="name" type="text" class="form-control" id="inputProductTitle"
-                                        placeholder="Enter product title" required>
+                                      <label for="inputProductTitle" class="form-label">Product Name</label>
+                                      <input name="name" type="text" class="form-control" id="inputProductTitle" placeholder="Enter product title" required>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="inputProductDescription" class="form-label">Description</label>
-                                      <textarea name="description" class="form-control" id="inputProductDescription"
-                                        rows="3" required></textarea>
+                                      <textarea name="description" class="form-control" id="inputProductDescription" rows="3" required></textarea>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="inputProductType" class="form-label">Category</label>
                                       <select name="categoryId" class="form-select" id="inputProductType" required>
                                         <option></option>
                                         <% for (category of categories) { %>
-                                          <option value="<%=category._id%>">
-                                            <%=category.name%>
-                                          </option>
-                                          <% } %>
+                                          <option value="<%=category._id%>"><%=category.name%></option>
+                                        <% } %>
                                       </select>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="productBrand" class="form-label">Product Brand</label>
-                                      <input name="brand" class="form-control" id="productBrand"
-                                        placeholder="Enter Product Brand">
+                                      <input name="brand" class="form-control" id="productBrand" placeholder="Enter Product Brand" required>
                                     </div>
                                     <div class="mb-3 w-100" id="sizes-container">
                                       <label for="productSize" class="form-label">Sizes</label>
                                       <div class="input-group mb-2">
                                         <input name="size[]" class="form-control" required>
-                                        <button type="button" class="btn btn-outline-secondary add-size-btn">Add
-                                          Size</button>
+                                        <button type="button" class="btn btn-outline-secondary add-size-btn">Add Size</button>
                                       </div>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="productPrice" class="form-label">Original Price</label>
-                                      <input name="orginalPrice" class="form-control" id="productPrice"
-                                        placeholder="00.00" required>
+                                      <input name="orginalPrice" class="form-control" id="productPrice" placeholder="00.00" required>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="Discount" class="form-label">Discount</label>
-                                      <input name="discount" class="form-control" id="Discount" placeholder="00.00"
-                                        required>
+                                      <input name="discount" class="form-control" id="Discount" placeholder="00.00" required>
                                     </div>
                                     <div class="mb-3 w-100">
-                                      <label for="inputProductDescription" class="form-label">Product Images</label>
-                                      <input name="image" id="image-uploadify" type="file" accept=".png,.jpeg,.jpg"
-                                        required>
+                                      <label for="inputProductImage" class="form-label">Product Image</label>
+                                      <input name="image" id="image-uploadify" type="file" accept=".png,.jpeg,.jpg" required>
                                       <div class="mt-2">
                                         <img id="image-preview" style="max-width: 100%; display: none;">
                                       </div>
                                       <input type="hidden" name="croppedImage" id="croppedImage">
                                     </div>
-
                                   </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-center mt-3">
                                   <button type="submit" class="btn btn-primary">ADD Product</button>
                                 </div>
-                              </div><!--end row-->
+                              </div>
                             </div>
                           </form>
                         </div>
                       </div>
                     </div>
-
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
-                      rel="stylesheet">
+                    
+                    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-
-
-
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+                    
                     <script>
                       document.addEventListener("DOMContentLoaded", function () {
                         let cropper;
                         const imageUpload = document.getElementById('image-uploadify');
                         const imagePreview = document.getElementById('image-preview');
                         const croppedImageInput = document.getElementById('croppedImage');
-
+                    
                         imageUpload.addEventListener('change', function (event) {
                           const files = event.target.files;
                           if (files && files.length > 0) {
@@ -954,7 +939,7 @@
                                 cropper.destroy();
                               }
                               cropper = new Cropper(imagePreview, {
-                                aspectRatio: 1, // Set your aspect ratio here
+                                aspectRatio: 1,
                                 viewMode: 1,
                                 autoCropArea: 1,
                                 cropBoxResizable: false,
@@ -967,22 +952,20 @@
                             reader.readAsDataURL(file);
                           }
                         });
-
+                    
                         document.getElementById("form-body").addEventListener("submit", async function (event) {
                           event.preventDefault();
-
+                    
                           const formData = new FormData(event.target);
                           formData.set('croppedImage', croppedImageInput.value);
-
-                          console.log(Object.fromEntries(formData));
-
+                    
                           try {
                             const response = await fetch("/admin/addProduct", {
                               method: "POST",
                               body: formData
                             });
                             const data = await response.json();
-
+                    
                             if (data.success) {
                               const result = await Swal.fire({
                                 title: "Added",
@@ -1017,23 +1000,24 @@
                             });
                           }
                         });
-
+                    
                         document.querySelector('.add-size-btn').addEventListener('click', function () {
                           const sizesContainer = document.getElementById('sizes-container');
                           const newSizeInput = document.createElement('div');
                           newSizeInput.classList.add('input-group', 'mb-2');
                           newSizeInput.innerHTML = `
-                        <input name="size[]" class="form-control" placeholder="00.00" required>
-                        <button type="button" class="btn btn-outline-danger remove-size-btn">Remove</button>
-                    `;
+                            <input name="size[]" class="form-control" required>
+                            <button type="button" class="btn btn-outline-danger remove-size-btn">Remove</button>
+                          `;
                           sizesContainer.appendChild(newSizeInput);
-
+                    
                           newSizeInput.querySelector('.remove-size-btn').addEventListener('click', function () {
                             sizesContainer.removeChild(newSizeInput);
                           });
                         });
                       });
                     </script>
+                    
 
 
                     <!-- <div style="text-align: center;">

@@ -2,6 +2,72 @@
 
 	<body>
 
+		    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .signup-page {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        .login-text {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .log-title h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+        .custom-input p {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .custom-input input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .submit-text .btn-register {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color:black;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            border: none;
+        }
+        .submit-text .btn-register:hover {
+            background-color: #0056b3;
+        }
+        .social-login a {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            background-color: #db4437;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .social-login a:hover {
+            background-color: #c23321;
+        }
+        .social-login-box {
+            margin-top: 20px;
+        }
+        .error-message {
+            font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
 		<script src="/main.js" defer type="module"></script>
 
 		<!-- header section start -->
@@ -528,10 +594,51 @@
 		<!-- pages-title-end -->
 		<!-- login content section start -->
 
-		<section class="pages login-page section-padding-top">
+		<section class="pages signup-page">
 			<div class="container">
 				<div class="row justify-content-center">
-					<div class="col-md-6 text-center"> <!-- Center the content -->
+					<div class="col-md-6">
+						<div class="login-text new-customer text-center">
+							<div class="log-title">
+								<h3><strong>Customer Signup</strong></h3>
+								<hr />
+							</div>
+							<div class="custom-input">
+								<form id="formSignup">
+									<input type="text" id="name" name="name" placeholder="Name" required />
+									<div id="name-error" class="error-message" style="color:red;"></div>
+									<input type="email" id="email" name="email" placeholder="Email Address" required />
+									<div id="email-error" class="error-message" style="color:red;"></div>
+									<input type="tel" id="phone" name="number" placeholder="Phone Number" required />
+									<div id="mobile-error" class="error-message" style="color:red;"></div>
+									<input type="password" id="password" name="password" placeholder="Password" required />
+									<div id="password-error" class="error-message" style="color:red;"></div>
+									<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required />
+									<div id="confirmPassword-error" class="error-message" style="color:red;"></div>
+									<div class="submit-text coupon">
+										<button type="submit" class="btn btn-register">Register</button>
+									</div>
+								</form>
+							</div>
+							<div class="social-login-box">
+								<p>Or sign up with</p>
+								<div class="social-login">
+									<a id="google-login-btn" class="btn btn-google">Google</a>
+								</div>
+							</div>
+							<div>
+								<p>Do have an account? <a href="/login">Login</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- <section class="pages login-page section-padding-top">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-6 text-center"> 
 						<div class="login-text new-customer">
 							<div class="log-title">
 								<h3><strong>Customer Signup</strong></h3>
@@ -568,7 +675,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section> -->
 
 
 

@@ -2,6 +2,78 @@
 
 	<body>
 
+		<style>
+			body {
+				background-color: #f8f9fa;
+			}
+			.login-page {
+				padding-top: 50px;
+				padding-bottom: 50px;
+			}
+			.login-text {
+				background-color: #fff;
+				padding: 30px;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			.log-title h3 {
+				font-size: 24px;
+				margin-bottom: 20px;
+				color: #3c4034;
+			}
+			.custom-input p {
+				font-size: 14px;
+				color: #0087fe;
+			}
+			.custom-input input {
+				width: 100%;
+				padding: 10px;
+				margin-bottom: 15px;
+				border: 1px solid #ced4da;
+				border-radius: 4px;
+			}
+			.submit-text a {
+				display: block;
+				width: 100%;
+				padding: 10px;
+				background-color:black;
+				color: #fff;
+				text-align: center;
+				border-radius: 4px;
+				text-decoration: none;
+			}
+			.submit-text a:hover {
+				background-color: #0056b3;
+			}
+			.social-login a {
+				display: inline-block;
+				width: 100%;
+				padding: 10px;
+				background-color: #db4437;
+				color: #fff;
+				text-align: center;
+				border-radius: 4px;
+				text-decoration: none;
+			}
+			.social-login a:hover {
+				background-color: #c23321;
+			}
+			.social-login {
+				margin-top: 10px;
+			}
+			.custom-input .forget {
+				display: block;
+				margin: 15px 0;
+				color: #007bff;
+				text-decoration: none;
+			}
+			.custom-input .forget:hover {
+				text-decoration: underline;
+			}
+		</style>
+
+        <script src="/main.js" defer type="module"></script>
+
 		<!-- header section start -->
 		<header class="pages-header">
 			<div class="header-top">
@@ -525,10 +597,10 @@
 		</div>
 		<!-- pages-title-end -->
 		<!-- login content section start -->
-		<section class="pages login-page section-padding-top">
+		<!-- <section class="pages login-page section-padding-top">
 			<div class="container">
-				<div class="row justify-content-center"> <!-- Center the row -->
-					<div class="col-md-6 text-center"> <!-- Center the content -->
+				<div class="row justify-content-center">
+					<div class="col-md-6 text-center"> 
 						<div class="login-text">
 							<div class="log-title">
 								<h3><strong>Customer Login</strong></h3>
@@ -539,6 +611,39 @@
 								<form id="loginform">
 									<input type="text" id="email" name="email" placeholder="Email" />
 									<input type="password" id="password" name="password" placeholder="Password" />
+									<div class="submit-text coupon">
+										<a id="login-btn">Login</a>
+									</div>
+									<br>
+									<div>
+										<p>Don't have an account? <a href="/signup">Sign Up</a></p>
+									</div>
+									<p>Or sign up with</p>
+									<div class="social-login">
+										<a id="google-login-btn" class="btn btn-google">Google</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> -->
+
+		<section class="pages login-page">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-6">
+						<div class="login-text text-center">
+							<div class="log-title">
+								<h3><strong>Customer Login</strong></h3>
+								<hr />
+							</div>
+							<div class="custom-input">
+								<p>If you have an account with us, Please log in!</p>
+								<form id="loginform">
+									<input type="text" id="email" name="email" placeholder="Email" required />
+									<input type="password" id="password" name="password" placeholder="Password" required />
 									<!-- <a class="forget" href="/otp">Forget your password?</a> -->
 									<div class="submit-text coupon">
 										<a id="login-btn">Login</a>
@@ -546,6 +651,10 @@
 									<br>
 									<div>
 										<p>Don't have an account? <a href="/signup">Sign Up</a></p>
+									</div>
+									<p>Or sign up with</p>
+									<div class="social-login">
+										<a id="google-login-btn" class="btn btn-google">Google</a>
 									</div>
 								</form>
 							</div>

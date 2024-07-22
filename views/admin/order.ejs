@@ -870,7 +870,7 @@
                             <a href="/admin/orderDetail?orderId=<%= order._id %>" class="btn btn-success">SHOW</a>
                           </h6>
                         </td>
-                        <td>
+                        <!-- <td>
                           <div class="d-flex align-items-center gap-3 fs-6">
                             <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View detail">
                               <ion-icon name="eye-outline"></ion-icon>
@@ -882,7 +882,7 @@
                               <ion-icon name="trash-outline"></ion-icon>
                             </a>
                           </div>
-                        </td>
+                        </td> -->
                       </tr>
                     <% }); %>
                   </tbody>
@@ -908,6 +908,14 @@
           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
           
           <script>
+            function prevPage() {
+              window.location.href = "?page=<%= currentPage - 1 %>&limit=<%= limit %>";
+            }
+          
+            function nextPage() {
+              window.location.href = "?page=<%= currentPage + 1 %>&limit=<%= limit %>";
+            }
+
             document.addEventListener('DOMContentLoaded', function () {
               const dropdownButtons = document.querySelectorAll('.dropdown-toggle');
               const dropdownItems = document.querySelectorAll('.dropdown-item');
@@ -938,13 +946,6 @@
               });
             });
           
-            function prevPage() {
-              window.location.href = "?page=<%= currentPage - 1 %>&limit=<%= limit %>";
-            }
-          
-            function nextPage() {
-              window.location.href = "?page=<%= currentPage + 1 %>&limit=<%= limit %>";
-            }
           </script>
 
 

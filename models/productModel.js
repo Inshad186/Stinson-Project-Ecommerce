@@ -14,6 +14,10 @@ const productSchema = new mongoose.Schema({
         ref: "Category",
         required: true  
     },
+    brand: {
+        type: String,
+        required: true
+    },
     size: {
         type: [String],
         required: true

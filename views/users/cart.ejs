@@ -425,6 +425,51 @@
 									<% } %>
 								</tbody>
 							</table>
+						</div>
+					</div>
+				</div>
+				
+				<br>
+				<div class="row">
+					<div class="col-md-8">
+						<!-- Main content goes here -->
+					</div>
+					<div class="col-md-4">
+						<div class="single-cart-form float-right">
+							<div class="cart-form-title">
+								<h4>Payment Details</h4>
+							</div>
+							<div class="cart-form-text">
+								<table>
+									<tbody>
+										<tr>
+											<th>Subtotal</th>
+											<td data-subtotal="0.00">0.00</td>
+										</tr>
+										<tr>
+											<th>Shipping</th>
+											<td>50.00</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th class="tfoot-padd">Grand Total</th>
+											<td class="tfoot-padd" data-grand-total="0.00">0.00</td>
+										</tr>
+									</tfoot>
+								</table>
+								<div class="submit-text">
+									<a href="/checkOut">Proceed to Checkout</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				</div>
+			</div>
+		</section>
 							
 							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 							
@@ -459,14 +504,15 @@
 												text: responseData.error || "Failed to update cart quantity",
 												icon: "error"
 											});
-										}else{
-											await Swal.fire({
-												title: "Success",
-												text: "Cart quantity updated successfully",
-												icon: "success"
-											});
-
 										}
+										// else{
+										// 	await Swal.fire({
+										// 		title: "Success",
+										// 		text: "Cart quantity updated successfully",
+										// 		icon: "success"
+										// 	});
+
+										// }
 									}
 							
 									document.querySelectorAll(".pe-7s-close").forEach(removeBtn => {
@@ -533,6 +579,9 @@
 											if (value >= 1) {
 												input.value = value;
 												updateTotalPrice(input);
+												const productId = this.closest('tr').dataset.productId;
+											    const size = this.closest('tr').querySelector('.itemcolor span').textContent;
+											    updateCartQuantity(productId, size, value);
 											} else {
 												input.value = 1;
 												Swal.fire({
@@ -569,60 +618,15 @@
 										const tr = input.closest('tr');
 										const price = parseFloat(tr.querySelector('td:nth-child(2)').textContent);
 										const quantity = parseInt(input.value);
-										tr.querySelector('.total-price').textContent = (price * quantity).toFixed(2);
+										// tr.querySelector('.total-price').textContent = parseInt(price * quantity);
 										updateSubtotalAndGrandTotal();
+										window.location.reload()
 									}
 							
 									updateSubtotalAndGrandTotal();
 								});
 							</script>
 							
-									
-						</div>
-					</div>
-				</div>
-
-				<br>
-				<div class="row">
-					<div class="col-md-8">
-						<!-- Main content goes here -->
-					</div>
-					<div class="col-md-4">
-						<div class="single-cart-form float-right">
-							<div class="cart-form-title">
-								<h4>Payment Details</h4>
-							</div>
-							<div class="cart-form-text">
-								<table>
-									<tbody>
-										<tr>
-											<th>Subtotal</th>
-											<td data-subtotal="0.00">0.00</td>
-										</tr>
-										<tr>
-											<th>Shipping</th>
-											<td>50.00</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<th class="tfoot-padd">Grand Total</th>
-											<td class="tfoot-padd" data-grand-total="0.00">0.00</td>
-										</tr>
-									</tfoot>
-								</table>
-								<div class="submit-text">
-									<a href="/checkOut">Proceed to Checkout</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				
-				</div>
-			</div>
-		</section>
 		<!-- cart content section end -->
         <!-- footer section start -->
 		<footer class="section-padding-top">

@@ -30,6 +30,9 @@ const orderSchema = new mongoose.Schema({
             default: 'Processing',
             enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Returned', 'Completed', 'Return requested', 'Return approved', 'Return Rejected', 'Refunded'],
         },
+        returnReason: { 
+            type: String
+        }
     }],
     offerDiscount: {
         type: Number

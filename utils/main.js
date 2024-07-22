@@ -1,6 +1,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth , GoogleAuthProvider , signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyCrane1NlrbE4tne1PIS4b3rU3ANAzV1ow",
     authDomain: "stingson-fashion.firebaseapp.com",
@@ -25,13 +26,38 @@ import { getAuth , GoogleAuthProvider , signInWithPopup } from "https://www.gsta
     signInWithPopup(auth, provider)
     .then((result) => {
      
-      const credential = GoogleAuthProvider.credentialFromResult(result);
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
       const user = result.user;
-      console.log(user);
-      window.location.href = "../home";
+      fetch('/google-authentication', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: user.displayName,
+          email: user.email
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = '/';
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      });
     }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
+      console.error("Error during sign-in: ", error);
+      Swal.fire({
+        title: 'Error!',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     });
-  })
+  });

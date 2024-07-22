@@ -32,17 +32,12 @@ th, td {
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #ab1717;
 }
 
 tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #000000;
 }
-
-tr:hover {
-  background-color: #f1f1f1;
-}
-
 </style>
     
     <!--start wrapper-->
@@ -814,6 +809,7 @@ tr:hover {
         <div class="page-content">
 
           <!--start breadcrumb-->
+    
           <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
             <div class="breadcrumb-title pe-3">Dashboard</div>
             <div class="ps-3">
@@ -843,50 +839,111 @@ tr:hover {
               </div>
             </div>
           </div>
+          <!-- <button id="downloadExcelBtn">Download ExcelFormat</button> -->
           <!--end breadcrumb-->
 
-          
-          <h1>Sales Report</h1>
-
-          <div>
-            <h2>Overall Sales Summary</h2>
-            <p>Total Sales Count: <%= overallSalesCount %></p>
-            <p>Total Order Amount: ₹<%= overallOrderAmount.toFixed(2) %></p>
-            <p>Total Discount Given: ₹<%= overallDiscount.toFixed(2) %></p>
+          <div class="container mt-5">
+            <h1 class="mb-4">Product Sales Report</h1>
+        
+            <div class="mb-4">
+              <form action="/admin/salesReport" method="GET" class="form-inline">
+                <label for="sortBy" class="mr-2">Sort By:</label>
+                <select name="sortBy" id="sortBy" class="form-control mr-2">
+                  <option value="All Orders">All Orders</option>
+                  <option value="Today">Today</option>
+                  <option value="Last 7 Days">Last 7 Days</option>
+                  <option value="Last 30 Days">Last 30 Days</option>
+                  <option value="Custom Date">Custom Date</option>
+                </select>
+                <input type="date" name="startDate" id="startDate" class="form-control mr-2">
+                <input type="date" name="endDate" id="endDate" class="form-control mr-2">
+                <button type="submit" class="btn btn-primary mr-2">Filter</button>
+                <button type="button" id="downloadExcelBtn" class="btn btn-success mr-2">Download Excel</button>
+                <button type="button" id="downloadPdfBtn" class="btn btn-danger">Download PDF</button>
+              </form>
+            </div>
+        
+            <div>
+              <p>Total Orders: <%= totalOrders %></p>
+              <p>Grand Total Amount: <%= grandTotalAmount %></p>
+        
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>Order Date</th>
+                    <th>User Name</th>
+                    <th>Subtotal</th>
+                    <th>Grand Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% orders.forEach(order => { %>
+                    <tr>
+                      <td><%= order.orderDate.toDateString() %></td>
+                      <td><%= order.userId.name %></td>
+                      <td><%= order.subTotal %></td>
+                      <td><%= order.grandTotal %></td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+        
+              <% if (totalPages > 1) { %>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                      <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                        <a class="page-link" href="/admin/salesReport?page=<%= i %>&sortBy=<%= sortBy %>&startDate=<%= startDate %>&endDate=<%= endDate %>"><%= i %></a>
+                      </li>
+                    <% } %>
+                  </ul>
+                </nav>
+              <% } %>
+            </div>
           </div>
         
-          <table>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Order Date</th>
-                <th>Product Name</th>
-                <th>Customer</th>
-                <th>Payment Mode</th>
-                <th>Status</th>
-                <th>Offer Discount</th>
-                <th>Coupon Discount</th>
-                <th>Product Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% orders.forEach(order => { %>
-                <tr>
-                  <td><%= order.orderId %></td>
-                  <td><%= order.orderDate %></td>
-                  <td><%= order.productName %></td>
-                  <td><%= order.customer %></td>
-                  <td><%= order.paymentMode %></td>
-                  <td><%= order.status %></td>
-                  <td><%= order.offerDiscount %></td>
-                  <td><%= order.couponDiscount %></td>
-                  <td><%= order.productSubtotal %></td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-
-      
+          <script>
+            document.getElementById('downloadExcelBtn').addEventListener('click', () => {
+              const sortBy = document.getElementById('sortBy').value;
+              const startDate = document.getElementById('startDate').value;
+              const endDate = document.getElementById('endDate').value;
+        
+              const url = `/admin/salesReport/download-excel?sortBy=${sortBy}&startDate=${startDate}&endDate=${endDate}`;
+              window.location.href = url;
+            });
+        
+            document.getElementById('downloadPdfBtn').addEventListener('click', async () => {
+              try {
+                const sortBy = document.getElementById('sortBy').value;
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+        
+                const response = await fetch(`/admin/pdfDownload?sortBy=${sortBy}&startDate=${startDate}&endDate=${endDate}`, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                });
+        
+                if (response.ok) {
+                  const blob = await response.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'sales_report.pdf';
+                  document.body.appendChild(a);
+                  a.click();
+                  a.remove();
+                  window.URL.revokeObjectURL(url);
+                } else {
+                  console.error('Failed to download the file.');
+                }
+              } catch (error) {
+                console.error('An error occurred while downloading the file:', error);
+              }
+            });
+          </script>
+          
 
 
           <!--start footer-->

@@ -55,7 +55,7 @@ const insertUser = async (req, res) => {
     }
 }
 
-////////////     Load Otp      ////////////
+////////////!     Load Otp      ////////////
 
 const loadOtp = async (req, res) => {
     try {
@@ -110,7 +110,7 @@ const checkotp = async (req, res) => {
     }
 }
 
-////////////     Load login      ////////////
+////////////!     Load login      ////////////
 
 const loadLogin = async (req, res) => {
     try {
@@ -183,6 +183,39 @@ const securePassword = async (password) => {
 
 
 
+googleSignin = async (req, res) => {
+    try {
+        const { name, email } = req.body;
+
+        const regexPattern = new RegExp(`^${email}$`, 'i');
+        let user = await User.findOne({ email: regexPattern });
+        console.log(email, name)
+
+        if (user) {
+            req.session.userId = user._id;
+            req.session.isAuthenticated = true;
+            return res.status(200).json({ success: true });
+        }
+
+        user = new User({
+            name,
+            email
+        });
+
+        const savedUser = await user.save();
+
+        req.session.userId = savedUser._id;
+        req.session.isAuthenticated = true;
+
+        return res.status(200).json({ success: true });
+    } catch (error) {
+        console.error('Google Login Error:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
+
+
+
 
 module.exports = {
     loadSignup,
@@ -192,5 +225,6 @@ module.exports = {
     checkotp,
     loadLogin,
     verifyLogin,
-    logout
+    logout,
+    googleSignin
 }

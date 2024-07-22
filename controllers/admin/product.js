@@ -15,7 +15,7 @@ exports.addProduct = async (req, res) => {
 
 exports.insertProduct = async (req, res) => {
     try {
-        const { name, description, size, orginalPrice, discount, categoryId } = req.body;
+        const { name, description, size, orginalPrice, discount, categoryId, brand } = req.body;
 
         if (!categoryId) {
             return res.status(400).json({ success: false, message: 'Category ID is required' });
@@ -29,7 +29,8 @@ exports.insertProduct = async (req, res) => {
         const insertProduct = new Product({
             name,
             description,
-            size,
+            brand,
+            size: Array.isArray(size) ? size : [size],
             orginalPrice: parseFloat(orginalPrice),
             discount: parseFloat(discount),
             categoryId,

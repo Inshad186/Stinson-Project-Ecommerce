@@ -101,16 +101,9 @@
 								<nav>
 									<ul>
 										<li><a href="/">Home</a>
-											<ul>
-												<li><a href="index.html">Home Version One</a></li>
-												<li><a href="index-2.html">Home Version Two</a></li>
-											</ul>
 										</li>
-										<li><a href="#">Shop</a>
-											<ul>
-												<li><a href="/shopList">All Product</a></li>
-												<li><a href="/shopList">New Product</a></li>
-											</ul>
+										<li><a href="/shopList">Shop</a>
+
 										</li>
 										<li><a href="/userProfile">My Account</a>
 											<!-- <li><a href="product-grid-left.html">Shop</a>
@@ -572,9 +565,8 @@
 									<h3><strong>Shipping Details</strong></h3>
 									<hr />
 								</div> -->
-							<button id="toggleShippingAddress" class="btn btn-primary">Ship to a different
-								address</button>
-							<div id="shippingAddressSection" class="custom-input"
+							<a id="toggleShippingAddress" class="btn btn-primary" href="/userProfile">Ship to a different Address</a>
+							<!-- <div id="shippingAddressSection" class="custom-input"
 								style="display: none; margin-top: 20px;">
 								<form action="#">
 									<input type="text" name="ship_name" placeholder="Name" />
@@ -598,7 +590,7 @@
 											name="ship_message"></textarea>
 									</div>
 								</form>
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -664,9 +656,11 @@
 								</thead>
 								<tbody>
 									<% let subTotal = 0; %>
+									<% let offerDiscount = cart.products[0].productVariantId.offerDiscount %>
 									<% cart.products.forEach(product => { %>
 										<% const total = product.discountPrice * product.quantity; %>
 										<% subTotal += total; %>
+										<% console.log("SubTotal  :  ",subTotal) %>
 										<tr>
 											<th>
 												<%= product.productVariantId.productName %> x <%= product.quantity %>
@@ -678,12 +672,16 @@
 										</tr>
 									<% }); %>
 									<tr>
-										<th>Coupon Discount:</th>
+										<th>Shipping Charge :</th>
+										<td id="shippingCharge">50/-</td>
+									</tr>
+									<tr>
+										<th>Coupon Discount :</th>
 										<td id="discountAmount">
 											<% if (typeof couponDiscount !== 'undefined' && couponDiscount > 0) { %>
 												<%= parseInt(couponDiscount) %>/-
 											<% } else { %>
-												Nill
+												----
 											<% } %>
 										</td>
 									</tr>
@@ -695,7 +693,7 @@
 											<% if (typeof couponDiscount !== 'undefined' && couponDiscount > 0) { %>
 												<%= parseInt(subTotal - couponDiscount) %>/-
 											<% } else { %>
-												<%= parseInt(subTotal) %>/-
+												<%= parseInt(subTotal) + 50; %>/-
 											<% } %>
 										</td>
 									</tr>
@@ -769,6 +767,14 @@
 										</label>
 									</div>
 								</li>
+								<li class="panel panelimg">
+									<div data-bs-toggle="collapse" data-bs-target="#collapseCOD">
+									    <label>
+										   <input type="radio" name="paymentMethod" value="Wallet Payment">
+										   Wallet Payments
+									    </label>
+									</div>
+								</li>
 							</ul>
 
 							<div class="submit-text place-order floatright">
@@ -783,14 +789,19 @@
 						</div>
                      </div>
 
+					
+
+
 							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 							<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+							<input type="hidden" id="subTotal" value="<%= subTotal %>">
+
 
 							<script>
-								document.getElementById('placeOrderBtn').addEventListener('click', function (event) {
+								document.getElementById('placeOrderBtn').addEventListener('click', async function (event) {
 									event.preventDefault();
-								
+							
 									// Check if any address is selected
 									const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
 									if (!selectedAddress) {
@@ -801,10 +812,11 @@
 										});
 										return;
 									}
-								
+							
 									// Check selected payment method
 									const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
-									if (!selectedPaymentMethod) {
+									const selectedWalletMethod = document.querySelector('input[name="walletMethod"]:checked');
+									if (!selectedPaymentMethod && !selectedWalletMethod) {
 										Swal.fire({
 											icon: 'error',
 											title: 'Oops...',
@@ -812,12 +824,46 @@
 										});
 										return;
 									}
-								
+							
 									const addressId = selectedAddress.value;
-									const paymentMethod = selectedPaymentMethod.value;
+									const paymentMethod = selectedPaymentMethod ? selectedPaymentMethod.value : selectedWalletMethod.value;
 									const couponId = document.getElementById('couponId') ? document.getElementById('couponId').value : null;
-								
-									// If COD is selected, proceed with COD order
+									const subTotal = parseFloat(document.getElementById('subTotal').value);
+							
+									// Check if COD is selected and subtotal is greater than 1000
+									if (paymentMethod === 'COD' && subTotal > 1000) {
+										Swal.fire({
+											icon: 'error',
+											title: 'Oops...',
+											text: 'Cash on Delivery is not available for orders above 1000. Please select another payment method.',
+										});
+										return;
+									}
+							
+									// If Wallet Payment is selected, check wallet balance
+									if (paymentMethod === 'Wallet Payment') {
+										try {
+											const response = await fetch('/check-wallet-balance');
+											const data = await response.json();
+											if (!response.ok || data.balance < subTotal) {
+												Swal.fire({
+													icon: 'error',
+													title: 'Oops...',
+													text: 'Insufficient wallet balance. Please select another payment method.',
+												});
+												return;
+											}
+										} catch (error) {
+											Swal.fire({
+												icon: 'error',
+												title: 'Oops...',
+												text: 'Error checking wallet balance. Please try again.',
+											});
+											return;
+										}
+									}
+							
+									// Confirm order placement
 									Swal.fire({
 										title: 'Are you sure?',
 										text: 'Do you want to confirm your order?',
@@ -826,29 +872,29 @@
 										confirmButtonText: 'Yes, place order!',
 										cancelButtonText: 'No, cancel',
 										reverseButtons: true
-									}).then((result) => {
+									}).then(async (result) => {
 										if (result.isConfirmed) {
-											// After confirmation, send the address ID to the backend using fetch
-											fetch('/place-order', {
-												method: 'POST',
-												headers: {
-													'Content-Type': 'application/json',
-												},
-												body: JSON.stringify({
-													addressId: addressId,
-													paymentMethod: paymentMethod,
-													couponId: couponId
-												})
-											})
-											.then(response => {
-												if (!response.ok) {
-													throw new Error('Network response was not ok');
-												}
-												return response.json();
-											})
-											.then(data => {
-												if (data.success) {
-													if (paymentMethod === 'COD') {
+											try {
+												// After confirmation, send the address ID to the backend using fetch
+												const response = await fetch('/place-order', {
+													method: 'POST',
+													headers: {
+														'Content-Type': 'application/json',
+													},
+													body: JSON.stringify({
+														addressId: addressId,
+														paymentMethod: paymentMethod,
+														couponId: couponId
+													})
+												});
+												const data = await response.json();
+												if (!response.ok || !data.success) {
+													Swal.fire({
+														text: data.message || "Order placement failed",
+														icon: "error"
+													});
+												} else {
+													if (paymentMethod === 'COD' || paymentMethod === 'Wallet Payment') {
 														window.location.href = `/order?orderId=${data.orderId}`;
 													} else {
 														var options = {
@@ -864,7 +910,7 @@
 																	razorpay_signature: response.razorpay_signature,
 																	order_id: data.orderId
 																};
-								
+							
 																// Verify payment
 																try {
 																	const res = await fetch('/payment-success', {
@@ -874,12 +920,12 @@
 																		},
 																		body: JSON.stringify(paymentData)
 																	});
-								
+							
 																	const verifyData = await res.json();
-								
+							
 																	if (verifyData.success) {
 																		Swal.fire({
-																			text: verifyData.success  || "Success",
+																			text: verifyData.success || "Success",
 																			icon: "success"
 																		}).then(() => {
 																			window.location.href = `/order?orderId=${data.orderId}`;
@@ -911,7 +957,7 @@
 																		text: "Payment failed or was dismissed. Please try again.",
 																		icon: "error"
 																	}).then(() => {
-																		window.location.href = '/order';
+																		window.location.href = '/checkOut'
 																	});
 																}
 															}
@@ -919,24 +965,18 @@
 														const rzp1 = new Razorpay(options);
 														rzp1.open();
 													}
-												} else {
-													Swal.fire({
-														text: "Order placement failed",
-														icon: "error"
-													});
 												}
-											})
-											.catch(error => {
-												console.error('There has been a problem with your fetch operation:', error);
+											} catch (error) {
 												Swal.fire({
 													text: "An error occurred while placing the order.",
 													icon: "error"
 												});
-											});
+											}
 										}
 									});
 								});
 							</script>
+							
 							
 								
 

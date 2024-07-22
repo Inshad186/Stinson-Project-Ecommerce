@@ -32,6 +32,14 @@ exports.viewUserProfile = async (req, res) => {
 
         const wallet = await Wallet.findOne({ userId: userId });
 
+        const walletPage = parseInt(req.query.walletPage) || 1;
+        const walletLimit = parseInt(req.query.walletLimit) || 6; 
+        const walletSkip = (walletPage - 1) * walletLimit;
+
+        const totalTransactions = wallet ? wallet.transactions.length : 0;
+        const totalWalletPages = Math.ceil(totalTransactions / walletLimit);
+        const transactions = wallet ? wallet.transactions.slice(walletSkip, walletSkip + walletLimit) : [];
+
 
         if (!user) {
             return res.status(404).send("User not found");
@@ -45,7 +53,13 @@ exports.viewUserProfile = async (req, res) => {
             currentPage: page,
             totalPages: Math.ceil(totalOrders / limit),
             limit,
-            wallet
+            wallet: {
+                balance: wallet ? wallet.balance : 0,
+                transactions: transactions
+            },
+            walletCurrentPage: walletPage,
+            totalWalletPages: totalWalletPages,
+            walletLimit: walletLimit
         });
     } catch (error) {
         console.log(error.message);
@@ -117,7 +131,7 @@ exports.cancelOrder = async (req, res, next) => {
 
 exports.returnOrder = async (req, res) => {
     try {
-        const { orderId, variantId } = req.body;
+        const { orderId, variantId, reason } = req.body;
         const order = await Order.findById(orderId);
 
         console.log("ORDERRRR  :  ",order);
@@ -125,7 +139,6 @@ exports.returnOrder = async (req, res) => {
         if (!order) {
             return res.status(404).json({ error: 'Order not found' });
         }
-
         const orderItem = order.orderItems[0]
         console.log("OORRDEER  ITTEEEMM  : ",orderItem);
         if (!orderItem) {
@@ -135,13 +148,9 @@ exports.returnOrder = async (req, res) => {
         if (orderItem.orderStatus !== 'Delivered') {
             return res.status(400).json({ error: 'Order is not delivered yet' });
         }
-
-        // await Order.findOneAndUpdate(
-        //     { _id: orderId, 'orderItems._id': variantId },
-        //     { $set: { 'orderItems.$.orderStatus': 'Return requested'}}
-        // );
-
         orderItem.orderStatus = 'Return requested'
+        orderItem.returnReason = reason;
+
         await order.save()
         
         res.json({ message: 'Your return request placed successfully' });
@@ -163,7 +172,7 @@ exports.applyCoupon = async (req, res) => {
 
         const cart = await Cart.findOne({ userId }).populate({
             path: 'products.productVariantId',
-            select: 'size salePrice stock colour image productName categoryName'
+            select: 'size salePrice stock colour image productName categoryName offerDiscount'
         });
 
         if (!cart) {
@@ -172,7 +181,13 @@ exports.applyCoupon = async (req, res) => {
 
         let subTotal = 0;
         cart.products.forEach(product => {
-            subTotal += product.productVariantId.salePrice * product.quantity;
+            const variant = product.productVariantId;
+            let discountPrice = variant.salePrice;
+            if (variant.offerDiscount) {
+                discountPrice = variant.salePrice - (variant.salePrice * variant.offerDiscount / 100);
+            }
+            product.discountPrice = parseInt(discountPrice);
+            subTotal += product.discountPrice * product.quantity;
         });
 
         const coupon = await Coupons.findOne({ couponCode });
@@ -186,7 +201,7 @@ exports.applyCoupon = async (req, res) => {
         }
 
         const discount = Math.min(subTotal * (coupon.discountPercentage / 100), coupon.maxRedeemAmount);
-        const newTotal = subTotal - discount;
+        const newTotal = (subTotal - discount)+50;
 
         res.status(200).json({ discount, newTotal, couponId: coupon._id });
     } catch (error) {
@@ -253,7 +268,22 @@ exports.insertAddress = async (req, res) => {
         if (!userId) {
             return res.status(401).json({ error: "User not authenticated" });
         }
-        const addressIsExisting = await Address.findOne({ userId });
+
+        const nameRegex = /^[^\s][a-zA-Z\s]*[^\s]$/;
+        const mobileRegex = /^(\+?\d{1,3}[- ]?)?(6|7|8|9)\d{9}$/;
+        const pincodeRegex = /^\d{6}$/;
+
+        if (!nameRegex.test(name)) {
+            return res.status(400).json({ error: "Invalid name format." });
+        }
+
+        if (!mobileRegex.test(phone)) {
+            return res.status(400).json({ error: "Invalid phone number format." });
+        }
+
+        if (!pincodeRegex.test(pincode)) {
+            return res.status(400).json({ error: "Invalid pincode format." });
+        }
 
         const addressData = new Address({
             userId,
