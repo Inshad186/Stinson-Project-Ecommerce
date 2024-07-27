@@ -525,6 +525,7 @@
 		</div>
 		<!-- pages-title-end -->
         <!-- collection section start -->
+		 
 		<section class="collection-area section-padding-top">
 			<div class="container">
 				<div class="row">
@@ -556,6 +557,31 @@
 		</section>
 		<!-- collection section end -->
 		<!-- product-grid-view-left content section start -->
+
+
+	<!-- <div class="col-12 mb-4">
+			<div class="btn-group" role="group" aria-label="Category Filters">
+				<a href="/shopList?category=Shirt" class="btn btn-primary">Shirts</a>
+				<a href="/shopList?category=Pants" class="btn btn-primary">Pants</a>
+				<a href="/shopList?category=Shoes" class="btn btn-primary">Shoes</a>
+				<a href="/shopList" class="btn btn-secondary">All</a>
+			</div>
+		</div> -->
+
+		<!-- <div class="s-side-text">
+			<div class="sidebar-title">
+				<h4>size</h4>
+			</div>
+			<div class="size text-bg">
+				<ul>
+					<li><a href="#">s</a></li>
+					<li><a href="#">l</a></li>
+					<li><a href="#">m</a></li>
+					<li><a href="#">xl</a></li>
+				</ul>
+			</div>
+		</div> -->
+
 		<section class="pages products-page section-padding-top ">
 			<div class="container">
 				<div class="row">
@@ -563,61 +589,24 @@
 						<div class="sidebar left-sidebar">
 							<div class="s-side-text">
 								<div class="sidebar-title">
-									<h4>filter by</h4>
+									<h4>filter & sort by</h4>
 								</div>
 							</div>
 							<div class="s-side-text">
 								<div class="sidebar-title">
 									<h4>price</h4>
 								</div>
-								<div class="range-slider text-bg clearfix">
-									<form action="#" method="get">
-										<label><input type="text" id="amount" readonly /></label>
-										<input class="submit floatright" type="submit" value="Search">
-										<div id="slider-range"></div>
+								<div class="custom-select text-bg">
+									<form action="/shopList" method="get">
+										<select class="form-control" name="sortBy">
+											<option value="priceAsc">Price: Low to High</option>
+											<option value="priceDesc">Price: High to Low</option>
+											<option value="nameAsc">Name: A to Z</option>
+											<option value="nameDesc">Name: Z to A</option>
+										</select>
+										<input type="hidden" name="category" value="<%= selectedCategory %>">
+										<input class="submit floatright" type="submit" value="Sort">
 									</form>
-								</div>
-							</div>
-							<!-- <div class="s-side-text">
-								<div class="sidebar-title">
-									<h4>color</h4>
-								</div>
-								<div class="color text-bg">
-									<ul>
-										<li><a href="#">red</a></li>
-										<li><a href="#">green</a></li>
-										<li><a href="#">blue</a></li>
-										<li><a href="#">yellow</a></li>
-										<li><a href="#">gray</a></li>
-										<li><a href="#">orange</a></li>
-									</ul>
-								</div>
-							</div> -->
-							<!-- <div class="s-side-text">
-								<div class="sidebar-title">
-									<h4>MANUFACTURER</h4>
-								</div>
-								<div class="facturer text-bg">
-									<ul>
-										<li><a href="#">Consequat <span class="floatright">12</span></a></li>
-										<li><a href="#">Sollicitudin <span class="floatright">25</span></a></li>
-										<li><a href="#">Pellentesque <span class="floatright">65</span></a></li>
-										<li><a href="#">premium label <span class="floatright">89</span></a></li>
-										<li><a href="#">TOMMY HILFIGER <span class="floatright">65</span></a></li>
-									</ul>
-								</div>
-							</div> -->
-							<div class="s-side-text">
-								<div class="sidebar-title">
-									<h4>size</h4>
-								</div>
-								<div class="size text-bg">
-									<ul>
-										<li><a href="#">s</a></li>
-										<li><a href="#">l</a></li>
-										<li><a href="#">m</a></li>
-										<li><a href="#">xl</a></li>
-									</ul>
 								</div>
 							</div>
 							<div class="s-side-text">
@@ -626,16 +615,16 @@
 								</div>
 								<div class="facturer category text-bg">
 									<ul>
-										<li><a href="#">Shirt <span class="floatright"></span></a></li>
-										<li><a href="#">Pant<span class="floatright"></span></a></li>
-										<li><a href="#">T-shirt<span class="floatright"></span></a></li>
-										<li><a href="#">Trousers & shorts<span class="floatright"></span></a></li>
+										<li><a href="/shopList?category=Shirt">Shirt <span class="floatright"></span></a></li>
+										<li><a href="/shopList?category=Pant">Pant<span class="floatright"></span></a></li>
+										<li><a href="/shopList?category=T shirt">T-shirt<span class="floatright"></span></a></li>
+										<li><a href="/shopList?category=Trousers and Shorts">Trousers & shorts<span class="floatright"></span></a></li>
+										<li><a href="/shopList">All<span class="floatright"></span></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
-
 					<div class="col-md-8 col-lg-9">
 						<div class="right-products">
 							<div class="row">
@@ -648,29 +637,16 @@
 												</ul>
 											</li>
 											<li class="sort-by l-r-margin">
-												<h5>sort by :</h5>
+												<h5>search :</h5>
 											</li>
 											<li class="sort-by">
-												<form action="#">
+												<form action="/shopList" method="get">
 													<div class="custom-select">
-														<select class="form-control">
-															<option> Men Products </option>
-														</select>
+														<input type="text" class="form-control" name="search" placeholder="Search for a product">
 													</div>
-												</form>
-											</li>
-											<li class="sort-by l-r-margin">
-												<h5>show :</h5>
-											</li>
-											<li class="sort-by">
-												<form action="#">
-													<div class="custom-select">
-														<select class="form-control">
-															<option> 01</option>
-															<option> 02</option>
-															<option> 03</option>
-														</select>
-													</div>
+													<input type="hidden" name="category" value="<%= selectedCategory %>">
+													<input type="hidden" name="sortBy" value="<%= sortBy %>">
+													<!-- <input class="submit floatright" type="submit" value="Search"> -->
 												</form>
 											</li>
 										</ul>
@@ -721,17 +697,17 @@
 									<ul class="pagination">
 										<% if (currentPage > 1) { %>
 										<li class="page-item">
-											<a class="page-link" href="/shopList?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+											<a class="page-link" href="/shopList?page=<%= currentPage - 1 %>&limit=<%= limit %>&sortBy=<%= sortBy %>&search=<%= searchQuery %>">Previous</a>
 										</li>
 										<% } %>
 										<% for (let i = 1; i <= totalPages; i++) { %>
 										<li class="page-item <%= i === currentPage ? 'active' : '' %>">
-											<a class="page-link" href="/shopList?page=<%= i %>&limit=<%= limit %>"><%= i %></a>
+											<a class="page-link" href="/shopList?page=<%= i %>&limit=<%= limit %>&sortBy=<%= sortBy %>&search=<%= searchQuery %>"><%= i %></a>
 										</li>
 										<% } %>
 										<% if (currentPage < totalPages) { %>
 										<li class="page-item">
-											<a class="page-link" href="/shopList?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+											<a class="page-link" href="/shopList?page=<%= currentPage + 1 %>&limit=<%= limit %>&sortBy=<%= sortBy %>&search=<%= searchQuery %>">Next</a>
 										</li>
 										<% } %>
 									</ul>
@@ -739,275 +715,10 @@
 							</div>
 						</div>
 					</div>
-					
-									<!-- grid view end -->
-
-
-									<!-- <div class="tab-pane list-view fade show active" id="list">
-										<div class="row">
-											<div class="col-12">
-												<div class="single-product">
-													<div class="row">
-														<div class="col-lg-4">
-															<div class="product-img">
-																<div class="pro-type">
-																	<span>sale</span>
-																</div>
-																<a href="#"><img src="img/products/3.webp" alt="Product Title" /></a>
-															</div>
-														</div>
-														<div class="col-lg-6">
-															<div class="product-dsc">
-																<div class="rating floatright">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-half-o"></i>
-																	<i class="fa fa-star-o"></i>
-																</div>
-																<h4><a href="#">Product Title</a></h4>
-																<h3>$52.00</h3>
-																<p>Lorem Ipsum is simply dummy text of the printing and types setting industry. Lorem Ipsum has been the industry's stan dard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.</p>
-																<ul class="clearfix">
-																	<li><a href="#">in Stock</a></li>
-																	<li><a href="#">06 Reviews</a></li>
-																	<li><a href="#">add your review</a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-lg-2">
-															<div class="por-dse clearfix">
-																<ul class="other-btn clearfix">
-																	<li><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view"><i class="pe-7s-expand1"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-like"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-repeat"></i></a></li>
-																	<li><a href="#">ssl</a></li>
-																	<li><a href="#">xs</a></li>
-																	<li><a href="#">xl</a></li>
-																</ul>
-															</div>
-															<div class="por-dse add-to">
-																<a href="#"><i class="pe-7s-cart"></i>add to cart</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="single-product">
-													<div class="row">
-														<div class="col-lg-4">
-															<div class="product-img">
-																<a href="#"><img src="img/products/4.webp" alt="Product Title" /></a>
-															</div>
-														</div>
-														<div class="col-lg-6">
-															<div class="product-dsc">
-																<div class="rating floatright">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-half-o"></i>
-																	<i class="fa fa-star-o"></i>
-																</div>
-																<h4><a href="#">Product Title</a></h4>
-																<h3>$52.00</h3>
-																<p>Lorem Ipsum is simply dummy text of the printing and types setting industry. Lorem Ipsum has been the industry's stan dard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.</p>
-																<ul class="clearfix">
-																	<li><a href="#">in Stock</a></li>
-																	<li><a href="#">06 Reviews</a></li>
-																	<li><a href="#">add your review</a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-lg-2">
-															<div class="por-dse clearfix">
-																<ul class="other-btn clearfix">
-																	<li><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view"><i class="pe-7s-expand1"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-like"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-repeat"></i></a></li>
-																	<li><a href="#">ssl</a></li>
-																	<li><a href="#">xs</a></li>
-																	<li><a href="#">xl</a></li>
-																</ul>
-															</div>
-															<div class="por-dse add-to">
-																<a href="#"><i class="pe-7s-cart"></i>add to cart</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="single-product">
-													<div class="row">
-														<div class="col-lg-4">
-															<div class="product-img">
-																<div class="pro-type">
-																	<span>new</span>
-																</div>
-																<a href="#"><img src="img/products/5.webp" alt="Product Title" /></a>
-															</div>
-														</div>
-														<div class="col-lg-6">
-															<div class="product-dsc">
-																<div class="rating floatright">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-half-o"></i>
-																	<i class="fa fa-star-o"></i>
-																</div>
-																<h4><a href="#">Product Title</a></h4>
-																<h3>$52.00</h3>
-																<p>Lorem Ipsum is simply dummy text of the printing and types setting industry. Lorem Ipsum has been the industry's stan dard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.</p>
-																<ul class="clearfix">
-																	<li><a href="#">in Stock</a></li>
-																	<li><a href="#">06 Reviews</a></li>
-																	<li><a href="#">add your review</a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-lg-2">
-															<div class="por-dse clearfix">
-																<ul class="other-btn clearfix">
-																	<li><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view"><i class="pe-7s-expand1"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-like"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-repeat"></i></a></li>
-																	<li><a href="#">ssl</a></li>
-																	<li><a href="#">xs</a></li>
-																	<li><a href="#">xl</a></li>
-																</ul>
-															</div>
-															<div class="por-dse add-to">
-																<a href="#"><i class="pe-7s-cart"></i>add to cart</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="single-product">
-													<div class="row">
-														<div class="col-lg-4">
-															<div class="product-img">
-																<a href="#"><img src="img/products/6.webp" alt="Product Title" /></a>
-															</div>
-														</div>
-														<div class="col-lg-6">
-															<div class="product-dsc">
-																<div class="rating floatright">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-half-o"></i>
-																	<i class="fa fa-star-o"></i>
-																</div>
-																<h4><a href="#">Product Title</a></h4>
-																<h3>$52.00</h3>
-																<p>Lorem Ipsum is simply dummy text of the printing and types setting industry. Lorem Ipsum has been the industry's stan dard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.</p>
-																<ul class="clearfix">
-																	<li><a href="#">in Stock</a></li>
-																	<li><a href="#">06 Reviews</a></li>
-																	<li><a href="#">add your review</a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-lg-2">
-															<div class="por-dse clearfix">
-																<ul class="other-btn clearfix">
-																	<li><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view"><i class="pe-7s-expand1"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-like"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-repeat"></i></a></li>
-																	<li><a href="#">ssl</a></li>
-																	<li><a href="#">xs</a></li>
-																	<li><a href="#">xl</a></li>
-																</ul>
-															</div>
-															<div class="por-dse add-to">
-																<a href="#"><i class="pe-7s-cart"></i>add to cart</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="single-product">
-													<div class="row">
-														<div class="col-lg-4">
-															<div class="product-img">
-																<div class="pro-type">
-																	<span>new</span>
-																</div>
-																<a href="#"><img src="img/products/9.webp" alt="Product Title" /></a>
-															</div>
-														</div>
-														<div class="col-lg-6">
-															<div class="product-dsc">
-																<div class="rating floatright">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-half-o"></i>
-																	<i class="fa fa-star-o"></i>
-																</div>
-																<h4><a href="#">Product Title</a></h4>
-																<h3>$52.00</h3>
-																<p>Lorem Ipsum is simply dummy text of the printing and types setting industry. Lorem Ipsum has been the industry's stan dard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.</p>
-																<ul class="clearfix">
-																	<li><a href="#">in Stock</a></li>
-																	<li><a href="#">06 Reviews</a></li>
-																	<li><a href="#">add your review</a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-lg-2">
-															<div class="por-dse clearfix">
-																<ul class="other-btn clearfix">
-																	<li><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view"><i class="pe-7s-expand1"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-like"></i></a></li>
-																	<li><a href="#"><i class="pe-7s-repeat"></i></a></li>
-																	<li><a href="#">ssl</a></li>
-																	<li><a href="#">xs</a></li>
-																	<li><a href="#">xl</a></li>
-																</ul>
-															</div>
-															<div class="por-dse add-to">
-																<a href="#"><i class="pe-7s-cart"></i>add to cart</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div> -->
-
-
-
-									<!-- list view end -->
-								</div>
-							</div>
-							<!-- <div class="row">
-								<div class="col-12"> -->
-									<!-- <div class="blog-pagination">
-										<nav>
-											<ul class="pagination">
-												<li>
-													<a href="#" aria-label="Previous">
-														<span aria-hidden="true">prev</span>
-													</a>
-												</li>
-												<li><a class="active" href="#">1</a></li>
-												<li><a href="#">2</a></li>
-												<li><a href="#">3</a></li>
-												<li><a href="#">4</a></li>
-												<li>
-													<a href="#" aria-label="Next">
-														<span aria-hidden="true">next</span>
-													</a>
-												</li>
-											</ul>
-										</nav>
-									</div> -->
-								<!-- </div>
-							</div> -->
-						</div>
-					</div>
 				</div>
-			</div>
-		</section>
+	       </div>
+     </section>
+
 		<!-- product-grid-view-left content section end -->
         <!-- quick view start -->
 		<div class="quick-view modal fade show" id="quick-view">

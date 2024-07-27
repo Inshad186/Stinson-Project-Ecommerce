@@ -21,15 +21,24 @@ exports.addCategory = async (req, res) => {
             return res.status(400).json({ success: false, message: "Category already exist" })
         }
 
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "Image upload failed" });
+        }
+
         const image = `/admin/uploads/category/${req.file.filename}`
+
+        console.log(">>>>>>>>>>>>>>     image     <<<<<<<<<<<<<<<<",image);
 
         const categoryData = new category({
             name: name,
             image: image,
             description: description
         });
+        console.log(">>>>>>>>>>>>>>     categoryData     <<<<<<<<<<<<<<<<",categoryData);
 
         const savedCategory = await categoryData.save();
+
+        console.log(">>>>>>>>>>>>>>     SAVED CATEGORY     <<<<<<<<<<<<<<<<",savedCategory);
 
         res.status(200).json({ success: true, message: "Category added successfully" });
     } catch (error) {

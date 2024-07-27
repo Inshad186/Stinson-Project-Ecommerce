@@ -144,7 +144,6 @@ exports.updateOrderStatus = async (req, res) => {
 };
 
 
-
 function formatNumber(num) {
     const str = num.toString().split('.');
     const integerPart = str[0];
@@ -157,15 +156,13 @@ function formatNumber(num) {
 
 exports.viewSalesReport = async (req, res) => {
   try {
-    const ITEMS_PER_PAGE = 10; // Adjust as needed
+    const ITEMS_PER_PAGE = 10; 
     const { sortBy = 'All Orders', startDate, endDate, page = 1 } = req.query;
 
-    // Define filter based on order status and optionally by date range
     let filter = {
       'orderItems.orderStatus': { $in: ['Delivered', 'Completed'] }
     };
 
-    // Determine date filters based on sortBy criteria
     const today = new Date();
     const startOfToday = new Date(today.setHours(0, 0, 0, 0));
     const startOfWeek = new Date(today.setDate(today.getDate() - 7));
@@ -184,28 +181,22 @@ exports.viewSalesReport = async (req, res) => {
 
       filter.orderDate = { $gte: start, $lte: end };
     }
-
-    // Count total orders matching the filter
     const totalOrders = await Order.countDocuments(filter);
 
-    // Aggregate to calculate total grand total
     const totalGrandTotal = await Order.aggregate([
       { $match: filter },
       { $group: { _id: null, total: { $sum: "$grandTotal" } } }
     ]);
 
-    // Query orders with pagination and populate user details
     const orders = await Order.find(filter)
       .populate({ path: 'userId', select: 'name' })
       .sort({ orderDate: -1 })
       .skip((page - 1) * ITEMS_PER_PAGE)
       .limit(ITEMS_PER_PAGE);
 
-    // Extract grand total amount
     const grandTotalAmount = totalGrandTotal.length > 0 ? totalGrandTotal[0].total : 0;
-    const formattedGrandTotalAmount = formatNumber(grandTotalAmount); // Define your formatting function
+    const formattedGrandTotalAmount = formatNumber(grandTotalAmount);
 
-    // Render the sales report page with data
     res.render('admin/salesReport', {
       orders,
       sortBy,

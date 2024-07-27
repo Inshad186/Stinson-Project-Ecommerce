@@ -19,7 +19,7 @@ exports.Dashboard = async(req,res)=>{
 
         let filter = await Order.find( {'orderItems.orderStatus': { $in: ['Delivered', 'Completed'] }});
 
-        const totalRevenue = filter.reduce((acc, order) => acc + order.subTotal, 0);
+        const totalRevenue = filter.reduce((acc, order) => acc + order.grandTotal, 0);
         console.log("REVENUE  :  ",totalRevenue);
 
 
@@ -31,82 +31,60 @@ exports.Dashboard = async(req,res)=>{
 
 
 exports.getChartData = asyncHandler(async (req, res) => {
-    const { filter } = req.query;
+    const { filter, startDate, endDate } = req.query;
 
-    let startDate, endDate;
+    let start, end;
     const now = new Date();
+    
     if (filter === 'yearly') {
-        startDate = new Date(now.getFullYear(), 0, 1);
-        endDate = new Date(now.getFullYear(), 11, 31);
+        start = new Date(now.getFullYear(), 0, 1);
+        end = new Date(now.getFullYear(), 11, 31);
     } else if (filter === 'monthly') {
-        startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-        endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        start = new Date(now.getFullYear(), now.getMonth(), 1);
+        end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     } else if (filter === 'weekly') {
-        startDate = new Date(now.setDate(now.getDate() - now.getDay()));
-        endDate = new Date(now.setDate(now.getDate() + 6));
-        startDate = new Date(now.setDate(startOfWeek));
-        endDate = new Date(now.setDate(endOfWeek));
+        start = new Date(now.setDate(now.getDate() - now.getDay()));
+        end = new Date(now.setDate(now.getDate() + 6));
+    } else if (filter === 'daily') { // Added daily filter
+        start = new Date(now.setHours(0, 0, 0, 0));
+        end = new Date(now.setHours(23, 59, 59, 999));
+    } else if (filter === 'date-range') {
+        start = new Date(startDate);
+        end = new Date(endDate);
     } else {
-        startDate = new Date(0);
-        endDate = new Date();
+        start = new Date(0);
+        end = new Date();
     }
 
+    console.log(`Filter: ${filter}, Start Date: ${start}, End Date: ${end}`);
+
     try {
-        // Aggregation for best-selling products
         const bestSellingProducts = await Order.aggregate([
-            { $match: { orderDate: { $gte: startDate, $lte: endDate } } },
+            { $match: { orderDate: { $gte: start, $lte: end } } },
             { $unwind: '$orderItems' },
             { $group: { _id: '$orderItems.variantName', totalSold: { $sum: '$orderItems.quantity' } } },
             { $sort: { totalSold: -1 } },
             { $limit: 10 }
         ]);
 
-        // Aggregation for best-selling categories
         const bestSellingCategories = await Order.aggregate([
-            { $match: { orderDate: { $gte: startDate, $lte: endDate } } },
+            { $match: { orderDate: { $gte: start, $lte: end } } },
             { $unwind: '$orderItems' },
-            {
-                $lookup: {
-                    from: 'varients',
-                    localField: 'orderItems.variantId',
-                    foreignField: '_id',
-                    as: 'variantDetails'
-                }
-            },
+            { $lookup: { from: 'varients', localField: 'orderItems.variantId', foreignField: '_id', as: 'variantDetails' } },
             { $unwind: '$variantDetails' },
             { $group: { _id: '$variantDetails.categoryName', totalSold: { $sum: '$orderItems.quantity' } } },
             { $sort: { totalSold: -1 } },
             { $limit: 10 }
         ]);
-        
-        // Aggregation for best-selling brands
+
         const bestSellingBrands = await Order.aggregate([
-            { $match: { orderDate: { $gte: startDate, $lte: endDate } } },
+            { $match: { orderDate: { $gte: start, $lte: end } } },
             { $unwind: "$orderItems" },
-            {
-                $lookup: {
-                    from: 'varients',
-                    localField: 'orderItems.variantId',
-                    foreignField: '_id',
-                    as: 'variantDetails'
-                }
-            },
+            { $lookup: { from: 'varients', localField: 'orderItems.variantId', foreignField: '_id', as: 'variantDetails' } },
             { $unwind: '$variantDetails' },
-            {
-                $lookup: {
-                    from: 'products',
-                    localField: 'variantDetails.productId',
-                    foreignField: '_id',
-                    as: 'productDetails'
-                }
-            },
+            { $lookup: { from: 'products', localField: 'variantDetails.productId', foreignField: '_id', as: 'productDetails' } },
             { $unwind: '$productDetails' },
-            {
-                $group: {
-                    _id: '$productDetails.brand',
-                    totalSold: { $sum: '$orderItems.quantity' }
-                }
-            },
+            { $group: { _id: '$productDetails.brand', totalSold: { $sum: 1 } } },
             { $sort: { totalSold: -1 } },
             { $limit: 10 }
         ]);
@@ -118,11 +96,10 @@ exports.getChartData = asyncHandler(async (req, res) => {
         res.json({
             bestSellingProducts,
             bestSellingCategories,
+            bestSellingBrands
         });
     } catch (error) {
+        console.error('Error fetching chart data:', error);
         res.status(500).send(error.message);
     }
 });
-
-
-

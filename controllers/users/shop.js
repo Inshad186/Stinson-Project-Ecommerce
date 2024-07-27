@@ -6,13 +6,39 @@ exports.viewshopList = async (req, res, next) => {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 6;
         const category = req.query.category || '';
+        const searchQuery = req.query.search || '';
+        const sortBy = req.query.sortBy || 'priceAsc';
 
         const startIndex = (page - 1) * limit;
 
         const categoryFilter = category ? { categoryName: category, is_Delete: false } : { is_Delete: false };
 
+        if (searchQuery) {
+            categoryFilter.productName = { $regex: searchQuery, $options: 'i' }; // Case-insensitive search
+        }
+
+        let sortOptions = {};
+
+        switch (sortBy) {
+            case 'priceAsc':
+                sortOptions = { salePrice: 1 };
+                break;
+            case 'priceDesc':
+                sortOptions = { salePrice: -1 };
+                break;
+            case 'nameAsc':
+                sortOptions = { productName: 1 };
+                break;
+            case 'nameDesc':
+                sortOptions = { productName: -1 };
+                break;
+            default:
+                sortOptions = { salePrice: 1 };
+        }
+
         const totalVariants = await Variant.countDocuments(categoryFilter);
         const variants = await Variant.find(categoryFilter)
+            .sort(sortOptions)
             .skip(startIndex)
             .limit(limit);
 
@@ -21,7 +47,9 @@ exports.viewshopList = async (req, res, next) => {
             currentPage: page,
             totalPages: Math.ceil(totalVariants / limit),
             limit: limit,
-            selectedCategory: category 
+            selectedCategory: category,
+            sortBy: sortBy,
+            searchQuery: searchQuery
         });
     } catch (error) {
         console.log(error.message);

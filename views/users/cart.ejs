@@ -95,19 +95,11 @@
 								<nav>
 									<ul>
 										<li><a href="/">Home</a>
-											<ul>
-												<li><a href="index.html">Home Version One</a></li>
-												<li><a href="index-2.html">Home Version Two</a></li>
-											</ul>
 										</li>
 										<li><a href="/shopList">Shop</a>
-											<ul>
-												<li><a href="/shopList">All Product</a></li>
-												<li><a href="/shopList">New Product</a></li>				
-											</ul>
 										</li>
 										<li><a href="/userProfile">My Account</a>
-										<li><a href="blog-style-1.html">Blog</a>
+										<!-- <li><a href="blog-style-1.html">Blog</a>
 											<ul>
 												<li><a href="single-blog.html">Single Blog</a></li>
 												<li><a href="blog-style-1.html">Blog Style One</a></li>
@@ -136,7 +128,7 @@
 									</ul>
 								</nav>
 							</div>
-							<!-- mobile menu start -->
+
 							<div class="mobile-menu-area">
 								<div class="mobile-menu">
 									<nav id="dropdown">
@@ -296,7 +288,7 @@
 													</li>
 												</ul>
 											</li>
-											<li><a href="shop-style-1.html">Lookbook</a></li>
+											<li><a href="shop-style-1.html">Lookbook</a></li> -->
 											<li><a href="blog-style-1.html">Blog</a>
 												<ul>
 													<li><a href="single-blog.html">Single Blog</a></li>
@@ -304,7 +296,7 @@
 													<li><a href="blog-style-2.html">Blog Style Two</a></li>
 												</ul>
 											</li>
-											<li><a href="#">Pages</a>
+											<!-- <li><a href="#">Pages</a>
 												<ul>
 													<li><a href="cart.html">Cart</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
@@ -320,7 +312,7 @@
 													<li><a href="product-detail.html">Product-Detail</a></li>
 													<li><a href="order-complete.html">Order Completed</a></li>
 												</ul>
-											</li>
+											</li> -->
 											<li><a href="about.html">About</a></li>
 											<li><a href="contact.html">Contact</a></li>
 										</ul>
@@ -377,7 +369,7 @@
 													<div class="items-dsc">
 														<h6><a href="#"><%= product.productVariantId.productName %></a></h6>
 														<h6 class="itemcolor">Color : <span><%= product.productVariantId.colour %></span></h6>
-														<h6 class="itemcolor">Size  : <span><%= product.size %></span></h6>
+														<h6 class="itemsize">Size  : <span><%= product.size %></span></h6>
 													</div>
 												</td>
 												<td>
@@ -503,16 +495,12 @@
 												title: "Error",
 												text: responseData.error || "Failed to update cart quantity",
 												icon: "error"
+											})
+										} else {
+                                            then(() => {
+												window.location.reload();
 											});
 										}
-										// else{
-										// 	await Swal.fire({
-										// 		title: "Success",
-										// 		text: "Cart quantity updated successfully",
-										// 		icon: "success"
-										// 	});
-
-										// }
 									}
 							
 									document.querySelectorAll(".pe-7s-close").forEach(removeBtn => {
@@ -580,7 +568,7 @@
 												input.value = value;
 												updateTotalPrice(input);
 												const productId = this.closest('tr').dataset.productId;
-											    const size = this.closest('tr').querySelector('.itemcolor span').textContent;
+											    const size = this.closest('tr').querySelector('.itemsize span').textContent;
 											    updateCartQuantity(productId, size, value);
 											} else {
 												input.value = 1;
@@ -601,7 +589,7 @@
 											input.value = value;
 											updateTotalPrice(input);
 											const productId = this.closest('tr').dataset.productId;
-											const size = this.closest('tr').querySelector('.itemcolor span').textContent;
+											const size = this.closest('tr').querySelector('.itemsize span').textContent;
 											updateCartQuantity(productId, size, value);
 										} else {
 											input.value = 5;
@@ -618,9 +606,9 @@
 										const tr = input.closest('tr');
 										const price = parseFloat(tr.querySelector('td:nth-child(2)').textContent);
 										const quantity = parseInt(input.value);
-										// tr.querySelector('.total-price').textContent = parseInt(price * quantity);
+										tr.querySelector('.total-price').textContent = parseInt(price * quantity);
 										updateSubtotalAndGrandTotal();
-										window.location.reload()
+										// window.location.reload()
 									}
 							
 									updateSubtotalAndGrandTotal();

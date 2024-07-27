@@ -38,12 +38,9 @@ router.post("/insertAddress", userAuth.isAuthenticated,userDetail.insertAddress)
 router.delete("/deleteAddress/:id", userAuth.isAuthenticated,userDetail.deleteAddress);
 router.patch("/editAddress/:id", userAuth.isAuthenticated,userDetail.editAddress)
 router.post("/changePassword", userAuth.isAuthenticated,userDetail.changePassword)
-router.post("/orderList", userAuth.isAuthenticated,userDetail.getUserOrders)
 router.post("/applyCoupon", userAuth.isAuthenticated,userDetail.applyCoupon)
 router.post('/cancelOrder',userAuth.isAuthenticated, userDetail.cancelOrder);
 router.post('/returnOrder',userAuth.isAuthenticated, userDetail.returnOrder);
-
-// router.get('/checkOutAddress',userAuth.isAuthenticated , userDetail.checkOutAddress);
 
 
 router.post('/cart-add', userAuth.isAuthenticated, loadCart.addToCart);
@@ -60,6 +57,7 @@ router.get("/checkOut", userAuth.isAuthenticated , loadCart.viewCheckOut)
 router.get("/order",userAuth.isAuthenticated , loadOrder.viewOrder)
 router.get('/check-wallet-balance', userAuth.isAuthenticated, loadOrder.checkWalletBalance)
 router.post('/place-order',userAuth.isAuthenticated , loadOrder.placeOrder)
+router.post("/rePayment", userAuth.isAuthenticated, loadOrder.rePayment)
 router.post("/payment-success", userAuth.isAuthenticated ,loadOrder.verifyPayment)
 router.get("/userInvoice",userAuth.isAuthenticated, loadOrder.invoice)
 

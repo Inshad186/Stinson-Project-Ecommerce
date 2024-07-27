@@ -102,26 +102,39 @@ exports.addToCart = async (req, res, next) => {
 };
 
 
-
 exports.updateCartQuantity = async (req, res, next) => {
     try {
         const userId = req.session.userId;
         const { variantId, size, quantity } = req.body;
-        
-        console.log(`Userrr ID: ${userId}, Variant ID: ${variantId}, Size: ${size}, Quantity : ${quantity} `);
+
+        console.log(`User ID: ${userId}, Variant ID: ${variantId}, Size: ${size}, Quantity: ${quantity}`);
 
         if (!userId || !variantId || !size || !quantity) {
             return res.status(400).json({ error: 'User ID, Variant ID, size, and quantity are required' });
         }
 
-        const cart = await Cart.findOne({ userId: userId });
+        // Fetch the variant and check stock
+        const variant = await Variant.findById(variantId);
+        if (!variant) {
+            return res.status(404).json({ error: 'Variant not found' });
+        }
+
+        const sizeIndex = variant.size.indexOf(size);
+        if (sizeIndex === -1) {
+            return res.status(400).json({ error: 'Size not available' });
+        }
+
+        if (quantity > variant.stock[sizeIndex]) {
+            return res.status(400).json({ error: `Only ${variant.stock[sizeIndex]} items available in stock for size ${size}` });
+        }
+
+        const cart = await Cart.findOne({ userId });
         if (!cart) {
             return res.status(400).json({ error: 'Cart not found' });
         }
 
-        const product = cart.products.find(product => 
-            product.productVariantId.equals(variantId)
-        );
+        const normalizedSize = size.trim().toLowerCase();
+        const product = cart.products.find(product => product.productVariantId.equals(variantId) && product.size.trim().toLowerCase() === normalizedSize);
         if (!product) {
             return res.status(400).json({ error: 'Product not found in cart' });
         }
@@ -209,14 +222,8 @@ exports.viewCheckOut = async (req, res) => {
         if (!cartItem || cartItem.products.length === 0) {
             return res.status(400).redirect('/cart');
         }
-
-        // Calculate subtotal
-        const subTotal = cartItem.products.reduce((acc, product) => {
-            return acc + (product.discountPrice * product.quantity);
-        }, 0);
-
-        console.log("SubTotal : ",subTotal);
-        res.render("users/checkout", { cart: cartItem, addresses, subTotal:subTotal });
+        
+        res.render("users/checkout", { cart: cartItem, addresses });
     } catch (error) {
         console.log("error in viewCheckOut", error);
         res.status(500).send("Server Error");

@@ -129,6 +129,34 @@ exports.cancelOrder = async (req, res, next) => {
 };
 
 
+exports.getWalletTransactions = async (req, res, next) => {
+    try {
+        const userId = req.session.userId;
+        const { page = 1, limit = 6 } = req.query;
+
+        const wallet = await Wallet.findOne({ userId: userId });
+        if (!wallet) {
+            return res.status(404).json({ error: 'Wallet not found' });
+        }
+
+        const transactions = wallet.transactions
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice((page - 1) * limit, page * limit);
+
+        const totalTransactions = wallet.transactions.length;
+        const totalPages = Math.ceil(totalTransactions / limit);
+
+        res.json({
+            transactions,
+            totalPages,
+            currentPage: page
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 exports.returnOrder = async (req, res) => {
     try {
         const { orderId, variantId, reason } = req.body;
@@ -196,6 +224,10 @@ exports.applyCoupon = async (req, res) => {
             return res.status(404).json({ message: "Invalid coupon code" });
         }
 
+        if (coupon.listed) {
+            return res.status(400).json({ message: "This coupon is not available" });
+        }
+
         if (subTotal < coupon.minPurchaseAmount) {
             return res.status(400).json({ message: "Purchase at least for 3000 to avail this coupon" });
         }
@@ -232,29 +264,6 @@ exports.updateUserProfile = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
-    }
-};
-
-
-exports.getUserOrders = async (req, res) => {
-    try {
-        console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"  );
-        const userId = req.session.userId;
-
-        if (!userId) {
-            return res.status(401).send("User not authenticated");
-        }
-
-        const orders = await Order.find({ userId }).populate({
-            path: 'orderItems.variantId',
-            select: 'productName'
-        });
-        console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO     :     ",orders);
-
-        res.status(200).json({ success: true, orders });
-    } catch (error) {
-        console.log("Error in getUserOrders", error);
-        return res.status(500).json({ success: false, message: "Server Error" });
     }
 };
 
@@ -382,21 +391,5 @@ exports.changePassword = async (req, res) => {
 };
 
 
-// exports.checkOutAddress = async(req,res)=>{
-//     try {
-//         const userId = req.session.userId
-
-//         if(!userId){
-//             return res.status(401).send("Unavailable")
-//         }
-//         const address = await Address.findOne({userId})
-
-//         res.render('checkout', { address });
-        
-//     } catch (error) {
-//         console.log("message in checkOutAddress",error);
-//         res.status(500).send("Server Error")
-//     }
-// }
 
 

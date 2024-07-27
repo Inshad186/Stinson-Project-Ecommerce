@@ -982,15 +982,19 @@
                 }
               });
 
-              function showError(errorId, message) {
-                const errorElement = document.getElementById(errorId);
-                errorElement.textContent = message;
+              function showError(id, message) {
+                const errorElement = document.getElementById(id);
+                if (errorElement) {
+                    errorElement.textContent = message;
+                }
               }
 
-              function hideError(errorId) {
-                const errorElement = document.getElementById(errorId);
-                errorElement.textContent = '';
-              }
+              function hideError(id) {
+                const errorElement = document.getElementById(id);
+                if (errorElement) {
+                    errorElement.textContent = '';
+                }
+            }
 
               document.getElementById('image-uploadify').addEventListener('change', function (event) {
                 const files = event.target.files;
@@ -1021,8 +1025,6 @@
               });
             });
           </script>
-
-
 
 
 

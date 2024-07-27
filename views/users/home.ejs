@@ -687,9 +687,9 @@
 						<ul class="product-tab nav nav-tabs justify-content-center">                                        
 							<li><a class="active" data-bs-toggle="tab" href="#all">all shop</a></li>
 							<li><a data-bs-toggle="tab" href="#clothings">clothings</a></li>
-							<li><a data-bs-toggle="tab" href="#shoes">shoes</a></li>
+							<!-- <li><a data-bs-toggle="tab" href="#shoes">shoes</a></li>
 							<li><a data-bs-toggle="tab" href="#bags">bags</a></li>
-							<li><a data-bs-toggle="tab" href="#accessories">accessories</a></li>
+							<li><a data-bs-toggle="tab" href="#accessories">accessories</a></li> -->
 						</ul>
 					</div>
 				</div>
@@ -699,11 +699,10 @@
 							<div class="product-item">
 								<div class="single-product">
 									<div class="product-img">
-										<a href="#"><img src="img/products/5.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[0].image%>" alt="<%= category[0].name%>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span>$42.00</span>
+										<p><a href="#"><%= category[0].name %></a></p>
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -716,11 +715,10 @@
 										<div class="pro-type">
 											<span>sale</span>
 										</div>
-										<a href="#"><img src="img/products/3.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[2].image%>" alt="<%= category[2].name %>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span><del>$65.00</del>$52.00</span>
+										<p><a href="#"><%= category[2].name %></a></p>					
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -736,11 +734,10 @@
 										<div class="pro-type">
 											<span>new</span>
 										</div>
-										<a href="#"><img src="img/products/6.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[1].image%>" alt="<%= category[1].name%>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span>$52.00</span>
+										<p><a href="#"><%= category[1].name%></a></p>
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -753,11 +750,10 @@
 										<div class="pro-type">
 											<span>new</span>
 										</div>
-										<a href="#"><img src="img/products/7.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[3].image%>" alt="<%= category[3].name%>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span>$52.00</span>
+										<p><a href="#"><%= category[3].name%></a></p>
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -770,11 +766,10 @@
 							<div class="product-item">
 								<div class="single-product">
 									<div class="product-img">
-										<a href="#"><img src="img/products/8.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[2].image%>" alt="<%= category[2].name%>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span><del>$65.00</del>$52.00</span>
+										<p><a href="#"><%= category[2].name%></a></p>
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -784,11 +779,10 @@
 								</div>
 								<div class="single-product margin-top">
 									<div class="product-img">
-										<a href="#"><img src="img/products/9.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[0].image%>" alt="<%= category[0].name%>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span>$52.00</span>
+										<p><a href="#"><%= category[0].name%></a></p>
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -801,11 +795,10 @@
 							<div class="product-item">
 								<div class="single-product">
 									<div class="product-img">
-										<a href="#"><img src="img/products/1.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[3].image%>" alt="<%= category[3].name%>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span>$52.00</span>
+										<p><a href="#"><%= category[3].name%></a></p>
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -815,11 +808,10 @@
 								</div>
 								<div class="single-product margin-top">
 									<div class="product-img">
-										<a href="#"><img src="img/products/3.webp" alt="Product Title" /></a>
+										<a href="#"><img src="<%= category[1].image%>" alt="<%= category[1].name%>" /></a>
 									</div>
 									<div class="product-dsc">
-										<p><a href="#">Product Title</a></p>
-										<span>$52.00</span>
+										<p><a href="#"><%= category[1].name%></a></p>
 									</div>
 									<div class="actions-btn"><a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
 										<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
@@ -1562,56 +1554,8 @@
 		</section>
 		<!-- new-products section end -->
         <!-- testimonials section start -->
-		<section class="testimonials section-padding-top">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="section-title">
-							<h3>TESTIMONIALS</h3>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-10 col-text-center">
-						<div id="testimonials" class="owl-carousel product-slider owl-theme">
-							<div class="single-testimonial">
-								<div class="testimonial-img">
-									<a href="#"><img src="img/testimonial/1.webp" alt="Title" /></a>
-								</div>
-								<div class="testimonial-dsc">
-									<h4><a href="#">Raymond Morales</a></h4>
-									<span>chairman</span>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-								</div>
-							</div>
-							<!-- single testimonial item end -->
-							<div class="single-testimonial">
-								<div class="testimonial-img">
-									<a href="#"><img src="img/testimonial/2.webp" alt="Title" /></a>
-								</div>
-								<div class="testimonial-dsc">
-									<h4><a href="#">Raymond Morales</a></h4>
-									<span>chairman</span>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-								</div>
-							</div>
-							<!-- single testimonial item end -->
-							<div class="single-testimonial">
-								<div class="testimonial-img">
-									<a href="#"><img src="/users/assets/img/testimonial/3.webp" alt="Title" /></a>
-								</div>
-								<div class="testimonial-dsc">
-									<h4><a href="#">Kenneth Alexander</a></h4>
-									<span>fashion designer</span>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-								</div>
-							</div>
-							<!-- single testimonial item end -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+
+
 		<!-- testimonials section end -->
         <!-- blog section start -->
 		<section class="blog section-padding-top">

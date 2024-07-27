@@ -872,8 +872,13 @@ tr:nth-child(even) {
                   <tr>
                     <th>Order Date</th>
                     <th>User Name</th>
+                    <th>Order Status</th>
+                    <th>Payment Method</th>
                     <th>Subtotal</th>
                     <th>Grand Total</th>
+                    <th>Delivery Charge</th>
+                    <th>Coupon Discount</th>
+                    <th>Offer Applied</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -881,8 +886,13 @@ tr:nth-child(even) {
                     <tr>
                       <td><%= order.orderDate.toDateString() %></td>
                       <td><%= order.userId.name %></td>
+                      <td><%= order.orderItems[0].orderStatus%></td>
+                      <td><%= order.paymentMethod %></td>
                       <td><%= order.subTotal %></td>
                       <td><%= order.grandTotal %></td>
+                      <td><%= order.deliveryCharge %></td>
+                      <td><%= order.couponDetails.claimedAmount%></td>
+                      <td><%= order.offerDicount %></td>
                     </tr>
                   <% }); %>
                 </tbody>

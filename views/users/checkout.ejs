@@ -280,7 +280,7 @@
 												<li><a href="blog-style-2.html">Blog Style Two</a></li>
 											</ul>
 										</li>
-										<li><a href="#">Pages</a>
+										<!-- <li><a href="#">Pages</a>
 											<ul>
 												<li><a href="cart.html">Cart</a></li>
 												<li><a href="wishlist.html">Wishlist</a></li>
@@ -296,7 +296,7 @@
 												<li><a href="product-detail.html">Product-Detail</a></li>
 												<li><a href="order-complete.html">Order Completed</a></li>
 											</ul>
-										</li>
+										</li> -->
 										<li><a href="about.html">About</a></li>
 										<li><a href="contact.html">Contact</a></li>
 									</ul>
@@ -470,7 +470,7 @@
 													<li><a href="blog-style-2.html">Blog Style Two</a></li>
 												</ul>
 											</li>
-											<li><a href="#">Pages</a>
+											<!-- <li><a href="#">Pages</a>
 												<ul>
 													<li><a href="cart.html">Cart</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
@@ -486,7 +486,7 @@
 													<li><a href="product-detail.html">Product-Detail</a></li>
 													<li><a href="order-complete.html">Order Completed</a></li>
 												</ul>
-											</li>
+											</li> -->
 											<li><a href="about.html">About</a></li>
 											<li><a href="contact.html">Contact</a></li>
 										</ul>
@@ -795,7 +795,7 @@
 							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 							<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-							<input type="hidden" id="subTotal" value="<%= subTotal %>">
+							<!-- <input type="hidden" id="subTotal" value="<%= subTotal %>"> -->
 
 
 							<script>
@@ -828,7 +828,8 @@
 									const addressId = selectedAddress.value;
 									const paymentMethod = selectedPaymentMethod ? selectedPaymentMethod.value : selectedWalletMethod.value;
 									const couponId = document.getElementById('couponId') ? document.getElementById('couponId').value : null;
-									const subTotal = parseFloat(document.getElementById('subTotal').value);
+									const subTotal = parseFloat(document.getElementById('subTotal').innerText);
+									console.log(" Ejs subtotal  : ",subTotal);
 							
 									// Check if COD is selected and subtotal is greater than 1000
 									if (paymentMethod === 'COD' && subTotal > 1000) {

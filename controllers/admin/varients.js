@@ -13,8 +13,6 @@ exports.loadvarients = async (req, res) => {
     }
 };
 
-
-
 exports.addVarients = async (req, res) => {
     try {
         const { colour, salePrice, sizes, stocks, productId } = req.body;

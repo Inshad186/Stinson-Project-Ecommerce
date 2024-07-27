@@ -2,6 +2,72 @@
 
 <body>
 
+
+  <style>
+    /* CSS */
+.sort-filter-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.sort-by-button, .date-input, .filter-button {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.sort-by-button:hover, .date-input:hover, .filter-button:hover {
+    border-color: #999;
+}
+
+.sort-by-button:focus, .date-input:focus, .filter-button:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.filter-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    background-color: #0056b3;
+}
+
+.filter-button:active {
+    background-color: #003f7f;
+}
+
+.sort-by-button, .date-input {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.date-input {
+    max-width: 150px;
+}
+
+@media (max-width: 768px) {
+    .sort-filter-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sort-by-button, .date-input, .filter-button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+  </style>
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
@@ -809,249 +875,187 @@
 
       <div class="container mt-5">
         <div class="mb-4">
-          <label for="sortBy" class="mr-2">Sort By:</label>
-          <select name="sortBy" id="sortBy" class="form-control mr-2">
-            <option value="All Orders">All Orders</option>
-            <option value="yearly">Yearly</option>
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-          </select>
-        </div>
-        <div id="totalRevenue">0</div>
-    
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-4 mb-4">
-          <div class="col">
-            <div class="card radius-10" data-metric="revenue">
-              <div class="card-body">
-                <div class="d-flex align-items-start gap-2">
-                  <div>
-                    <p class="mb-0 fs-6">Total Revenue</p>
-                  </div>
-                  <div class="ms-auto widget-icon-small text-white bg-gradient-purple">
-                    <ion-icon name="wallet-outline"></ion-icon>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center mt-3">
-                  <div>
-                    <h4 class="mb-0"><%= totalRevenue %></h4>
-                  </div>
-                  <div class="ms-auto">+6.32%</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card radius-10" data-metric="customers">
-              <div class="card-body">
-                <div class="d-flex align-items-start gap-2">
-                  <div>
-                    <p class="mb-0 fs-6">Total Customer</p>
-                  </div>
-                  <div class="ms-auto widget-icon-small text-white bg-gradient-info">
-                    <ion-icon name="people-outline"></ion-icon>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center mt-3">
-                  <div>
-                    <h4 class="mb-0"><%= totalUser %></h4>
-                  </div>
-                  <div class="ms-auto">+12.45%</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card radius-10" data-metric="orders">
-              <div class="card-body">
-                <div class="d-flex align-items-start gap-2">
-                  <div>
-                    <p class="mb-0 fs-6">Total Orders</p>
-                  </div>
-                  <div class="ms-auto widget-icon-small text-white bg-gradient-danger">
-                    <ion-icon name="bag-handle-outline"></ion-icon>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center mt-3">
-                  <div>
-                    <h4 class="mb-0"><%= totalOrder %></h4>
-                  </div>
-                  <div class="ms-auto">+3.12%</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card radius-10" data-metric="products">
-              <div class="card-body">
-                <div class="d-flex align-items-start gap-2">
-                  <div>
-                    <p class="mb-0 fs-6">Total Products</p>
-                  </div>
-                  <div class="ms-auto widget-icon-small text-white bg-gradient-success">
-                    <ion-icon name="bar-chart-outline"></ion-icon>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center mt-3">
-                  <div>
-                    <h4 class="mb-0"><%= totalProduct %></h4>
-                  </div>
-                  <div class="ms-auto">+8.52%</div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <label for="sortBy" class="mr-2">Sort By:</label>
+            <select name="sortBy" id="sortBy" class="form-control mr-2">
+                <option value="All Orders">All Orders</option>
+                <option value="yearly">Yearly</option>
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="daily">Daily</option>
+                <option value="date-range">Date Range</option> 
+            </select>
+            <input type="date" id="startDate" class="date-input">
+            <input type="date" id="endDate" class="date-input">
+            <button id="filterButton" class="filter-button">Filter</button>
         </div>
     
- 
+        <div class="loading active" id="loadingIndicator">Loading...</div>
+    
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <h5 class="card-title">Best Selling Products</h5>
+                        <canvas id="bestSellingProductsChart"></canvas>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Sale Count</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bestSellingProductsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <h5 class="card-title">Best Selling Categories</h5>
+                        <canvas id="bestSellingCategoriesChart"></canvas>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Category Name</th>
+                                    <th>Sale Count</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bestSellingCategoriesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <h5 class="card-title">Best Selling Brands</h5>
+                        <canvas id="bestSellingBrandsChart"></canvas>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Brand Name</th>
+                                    <th>Sale Count</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bestSellingBrandsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- New Chart Sections -->
-<div class="row mb-4">
-  <div class="col-12">
-      <div class="card radius-10">
-          <div class="card-body">
-              <h5 class="card-title">Best Selling Products</h5>
-              <canvas id="bestSellingProductsChart"></canvas>
-          </div>
-      </div>
-  </div>
-</div>
+      <script>
+        let chartInstances = {};
 
-<div class="row mb-4">
-  <div class="col-12">
-      <div class="card radius-10">
-          <div class="card-body">
-              <h5 class="card-title">Best Selling Categories</h5>
-              <canvas id="bestSellingCategoriesChart"></canvas>
-          </div>
-      </div>
-  </div>
-</div>
+      function updateChart(chartId, data, title, color) {
+          const ctx = document.getElementById(chartId).getContext('2d');
 
-<div class="row mb-4">
-  <div class="col-12">
-      <div class="card radius-10">
-          <div class="card-body">
-              <h5 class="card-title">Best Selling Brands</h5>
-              <canvas id="bestSellingBrandsChart"></canvas>
-          </div>
-      </div>
-  </div>
-</div>
+          // Destroy old chart instance if it exists
+          if (chartInstances[chartId]) {
+              chartInstances[chartId].destroy();
+          }
 
-<script>
-  async function fetchChartData() {
-      try {
-          const response = await fetch('/admin/chart-data?filter=all');
-          const data = await response.json();
-
-          // Check if the data is correctly sorted
-          console.log('Best Selling Products:', data.bestSellingProducts);
-          console.log('Best Selling Categories:', data.bestSellingCategories);
-          console.log('Best Selling Brands:', data.bestSellingBrands);
-          
-          // Prepare data for Best Selling Products
-          const productsCtx = document.getElementById('bestSellingProductsChart').getContext('2d');
-          new Chart(productsCtx, {
+          // Create a new chart instance and store it in the global object
+          chartInstances[chartId] = new Chart(ctx, {
               type: 'bar',
               data: {
-                  labels: data.bestSellingProducts.map(p => p._id),
+                  labels: data.map(item => item._id),
                   datasets: [{
                       label: 'Total Sold',
-                      data: data.bestSellingProducts.map(p => p.totalSold),
-                      backgroundColor: '#FF6384'
+                      data: data.map(item => item.totalSold),
+                      backgroundColor: color
                   }]
               },
               options: {
                   title: {
                       display: true,
-                      text: 'Best Selling Products'
+                      text: title
                   }
               }
           });
-          
-          // Prepare data for Best Selling Categories
-          const categoriesCtx = document.getElementById('bestSellingCategoriesChart').getContext('2d');
-          new Chart(categoriesCtx, {
-              type: 'bar',
-              data: {
-                  labels: data.bestSellingCategories.map(c => c._id),
-                  datasets: [{
-                      label: 'Total Sold',
-                      data: data.bestSellingCategories.map(c => c.totalSold),
-                      backgroundColor: '#36A2EB'
-                  }]
-              },
-              options: {
-                  title: {
-                      display: true,
-                      text: 'Best Selling Categories'
-                  }
-              }
-          });
-
-          // Prepare data for Best Selling Brands
-          const brandsCtx = document.getElementById('bestSellingBrandsChart').getContext('2d');
-          new Chart(brandsCtx, {
-              type: 'bar',
-              data: {
-                  labels: data.bestSellingBrands.map(b => b._id),
-                  datasets: [{
-                      label: 'Total Sold',
-                      data: data.bestSellingBrands.map(b => b.totalSold),
-                      backgroundColor: '#FFCE56'
-                  }]
-              },
-              options: {
-                  title: {
-                      display: true,
-                      text: 'Best Selling Brands'
-                  }
-              }
-          });
-      } catch (error) {
-          console.error('Error fetching chart data:', error);
       }
-  }
-  fetchChartData();
-</script>
 
-
-  <!-- <script>
       async function fetchChartData() {
           try {
-              const response = await fetch('/admin/chart-data?filter=all');
-              const data = await response.json();
+              const filter = document.getElementById('sortBy').value;
+              const startDate = document.getElementById('startDate').value;
+              const endDate = document.getElementById('endDate').value;
+              let url = `/admin/chart-data?filter=${filter}`;
 
-              // Prepare data for Best Selling Products
-              const productsCtx = document.getElementById('bestSellingProductsChart').getContext('2d');
-              new Chart(productsCtx, {
-                  type: 'bar',
-                  data: {
-                      labels: data.bestSellingProducts.map(p => p._id),
-                      datasets: [{
-                          label: 'Total Sold',
-                          data: data.bestSellingProducts.map(p => p.totalSold),
-                          backgroundColor: '#FF6384'
-                      }]
-                  },
-                  options: {
-                      title: {
-                          display: true,
-                          text: 'Best Selling Products'
-                      }
-                  }
-              });
+              if (filter === 'date-range') {
+                  url += `&startDate=${startDate}&endDate=${endDate}`;
+              }
+
+              console.log('Fetching data from:', url);
+
+              const response = await fetch(url);
+              const data = await response.json();
+              console.log('Data received:', data);
+
+              // Update tables with the fetched data
+              updateTable('bestSellingProductsTableBody', data.bestSellingProducts);
+              updateTable('bestSellingCategoriesTableBody', data.bestSellingCategories);
+              updateTable('bestSellingBrandsTableBody', data.bestSellingBrands);
+
+              // Update charts
+              updateChart('bestSellingProductsChart', data.bestSellingProducts, 'Best Selling Products', '#FF6384');
+              updateChart('bestSellingCategoriesChart', data.bestSellingCategories, 'Best Selling Categories', '#36A2EB');
+              updateChart('bestSellingBrandsChart', data.bestSellingBrands, 'Best Selling Brands', '#FFCE56');
+
           } catch (error) {
               console.error('Error fetching chart data:', error);
           }
       }
 
-      fetchChartData();
-  </script> -->
+      function updateTable(tableId, data) {
+          const tableBody = document.getElementById(tableId);
+          tableBody.innerHTML = '';
+
+          data.forEach((item, index) => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td>${index + 1}</td>
+                  <td>${item._id}</td>
+                  <td>${item.totalSold}</td>
+              `;
+              tableBody.appendChild(row);
+          });
+      }
+
+      // Event listener for filter changes
+      document.getElementById('sortBy').addEventListener('change', function() {
+          const filter = this.value;
+          const dateInputs = document.querySelectorAll('#startDate, #endDate');
+          if (filter === 'date-range') {
+              dateInputs.forEach(input => input.style.display = 'inline');
+          } else {
+              dateInputs.forEach(input => input.style.display = 'none');
+          }
+          fetchChartData();
+      });
+
+      // Event listener for filter button
+      document.getElementById('filterButton').addEventListener('click', fetchChartData);
+
+      // Fetch data on page load
+      window.onload = fetchChartData;
+
+      </script>
+    
+    
 
 
-        <!--end row-->
-      </div>
       <!-- end page content-->
     </div>
     <!--end page content wrapper-->

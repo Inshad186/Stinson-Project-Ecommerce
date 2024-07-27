@@ -49,6 +49,11 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    paymentStatus: {
+        type: String,
+        default: 'Failed',
+        enum: ['Pending', 'Success', 'Failed']
+    },
     subTotal: {
         type: Number,
         required: true
