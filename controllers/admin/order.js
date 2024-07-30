@@ -143,7 +143,6 @@ exports.updateOrderStatus = async (req, res) => {
     }
 };
 
-
 function formatNumber(num) {
     const str = num.toString().split('.');
     const integerPart = str[0];
@@ -154,9 +153,11 @@ function formatNumber(num) {
     return formattedNumber + decimalPart;
   }
 
+  
+
 exports.viewSalesReport = async (req, res) => {
   try {
-    const ITEMS_PER_PAGE = 10; 
+    const ITEMS_PER_PAGE =  6;
     const { sortBy = 'All Orders', startDate, endDate, page = 1 } = req.query;
 
     let filter = {
@@ -205,7 +206,8 @@ exports.viewSalesReport = async (req, res) => {
       currentPage: parseInt(page),
       totalPages: Math.ceil(totalOrders / ITEMS_PER_PAGE),
       totalOrders,
-      grandTotalAmount: formattedGrandTotalAmount
+      grandTotalAmount: formattedGrandTotalAmount,
+      ITEMS_PER_PAGE
     });
 
   } catch (error) {
@@ -213,7 +215,6 @@ exports.viewSalesReport = async (req, res) => {
     res.status(500).send('Failed to load product sales report');
   }
 };
-
 
 
 

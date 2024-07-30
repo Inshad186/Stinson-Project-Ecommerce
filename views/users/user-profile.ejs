@@ -1818,67 +1818,7 @@ Support Ticket
                         
          <!-------------------------------- This  is  for  Wallet ------------------------------------------>
 
-                        <!-- <div class="tab-pane fade" id="v-pills-wallet" role="tabpanel"
-                            aria-labelledby="v-pills-wallet-tab" tabindex="0">
-                            <div class="wallet-section">
-                                <table>
-                                    <tbody>
-                                        <tr class="table-row table-top-row">
-                                            <td class="table-wrapper wrapper-date">
-                                                <h5 class="table-heading">DATE</h5>
-                                            </td>
-                                            <td class="table-wrapper wrapper-status">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="table-heading">STATUS</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper wrapper-amount">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="table-heading">AMOUNT</h5>
-                                                </div>
-                                            </td>
-                                            <td class="table-wrapper wrapper-description">
-                                                <div class="table-wrapper-center">
-                                                    <h5 class="table-heading">DESCRIPTION</h5>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                            <tr class="table-row transaction-row">
-                                                <td class="table-wrapper wrapper-date">
-                                                    <div class="wrapper-content">
-                                                        <h5 class="heading">
-                                                            Date
-                                                        </h5>
-                                                    </div>
-                                                </td>
-                                                <td class="table-wrapper wrapper-status">
-                                                    <div class="table-wrapper-center">
-                                                        <h5 class="heading">
-                                                            status
-                                                        </h5>
-                                                    </div>
-                                                </td>
-                                                <td class="table-wrapper wrapper-amount">
-                                                    <div class="table-wrapper-center">
-                                                        <h5 class="heading">
-                                                            amount
-                                                        </h5>
-                                                    </div>
-                                                </td>
-                                                <td class="table-wrapper wrapper-description">
-                                                    <div class="table-wrapper-center">
-                                                        <h5 class="heading">
-                                                            Description
-                                                        </h5>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                    
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> -->
+
                         <div class="tab-pane fade" id="v-pills-wallet" role="tabpanel" aria-labelledby="v-pills-wallet-tab" tabindex="0">
                             <h5 class="total-amount-heading">Total Amount: 
                                 <% if (wallet && wallet.transactions && wallet.transactions.length > 0) { 
@@ -1913,8 +1853,16 @@ Support Ticket
                                                 </div>
                                             </td>
                                         </tr>
-                                        <% if (wallet && wallet.transactions && wallet.transactions.length > 0) { %>
-                                            <% wallet.transactions.forEach(transaction => { %>
+                                        <% if (wallet && wallet.transactions.length > 0) { %>
+                                            <% wallet.transactions.forEach(transaction => { 
+                                                const descriptions = {
+                                                    'Razorpay': 'Payment made via Razorpay',
+                                                    'Refund': 'Refund processed',
+                                                    'Purchase': 'Purchase made',
+                                                    'Cancelled': 'Order cancelled'
+                                                };
+                                                const description = descriptions[transaction.transactionMethod] || "No description";
+                                            %>
                                             <tr class="table-row transaction-row">
                                                 <td class="table-wrapper wrapper-date">
                                                     <div class="wrapper-content">
@@ -1940,7 +1888,7 @@ Support Ticket
                                                 <td class="table-wrapper wrapper-description">
                                                     <div class="table-wrapper-center">
                                                         <h5 class="table-heading">
-                                                            <%= transaction.description || "No description" %>
+                                                            <%= description %>
                                                         </h5>
                                                     </div>
                                                 </td>
@@ -1957,20 +1905,30 @@ Support Ticket
                                         <% } %>
                                     </tbody>
                                 </table>
-                                <div class="pagination">
-                                    <button id="prevPage" onclick="loadTransactions(currentPage - 1)">Previous</button>
-                                    <span id="pageIndicator"></span>
-                                    <button id="nextPage" onclick="loadTransactions(currentPage + 1)">Next</button>
-                                </div>
+                                <% if (wallet && wallet.transactions && wallet.transactions.length > 0) { %>
+                                    <div class="pagination">
+                                        <button id="prevPage" onclick="loadTransactions(currentPage - 1)">Previous</button>
+                                        <span id="pageIndicator"></span>
+                                        <button id="nextPage" onclick="loadTransactions(currentPage + 1)">Next</button>
+                                    </div>
+                                <% } %>                                
                             </div>
                         </div>
+
                         <script>
                             let currentPage = 1;
-                            const limit = 10;
+                            const limit = 6; 
                         
                             async function loadTransactions(page) {
                                 try {
-                                    const response = await fetch(`/wallet/transactions?page=${page}&limit=${limit}`);
+                                    const response = await fetch(`/transactions?page=${page}&limit=${limit}`, {
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    });
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok ' + response.statusText);
+                                    }
                                     const data = await response.json();
                         
                                     if (data.transactions.length === 0 && page > 1) {
@@ -2002,9 +1960,17 @@ Support Ticket
                                             </td>
                                         </tr>
                                     `;
+
+                                    const descriptions = {
+                                        'Razorpay': 'Payment made via Razorpay',
+                                        'Refund': 'Refund processed',
+                                        'Purchase': 'Purchase made',
+                                        'Cancelled': 'Order cancelled'
+                                    };
                         
                                     data.transactions.forEach(transaction => {
-                                        walletTransactions.innerHTML += `
+                                    const description = descriptions[transaction.transactionMethod] || "No description";
+                                    walletTransactions.innerHTML += `
                                             <tr class="table-row transaction-row">
                                                 <td class="table-wrapper wrapper-date">
                                                     <div class="wrapper-content">
@@ -2030,7 +1996,7 @@ Support Ticket
                                                 <td class="table-wrapper wrapper-description">
                                                     <div class="table-wrapper-center">
                                                         <h5 class="table-heading">
-                                                            ${transaction.description || "No description"}
+                                                            ${description}
                                                         </h5>
                                                     </div>
                                                 </td>
@@ -2051,6 +2017,7 @@ Support Ticket
                                 loadTransactions(currentPage);
                             });
                         </script>
+                        
 
 
      <!----------------------------  This  is  for  orders  List  ----------------------------->

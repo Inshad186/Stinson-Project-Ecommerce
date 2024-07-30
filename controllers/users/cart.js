@@ -1,7 +1,9 @@
 const Cart = require("../../models/cartModel");
 const Variant = require("../../models/varientModel"); 
 const Address = require("../../models/addressModel")
-const WishList = require("../../models/wishListModel")
+const WishList = require("../../models/wishListModel");
+const cartModel = require("../../models/cartModel");
+
 
 exports.viewCart = async (req, res, next) => {
     try {
@@ -102,6 +104,7 @@ exports.addToCart = async (req, res, next) => {
 };
 
 
+
 exports.updateCartQuantity = async (req, res, next) => {
     try {
         const userId = req.session.userId;
@@ -113,7 +116,6 @@ exports.updateCartQuantity = async (req, res, next) => {
             return res.status(400).json({ error: 'User ID, Variant ID, size, and quantity are required' });
         }
 
-        // Fetch the variant and check stock
         const variant = await Variant.findById(variantId);
         if (!variant) {
             return res.status(404).json({ error: 'Variant not found' });
@@ -139,8 +141,15 @@ exports.updateCartQuantity = async (req, res, next) => {
             return res.status(400).json({ error: 'Product not found in cart' });
         }
 
+        // Calculate the difference in quantity
+        const quantityDifference = quantity - product.quantity;
+
         product.quantity = quantity;
         await cart.save();
+
+        // Update the variant stock
+        variant.stock[sizeIndex] -= quantityDifference;
+        await variant.save();
 
         return res.status(200).json({ success: 'Cart updated successfully', cart });
     } catch (error) {
@@ -196,13 +205,15 @@ exports.viewCheckOut = async (req, res) => {
         }
         const cartItem = await Cart.findOne({ userId }).populate({
             path: 'products.productVariantId',
-            select: 'size salePrice stock colour image productName categoryName offerDiscount',
+            select: 'size salePrice stock colour image productName categoryName offerDiscount ',
             populate: {
                 path: 'productId',
                 model: 'Product',
                 select: 'categoryId'
             }
         });
+
+        console.log("CART CART ITEMS : ", JSON.stringify(cartItem, null, 2));
 
         if (cartItem && cartItem.products) {
             cartItem.products = cartItem.products.map(product => {
@@ -229,7 +240,6 @@ exports.viewCheckOut = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
-
 
 
 //////////////////////!      WishList     //////////////////////////
@@ -347,6 +357,7 @@ exports.removeWishList = async (req, res, next) => {
         next(error);
     }
 };
+
 
 
 exports.addToCartFromWishList = async (req, res, next) => {

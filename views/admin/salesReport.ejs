@@ -863,6 +863,7 @@ tr:nth-child(even) {
               </form>
             </div>
         
+            <% if (totalOrders > 0) { %>
             <div>
               <p>Total Orders: <%= totalOrders %></p>
               <p>Grand Total Amount: <%= grandTotalAmount %></p>
@@ -892,13 +893,13 @@ tr:nth-child(even) {
                       <td><%= order.grandTotal %></td>
                       <td><%= order.deliveryCharge %></td>
                       <td><%= order.couponDetails.claimedAmount%></td>
-                      <td><%= order.offerDicount %></td>
+                      <td><%= order.offerDiscount %>%</td>
                     </tr>
                   <% }); %>
                 </tbody>
               </table>
         
-              <% if (totalPages > 1) { %>
+              <% if (totalPages > 1 && totalOrders >= ITEMS_PER_PAGE) { %>
                 <nav aria-label="Page navigation">
                   <ul class="pagination">
                     <% for (let i = 1; i <= totalPages; i++) { %>
@@ -910,6 +911,11 @@ tr:nth-child(even) {
                 </nav>
               <% } %>
             </div>
+            <% } else { %>
+              <div>
+                <p>No transactions</p>
+              </div>
+            <% } %>
           </div>
         
           <script>
@@ -959,7 +965,7 @@ tr:nth-child(even) {
           <!--start footer-->
           <footer class="footer">
             <div class="footer-text">
-              Copyright © 2023. All right reserved.
+              <!-- Copyright © 2023. All right reserved. -->
             </div>
           </footer>
           <!--end footer-->

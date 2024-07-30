@@ -40,6 +40,7 @@ exports.viewUserProfile = async (req, res) => {
         const totalWalletPages = Math.ceil(totalTransactions / walletLimit);
         const transactions = wallet ? wallet.transactions.slice(walletSkip, walletSkip + walletLimit) : [];
 
+        console.log("Transactions: ", transactions);
 
         if (!user) {
             return res.status(404).send("User not found");
@@ -229,7 +230,7 @@ exports.applyCoupon = async (req, res) => {
         }
 
         if (subTotal < coupon.minPurchaseAmount) {
-            return res.status(400).json({ message: "Purchase at least for 3000 to avail this coupon" });
+            return res.status(400).json({ message: `Purchase at least for ${coupon.minPurchaseAmount} to avail this coupon` });
         }
 
         const discount = Math.min(subTotal * (coupon.discountPercentage / 100), coupon.maxRedeemAmount);

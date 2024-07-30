@@ -29,7 +29,6 @@ router.post("/login", userAuth.isUnAuthenticated, loadSignup.verifyLogin);
 router.get('/logout', loadSignup.logout);
 
 router.get("/shopList", loadshopList.viewshopList)
-
 router.get("/productDetail", loadshopList.productDetail);
 
 router.get("/userProfile", userAuth.isAuthenticated,userDetail.viewUserProfile)
@@ -40,6 +39,7 @@ router.patch("/editAddress/:id", userAuth.isAuthenticated,userDetail.editAddress
 router.post("/changePassword", userAuth.isAuthenticated,userDetail.changePassword)
 router.post("/applyCoupon", userAuth.isAuthenticated,userDetail.applyCoupon)
 router.post('/cancelOrder',userAuth.isAuthenticated, userDetail.cancelOrder);
+router.get("/transactions", userAuth.isAuthenticated, userDetail.getWalletTransactions)
 router.post('/returnOrder',userAuth.isAuthenticated, userDetail.returnOrder);
 
 

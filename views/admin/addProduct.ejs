@@ -848,8 +848,6 @@
 
 
 
-
-
                     <div class="container d-flex justify-content-center align-items-center min-vh-100">
                       <div class="card w-100" style="max-width: 600px;">
                         <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center">
@@ -863,10 +861,12 @@
                                     <div class="mb-3 w-100">
                                       <label for="inputProductTitle" class="form-label">Product Name</label>
                                       <input name="name" type="text" class="form-control" id="inputProductTitle" placeholder="Enter product title" required>
+                                      <div id="name-error" class="error-message"></div>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="inputProductDescription" class="form-label">Description</label>
                                       <textarea name="description" class="form-control" id="inputProductDescription" rows="3" required></textarea>
+                                      <div id="description-error" class="error-message"></div>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="inputProductType" class="form-label">Category</label>
@@ -876,10 +876,12 @@
                                           <option value="<%=category._id%>"><%=category.name%></option>
                                         <% } %>
                                       </select>
+                                      <div id="category-error" class="error-message"></div>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="productBrand" class="form-label">Product Brand</label>
                                       <input name="brand" class="form-control" id="productBrand" placeholder="Enter Product Brand" required>
+                                      <div id="brand-error" class="error-message"></div>
                                     </div>
                                     <div class="mb-3 w-100" id="sizes-container">
                                       <label for="productSize" class="form-label">Sizes</label>
@@ -887,14 +889,17 @@
                                         <input name="size[]" class="form-control" required>
                                         <button type="button" class="btn btn-outline-secondary add-size-btn">Add Size</button>
                                       </div>
+                                      <div id="size-error" class="error-message"></div>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="productPrice" class="form-label">Original Price</label>
                                       <input name="orginalPrice" class="form-control" id="productPrice" placeholder="00.00" required>
+                                      <div id="price-error" class="error-message"></div>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="Discount" class="form-label">Discount</label>
                                       <input name="discount" class="form-control" id="Discount" placeholder="00.00" required>
+                                      <div id="discount-error" class="error-message"></div>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="inputProductImage" class="form-label">Product Image</label>
@@ -902,6 +907,7 @@
                                       <div class="mt-2">
                                         <img id="image-preview" style="max-width: 100%; display: none;">
                                       </div>
+                                      <div id="image-error" class="error-message"></div>
                                       <input type="hidden" name="croppedImage" id="croppedImage">
                                     </div>
                                   </div>
@@ -955,6 +961,58 @@
                     
                         document.getElementById("form-body").addEventListener("submit", async function (event) {
                           event.preventDefault();
+
+                        // Clear previous error messages
+                        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+                        // Perform validation
+                        const name = document.getElementById('inputProductTitle').value;
+                        const description = document.getElementById('inputProductDescription').value;
+                        const categoryId = document.getElementById('inputProductType').value;
+                        const brand = document.getElementById('productBrand').value;
+                        const sizes = Array.from(document.querySelectorAll('input[name="size[]"]')).map(el => el.value);
+                        const price = document.getElementById('productPrice').value;
+                        const discount = document.getElementById('Discount').value;
+                        const image = document.getElementById('image-uploadify').files[0];
+
+                        let isValid = true;
+
+                        if (!/^[A-Za-z0-9\s]{3,50}$/.test(name)) {
+                          showError('name-error', 'Product name must be 3-50 characters long and can include letters, numbers, and spaces.');
+                          isValid = false;
+                        }
+                        if (!/^[\s\S]{10,500}$/.test(description)) {
+                          showError('description-error', 'Description must be 10-500 characters long.');
+                          isValid = false;
+                        }
+                        if (!categoryId) {
+                          showError('category-error', 'Category is required.');
+                          isValid = false;
+                        }
+                        if (!/^[A-Za-z0-9\s]{2,30}$/.test(brand)) {
+                          showError('brand-error', 'Brand must be 2-30 characters long and can include letters, numbers, and spaces.');
+                          isValid = false;
+                        }
+                        if (!sizes.every(size => /^[A-Za-z0-9\s]{1,10}$/.test(size))) {
+                          showError('size-error', 'Each size must be 1-10 characters long and can include letters, numbers, and spaces.');
+                          isValid = false;
+                        }
+                        if (!/^\d+(\.\d{1,2})?$/.test(price)) {
+                          showError('price-error', 'Price must be a valid number with up to 2 decimal places.');
+                          isValid = false;
+                        }
+                        if (!/^\d+(\.\d{1,2})?$/.test(discount)) {
+                          showError('discount-error', 'Discount must be a valid number with up to 2 decimal places.');
+                          isValid = false;
+                        }
+                        if (!image) {
+                          showError('image-error', 'Image is required.');
+                          isValid = false;
+                        }
+
+                        if (!isValid) {
+                          return;
+                        }
                     
                           const formData = new FormData(event.target);
                           formData.set('croppedImage', croppedImageInput.value);
@@ -1000,23 +1058,38 @@
                             });
                           }
                         });
+
+                        function showError(elementId, message) {
+                          const errorElement = document.getElementById(elementId);
+                          errorElement.textContent = message;
+                        }
                     
                         document.querySelector('.add-size-btn').addEventListener('click', function () {
-                          const sizesContainer = document.getElementById('sizes-container');
-                          const newSizeInput = document.createElement('div');
-                          newSizeInput.classList.add('input-group', 'mb-2');
-                          newSizeInput.innerHTML = `
-                            <input name="size[]" class="form-control" required>
-                            <button type="button" class="btn btn-outline-danger remove-size-btn">Remove</button>
-                          `;
-                          sizesContainer.appendChild(newSizeInput);
-                    
-                          newSizeInput.querySelector('.remove-size-btn').addEventListener('click', function () {
-                            sizesContainer.removeChild(newSizeInput);
-                          });
-                        });
+                        const sizesContainer = document.getElementById('sizes-container');
+                        const newSizeInput = document.createElement('div');
+                        newSizeInput.classList.add('input-group', 'mb-2');
+                        newSizeInput.innerHTML = `
+                          <input name="size[]" class="form-control" required>
+                          <button type="button" class="btn btn-outline-danger remove-size-btn">Remove</button>
+                        `;
+                        sizesContainer.appendChild(newSizeInput);
                       });
+
+                      document.getElementById('sizes-container').addEventListener('click', function (event) {
+                        if (event.target.classList.contains('remove-size-btn')) {
+                          event.target.closest('.input-group').remove();
+                        }
+                      });
+                    });
                     </script>
+
+                  <style>
+                    .error-message {
+                      color: red;
+                      font-size: 0.875em;
+                      margin-top: 0.25em;
+                    }
+                  </style>
                     
 
 

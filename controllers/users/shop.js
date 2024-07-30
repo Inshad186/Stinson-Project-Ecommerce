@@ -1,5 +1,6 @@
-const Product = require("../../models/productModel")
 const Variant = require("../../models/varientModel")
+const Offer = require("../../models/offerModel")
+
 
 exports.viewshopList = async (req, res, next) => {
     try {
@@ -11,10 +12,14 @@ exports.viewshopList = async (req, res, next) => {
 
         const startIndex = (page - 1) * limit;
 
-        const categoryFilter = category ? { categoryName: category, is_Delete: false } : { is_Delete: false };
+        let categoryFilter = { 'categoryDetails.is_Delete': false, 'productDetails.is_Delete': false, is_Delete: false };
+
+        if (category) {
+            categoryFilter['categoryDetails.name'] = category;
+        }
 
         if (searchQuery) {
-            categoryFilter.productName = { $regex: searchQuery, $options: 'i' }; // Case-insensitive search
+            categoryFilter.productName = { $regex: searchQuery, $options: 'i' };
         }
 
         let sortOptions = {};
@@ -36,16 +41,29 @@ exports.viewshopList = async (req, res, next) => {
                 sortOptions = { salePrice: 1 };
         }
 
-        const totalVariants = await Variant.countDocuments(categoryFilter);
-        const variants = await Variant.find(categoryFilter)
-            .sort(sortOptions)
-            .skip(startIndex)
-            .limit(limit);
+        // Use an aggregation pipeline to filter out variants with deleted categories or products
+        const totalVariants = await Variant.aggregate([
+            { $lookup: { from: 'categories', localField: 'categoryName', foreignField: 'name', as: 'categoryDetails' } },
+            { $lookup: { from: 'products', localField: 'productId', foreignField: '_id', as: 'productDetails' } },
+            { $match: categoryFilter },
+            { $count: "total" }
+        ]);
+
+        const variants = await Variant.aggregate([
+            { $lookup: { from: 'categories', localField: 'categoryName', foreignField: 'name', as: 'categoryDetails' } },
+            { $lookup: { from: 'products', localField: 'productId', foreignField: '_id', as: 'productDetails' } },
+            { $match: categoryFilter },
+            { $sort: sortOptions },
+            { $skip: startIndex },
+            { $limit: limit }
+        ]);
+
+        const totalCount = totalVariants.length > 0 ? totalVariants[0].total : 0;
 
         res.render("users/shopList", {
             variants,
             currentPage: page,
-            totalPages: Math.ceil(totalVariants / limit),
+            totalPages: Math.ceil(totalCount / limit),
             limit: limit,
             selectedCategory: category,
             sortBy: sortBy,
@@ -54,7 +72,7 @@ exports.viewshopList = async (req, res, next) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Server Error");
-        next(error)
+        next(error);
     }
 };
 
@@ -77,7 +95,7 @@ exports.productDetail = async (req, res, next) => {
         }));
 
         const productId = variant.productId;
-        const otherVariants = await Variant.find({ productId });
+        const otherVariants = await Variant.find({ productId, is_Delete: false });
 
         const colors = [variant.colour];
         const sizes = variant.size;

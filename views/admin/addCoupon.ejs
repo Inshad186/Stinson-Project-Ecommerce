@@ -852,7 +852,7 @@
                         <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center">
                           <h5 class="card-title">Add New Coupon</h5>
                           <hr class="w-100" />
-                          <form id="addCouponForm" action="/admin/addCoupon" enctype="multipart/form-data" method="POST">
+                          <form id="addCouponForm" enctype="multipart/form-data" method="POST">
                             <div class="form-body mt-4 w-100">
                               <div class="row">
                                 <div class="col-12">
@@ -860,10 +860,12 @@
                                     <div class="mb-3 w-100">
                                       <label for="CouponName" class="form-label">Coupon Name</label>
                                       <input name="couponName" type="text" class="form-control" id="CouponName" placeholder="Enter coupon name" required>
+                                      <span id="couponNameError" class="text-danger" style="display: none;">Invalid coupon name.</span>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="CouponCode" class="form-label">Coupon Code</label>
                                       <input name="couponCode" type="text" class="form-control" id="CouponCode" placeholder="Enter coupon Code" required>
+                                      <span id="couponCodeError" class="text-danger" style="display: none;">Invalid coupon code.</span>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="DiscountPercentage" class="form-label">Discount Percentage</label>
@@ -873,14 +875,17 @@
                                     <div class="mb-3 w-100">
                                       <label for="MinPurchaseAmt" class="form-label">Min Purchase Amount</label>
                                       <input name="minPurchaseAmount" type="number" step="0.01" class="form-control" id="MinPurchaseAmt" placeholder="00.00" required>
+                                      <span id="minPurchaseError" class="text-danger" style="display: none;">Invalid minimum purchase amount.</span>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="MaxRedeemAmt" class="form-label">Max Redeem Amount</label>
                                       <input name="maxRedeemAmount" type="number" step="0.01" class="form-control" id="MaxRedeemAmt" placeholder="00.00" required>
+                                      <span id="maxRedeemError" class="text-danger" style="display: none;">Invalid max redeem amount.</span>
                                     </div>
                                     <div class="mb-3 w-100">
                                       <label for="ExpDate" class="form-label">Expiry Date</label>
                                       <input name="expiryDate" type="date" class="form-control" id="ExpDate" required>
+                                      <span id="expiryDateError" class="text-danger" style="display: none;">Invalid expiry date.</span>
                                     </div>
                                   </div>
                                 </div>
@@ -903,19 +908,65 @@
                         const discountPercentage = parseFloat(document.getElementById("DiscountPercentage").value);
                         const discountError = document.getElementById("discountError");
                     
-                        if (discountPercentage <= 0 || discountPercentage > 70) {
-                          discountError.style.display = "block";
-                          return;
-                        } else {
-                          discountError.style.display = "none";
-                        }
-                    
                         const couponName = document.getElementById("CouponName").value;
                         const couponCode = document.getElementById("CouponCode").value;
                         const minPurchaseAmount = document.getElementById("MinPurchaseAmt").value;
                         const maxRedeemAmount = document.getElementById("MaxRedeemAmt").value;
                         const expiryDate = document.getElementById("ExpDate").value;
-                    
+
+                        const couponNameRegex = /^[a-zA-Z\s]+$/;
+                        const couponCodeRegex = /^[a-zA-Z0-9]+$/;
+                        const couponNameError = document.getElementById("couponNameError");
+                        const couponCodeError = document.getElementById("couponCodeError");
+                        const minPurchaseError = document.getElementById("minPurchaseError");
+                        const maxRedeemError = document.getElementById("maxRedeemError");
+                        const expiryDateError = document.getElementById("expiryDateError");
+
+                        let isValid = true;
+
+                        if (!couponNameRegex.test(couponName)) {
+                          couponNameError.style.display = "block";
+                          isValid = false;
+                        } else {
+                          couponNameError.style.display = "none";
+                        }
+
+                        if (!couponCodeRegex.test(couponCode)) {
+                          couponCodeError.style.display = "block";
+                          isValid = false;
+                        } else {
+                          couponCodeError.style.display = "none";
+                        }
+
+                        if (discountPercentage <= 0 || discountPercentage > 70) {
+                          discountError.style.display = "block";
+                          isValid = false;
+                        } else {
+                          discountError.style.display = "none";
+                        }
+
+                        if (minPurchaseAmount <= 0) {
+                          minPurchaseError.style.display = "block";
+                          isValid = false;
+                        } else {
+                          minPurchaseError.style.display = "none";
+                        }
+
+                        if (maxRedeemAmount <= 0) {
+                          maxRedeemError.style.display = "block";
+                          isValid = false;
+                        } else {
+                          maxRedeemError.style.display = "none";
+                        }
+
+                        if (new Date(expiryDate) < new Date()) {
+                          expiryDateError.style.display = "block";
+                          isValid = false;
+                        } else {
+                          expiryDateError.style.display = "none";
+                        }
+
+                        if (isValid) {
                         try {
                           const response = await fetch('/admin/addCoupon', {
                             method: 'POST',
@@ -958,7 +1009,8 @@
                             icon: "error"
                           });
                         }
-                      });
+                      }
+                    });
                       
                     </script>
                     

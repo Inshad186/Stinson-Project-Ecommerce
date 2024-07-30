@@ -265,15 +265,15 @@
 											</div>
 										</li> -->
 										<!-- <li><a href="shop-style-1.html">Lookbook</a></li> -->
-										<li><a href="blog-style-1.html">Blog</a>
+										<!-- <li><a href="blog-style-1.html">Blog</a>
 											<ul>
 												<li><a href="single-blog.html">Single Blog</a></li>
 												<li><a href="blog-style-1.html">Blog Style One</a></li>
 												<li><a href="blog-style-2.html">Blog Style Two</a></li>
 											</ul>
-										</li>
-										<li><a href="#">Pages</a>
-											<ul>
+										</li> -->
+										<!-- <li><a href="#">Pages</a> -->
+											<!-- <ul>
 												<li><a href="cart.html">Cart</a></li>
 												<li><a href="wishlist.html">Wishlist</a></li>
 												<li><a href="checkout.html">Checkout</a></li>
@@ -287,7 +287,7 @@
 												<li><a href="product-list-right.html">Product List Right</a></li>
 												<li><a href="product-detail.html">Product-Detail</a></li>
 												<li><a href="order-complete.html">Order Completed</a></li>
-											</ul>
+											</ul> -->
 										</li>
 										<li><a href="about.html">About</a></li>
 										<li><a href="contact.html">Contact</a></li>
@@ -521,14 +521,6 @@
 							<ul>
 								<li>Order no <span>m 2653257</span></li>
 								<li>Date <span><%= new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span></li>
-								<% let grandTotal = 50; %> 
-								<% orders.orderItems.forEach(item => { %>
-									<% const total = item.variantPrice * item.quantity; %>
-									<% grandTotal += total; %>
-								<% }); %>
-								<% if (orders.couponDetails && orders.couponDetails.claimedAmount) { %>
-									<% grandTotal -= orders.couponDetails.claimedAmount; %>
-								<% } %>
 								<li>Total <span><%= parseInt(grandTotal) %>/-</span></li>
 								<li>Payment Method <span><%= orders.paymentMethod %></span></li>
 							</ul>
@@ -586,7 +578,7 @@
 										<% totalOfferDiscount += discountAmount; %>
 										<tr>
 											<th><%= item.variantName %> x <%= item.quantity %></th>
-											<th><%= parseInt(total - discountAmount) %>/-</th> <!-- Display total after discount -->
+											<th><%= parseInt(subTotal) %>/-</th> <!-- Display total after discount -->
 										</tr>
 									<% }); %>
 									<tr>
@@ -595,7 +587,7 @@
 									</tr>
 									<% if (totalOfferDiscount > 0) { %>
 									<tr>
-										<th>Calculated Offer Discount:</th>
+										<th>Offer Discount:</th>
 										<th id="offerDiscount"><%= parseInt(totalOfferDiscount) %>/-</th>
 									</tr>
 									<% } %>
@@ -608,6 +600,7 @@
 									<tr>
 										<th>Grand Total</th>
 										<td><%= parseInt(orders.grandTotal) %>/-</td>
+										<% console.log("GRAND TOTAL",orders.grandTotal) %>
 									</tr>
 								</tfoot>
 							</table>							

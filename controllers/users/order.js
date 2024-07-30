@@ -25,9 +25,9 @@ exports.viewOrder = async (req, res, next) => {
             }
         });
 
-        console.log("Offer Discouhnttttttttttt   :  ",orderInfo.orderItems[0].variantId.offerDiscount); 
-        console.log("SubTotalllllllll   :    ",orderInfo.orderItems[0].variantId.subTotal);
-        console.log("ORDER INFOOOOOOO  :  ",orderInfo);
+        console.log("Offer Discount  :  ",orderInfo.orderItems[0].variantId.offerDiscount); 
+        console.log("SubTotalllllll  :    ",orderInfo.orderItems[0].variantId.subTotal);
+        console.log("ORDER INFOOOOO  :  ",orderInfo);
 
         if (!orderInfo) {
             return res.status(400).json({ error: 'Invalid operation' });
@@ -35,18 +35,28 @@ exports.viewOrder = async (req, res, next) => {
 
         let subTotal = 0;
         let totalOfferDiscount = 0;
-
+        
         orderInfo.orderItems.forEach(item => {
             subTotal += item.variantPrice * item.quantity;
+            if (item.variantId.offerDiscount) {
+                totalOfferDiscount += subTotal * (item.variantId.offerDiscount / 100) ;
+            }
         });
+
+        let totalAmount = subTotal - totalOfferDiscount;
 
         // Calculate grandTotal
         const deliveryCharge = parseFloat(orderInfo.deliveryCharge) || 0;
         const claimedAmount = orderInfo.couponDetails?.claimedAmount || 0;
         const offerDiscount = orderInfo.orderItems[0].variantId.offerDiscount || 0;
-        const grandTotal = subTotal + deliveryCharge - claimedAmount - offerDiscount;
+        const grandTotal = totalAmount + deliveryCharge - claimedAmount;
 
+        console.log("TOTAL AMOUNT  :  ",totalAmount);
+        console.log("SUBTOTAL  :  ",subTotal);
+        console.log("DELIVERY CHARGE : ",deliveryCharge);
+        console.log("CLAIMED AMOUNT  : ",claimedAmount);
         console.log("OFFER DISCOUNT  :  ",offerDiscount);
+        console.log("Grand Total : ",grandTotal);
 
         // Update orderInfo
         orderInfo.subTotal = subTotal;
@@ -54,7 +64,7 @@ exports.viewOrder = async (req, res, next) => {
 
         const address = await Address.findOne({ userId });
 
-        res.render('users/order', { orders: orderInfo, address ,offerDiscount});
+        res.render('users/order', { orders: orderInfo, address ,offerDiscount, grandTotal});
     } catch (error) {
         next(error);
     }
@@ -100,7 +110,7 @@ exports.placeOrder = async (req, res) => {
 
         const myCart = await Cart.findOne({ userId }).populate({
             path: 'products.productVariantId',
-            select: 'size salePrice stock colour image productName categoryName',
+            select: 'size salePrice stock colour image productName categoryName offerDiscount',
             populate: {
                 path: 'productId',
                 model: 'Product',
@@ -118,16 +128,30 @@ exports.placeOrder = async (req, res) => {
             return res.status(400).send("Invalid address");
         }
 
+        myCart.products.forEach(product => {
+            console.log("Product Variant ID Data: ", product.productVariantId);
+        });
+
         const orderItems = myCart.products.map(product => ({
             variantId: product.productVariantId._id,
             variantName: product.productVariantId.productName,
             variantPrice: product.productVariantId.salePrice,
             quantity: product.quantity,
-            orderStatus:paymentMethod == 'COD' ? 'Processing':'Pending'
+            offerDiscount: product.productVariantId.offerDiscount || 0,
+            orderStatus : (paymentMethod == 'COD' || paymentMethod == 'Wallet Payment') ? 'Processing' : 'Pending'
+
             
         }));
 
-        let subTotal = orderItems.reduce((acc, item) => acc + item.variantPrice * item.quantity, 0);
+        let subTotal = orderItems.reduce((acc, item) => {
+            let price = item.variantPrice;
+            if (item.offerDiscount) {
+                price = price * (1 - item.offerDiscount / 100);
+            }
+            return acc + price * item.quantity;
+        }, 0);
+
+        let offerDiscount = myCart.products[0].productVariantId.offerDiscount || 0;
         let deliveryCharge = 50;
         let discountPercentage = 0;
         let claimedAmount = 0;
@@ -149,7 +173,6 @@ exports.placeOrder = async (req, res) => {
                 return res.status(400).send(`Minimum purchase amount for this coupon is ${coupon.minPurchaseAmount}`);
             }
         }
-
         const grandTotal = subTotal + deliveryCharge;
 
         const newOrder = new Order({
@@ -160,6 +183,7 @@ exports.placeOrder = async (req, res) => {
             subTotal,
             deliveryCharge,
             grandTotal,
+            offerDiscount,
             paymentStatus: 'Failed',
             shippingAddress: {
                 name: address.name,
@@ -232,6 +256,8 @@ exports.placeOrder = async (req, res) => {
     }
 };
 
+
+
 exports.rePayment = async (req, res,next) => {
     try {
       const { orderId } = req.body
@@ -267,6 +293,8 @@ exports.rePayment = async (req, res,next) => {
     }
   }
 
+
+  
 exports.verifyPayment = async (req, res, next) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature, order_id } = req.body;
