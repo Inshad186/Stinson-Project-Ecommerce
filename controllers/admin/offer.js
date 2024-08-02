@@ -60,8 +60,6 @@ exports.addOffer = async(req, res)=>{
 
 
 
-
-
 exports.viewOfferList = async(req, res)=>{
     try {
         const offerList = await Offer.find({})

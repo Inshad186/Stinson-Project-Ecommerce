@@ -24,21 +24,14 @@ exports.addCategory = async (req, res) => {
         if (!req.file) {
             return res.status(400).json({ success: false, message: "Image upload failed" });
         }
-
         const image = `/admin/uploads/category/${req.file.filename}`
-
-        console.log(">>>>>>>>>>>>>>     image     <<<<<<<<<<<<<<<<",image);
 
         const categoryData = new category({
             name: name,
             image: image,
             description: description
         });
-        console.log(">>>>>>>>>>>>>>     categoryData     <<<<<<<<<<<<<<<<",categoryData);
-
         const savedCategory = await categoryData.save();
-
-        console.log(">>>>>>>>>>>>>>     SAVED CATEGORY     <<<<<<<<<<<<<<<<",savedCategory);
 
         res.status(200).json({ success: true, message: "Category added successfully" });
     } catch (error) {
@@ -79,7 +72,7 @@ exports.deleteCategory = async (req, res) => {
 
 exports.viewEditCategory = async (req, res) => {
     try {
-        const categoryId = req.params.categoryID;
+        const categoryId = req.query.categoryId;
         const categoryToEdit = await category.findById(categoryId);
         res.render("admin/editCategory", { categoryToEdit })
 
@@ -92,7 +85,7 @@ exports.viewEditCategory = async (req, res) => {
 
 exports.editCategory = async (req, res) => {
     try {
-        const categoryId = req.params.categoryID;
+        const categoryId = req.query.categoryId;
         const oldCategory = await category.findById(categoryId);
         
         if (!oldCategory) {
@@ -115,7 +108,6 @@ exports.editCategory = async (req, res) => {
                 }
             }
         }
-
         if (description && description.trim() !== oldCategory.description.trim()) {
             updateData.description = description.trim();
             isUpdated = true;
@@ -126,7 +118,7 @@ exports.editCategory = async (req, res) => {
             updateData.image = image;
             isUpdated = true;
         }
-
+        
         if (!isUpdated) {
             return res.status(400).json({ success: false, message: "You need to update at least one field." });
         }

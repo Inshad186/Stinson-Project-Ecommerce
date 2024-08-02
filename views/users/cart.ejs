@@ -1,11 +1,7 @@
 <%-include("../layouts/header.ejs") %>
 
     <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 
-        <!-- header section start -->
 		<header class="pages-header">
 			<div class="header-top">
 				<div class="container">
@@ -222,163 +218,7 @@
 				
 				</div>
 			</div>
-		</section>
-							
-							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-							
-							<script>
-								document.addEventListener("DOMContentLoaded", function() {
-									function updateSubtotalAndGrandTotal() {
-										let subtotal = 0;
-										document.querySelectorAll('.total-price').forEach(totalPriceElem => {
-											subtotal += parseFloat(totalPriceElem.textContent);
-										});
-							
-										const shipping = (subtotal === 0) ? 0 : 50.00; 
-										const grandTotal = subtotal + shipping;
-							
-										document.querySelector('td[data-subtotal]').textContent = parseInt(subtotal)
-										document.querySelector('td[data-grand-total]').textContent = parseInt(grandTotal)
-									}
-
-										async function updateCartQuantity(productId, size, quantity) {
-										const response = await fetch("/cart-update-quantity", {
-											method: "POST",
-											headers: {
-												"Content-Type": "application/json"
-											},
-											body: JSON.stringify({ variantId: productId, size, quantity })
-										});
-
-										const responseData = await response.json();
-										if (!response.ok) {
-											Swal.fire({
-												title: "Error",
-												text: responseData.error || "Failed to update cart quantity",
-												icon: "error"
-											})
-											.then((result)=> {
-												if(result.isConfirmed){
-													window.location.reload()
-												}
-											})
-											
-										} else {
-                                           window.location.reload()
-										}
-									}
-							
-									document.querySelectorAll(".pe-7s-close").forEach(removeBtn => {
-										removeBtn.addEventListener("click", async function(event) {
-											event.preventDefault();
-							
-											const productId = this.closest('tr').dataset.productId;
-							
-											const response = await fetch("/cart-remove", {
-												method: "DELETE",
-												headers: {
-													"Content-Type": "application/json"
-												},
-												body: JSON.stringify({ productId })
-											});
-							
-											const responseData = await response.json();
-							
-											if (response.ok) {
-												Swal.fire({
-													title: "Success",
-													text: responseData.message,
-													icon: "success"
-												}).then(() => {
-													this.closest('tr').remove();
-													updateSubtotalAndGrandTotal();
-												});
-											} else {
-												Swal.fire({
-													title: "Error",
-													text: responseData.error || "Failed to remove item from cart",
-													icon: "error"
-												});
-											}
-										});
-									});
-							
-									document.querySelectorAll('.plus-minus-box').forEach(input => {
-										input.addEventListener('change', function() {
-											let value = parseInt(this.value);
-											if (value < 1) {
-												this.value = 1;
-												Swal.fire({
-													title: "Error",
-													text: "You must have at least one product.",
-													icon: "error"
-												});
-											} else if (value > 5) {
-												this.value = 5;
-												Swal.fire({
-													title: "Error",
-													text: "You cannot add more than 5 products.",
-													icon: "error"
-												});
-											}
-											updateTotalPrice(this);
-										});
-									});
-							
-									document.querySelectorAll('.dec.qtybutton').forEach(btn => {
-										btn.addEventListener('click', function() {
-											let input = this.nextElementSibling;
-											let value = parseInt(input.value) - 0;
-											if (value >= 1) {
-												input.value = value;
-												updateTotalPrice(input);
-												const productId = this.closest('tr').dataset.productId;
-											    const size = this.closest('tr').querySelector('.itemsize span').textContent;
-											    updateCartQuantity(productId, size, value);
-											} else {
-												input.value = 1;
-												Swal.fire({
-													title: "Error",
-													text: "You must have at least one product.",
-													icon: "error"
-												});
-											}
-										});
-									});
-							
-									document.querySelectorAll('.inc.qtybutton').forEach(btn => {
-									btn.addEventListener('click', function() {
-										let input = this.previousElementSibling;
-										let value = parseInt(input.value) + 0;
-										if (value <= 5) {
-											input.value = value;
-											updateTotalPrice(input);
-											const productId = this.closest('tr').dataset.productId;
-											const size = this.closest('tr').querySelector('.itemsize span').textContent;
-											updateCartQuantity(productId, size, value);
-										} else {
-											input.value = 5;
-											Swal.fire({
-												title: "Error",
-												text: "You cannot add more than 5 products.",
-												icon: "error"
-											});
-										}
-									});
-								});
-							
-									function updateTotalPrice(input) {
-										const tr = input.closest('tr');
-										const price = parseFloat(tr.querySelector('td:nth-child(2)').textContent);
-										const quantity = parseInt(input.value);
-										tr.querySelector('.total-price').textContent = parseInt(price * quantity);
-										updateSubtotalAndGrandTotal();
-										// window.location.reload()
-									}
-							
-									updateSubtotalAndGrandTotal();
-								});
-							</script>
+		</section>				
 							
 		<!-- cart content section end -->
         <!-- footer section start -->
@@ -620,6 +460,163 @@
         <script src="js/plugins.js"></script>
 		<!-- main js -->
         <script src="js/main.js"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+							
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				function updateSubtotalAndGrandTotal() {
+					let subtotal = 0;
+					document.querySelectorAll('.total-price').forEach(totalPriceElem => {
+						subtotal += parseFloat(totalPriceElem.textContent);
+					});
+		
+					const shipping = (subtotal === 0) ? 0 : 50.00; 
+					const grandTotal = subtotal + shipping;
+		
+					document.querySelector('td[data-subtotal]').textContent = parseInt(subtotal)
+					document.querySelector('td[data-grand-total]').textContent = parseInt(grandTotal)
+				}
+
+					async function updateCartQuantity(productId, size, quantity) {
+					const response = await fetch("/cart-update-quantity", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ variantId: productId, size, quantity })
+					});
+
+					const responseData = await response.json();
+					if (!response.ok) {
+						Swal.fire({
+							title: "Error",
+							text: responseData.error || "Failed to update cart quantity",
+							icon: "error"
+						})
+						.then((result)=> {
+							if(result.isConfirmed){
+								window.location.reload()
+							}
+						})
+						
+					} else {
+					   window.location.reload()
+					}
+				}
+		
+				document.querySelectorAll(".pe-7s-close").forEach(removeBtn => {
+					removeBtn.addEventListener("click", async function(event) {
+						event.preventDefault();
+		
+						const productId = this.closest('tr').dataset.productId;
+		
+						const response = await fetch("/cart-remove", {
+							method: "DELETE",
+							headers: {
+								"Content-Type": "application/json"
+							},
+							body: JSON.stringify({ productId })
+						});
+		
+						const responseData = await response.json();
+		
+						if (response.ok) {
+							Swal.fire({
+								title: "Success",
+								text: responseData.message,
+								icon: "success"
+							}).then(() => {
+								this.closest('tr').remove();
+								updateSubtotalAndGrandTotal();
+							});
+						} else {
+							Swal.fire({
+								title: "Error",
+								text: responseData.error || "Failed to remove item from cart",
+								icon: "error"
+							});
+						}
+					});
+				});
+		
+				document.querySelectorAll('.plus-minus-box').forEach(input => {
+					input.addEventListener('change', function() {
+						let value = parseInt(this.value);
+						if (value < 1) {
+							this.value = 1;
+							Swal.fire({
+								title: "Error",
+								text: "You must have at least one product.",
+								icon: "error"
+							});
+						} else if (value > 5) {
+							this.value = 5;
+							Swal.fire({
+								title: "Error",
+								text: "You cannot add more than 5 products.",
+								icon: "error"
+							});
+						}
+						updateTotalPrice(this);
+					});
+				});
+		
+				document.querySelectorAll('.dec.qtybutton').forEach(btn => {
+					btn.addEventListener('click', function() {
+						let input = this.nextElementSibling;
+						let value = parseInt(input.value) - 0;
+						if (value >= 1) {
+							input.value = value;
+							updateTotalPrice(input);
+							const productId = this.closest('tr').dataset.productId;
+							const size = this.closest('tr').querySelector('.itemsize span').textContent;
+							updateCartQuantity(productId, size, value);
+						} else {
+							input.value = 1;
+							Swal.fire({
+								title: "Error",
+								text: "You must have at least one product.",
+								icon: "error"
+							});
+						}
+					});
+				});
+		
+				document.querySelectorAll('.inc.qtybutton').forEach(btn => {
+				btn.addEventListener('click', function() {
+					let input = this.previousElementSibling;
+					let value = parseInt(input.value) + 0;
+					if (value <= 5) {
+						input.value = value;
+						updateTotalPrice(input);
+						const productId = this.closest('tr').dataset.productId;
+						const size = this.closest('tr').querySelector('.itemsize span').textContent;
+						updateCartQuantity(productId, size, value);
+					} else {
+						input.value = 5;
+						Swal.fire({
+							title: "Error",
+							text: "You cannot add more than 5 products.",
+							icon: "error"
+						});
+					}
+				});
+			});
+		
+				function updateTotalPrice(input) {
+					const tr = input.closest('tr');
+					const price = parseFloat(tr.querySelector('td:nth-child(2)').textContent);
+					const quantity = parseInt(input.value);
+					tr.querySelector('.total-price').textContent = parseInt(price * quantity);
+					updateSubtotalAndGrandTotal();
+					// window.location.reload()
+				}
+		
+				updateSubtotalAndGrandTotal();
+			});
+		</script>
+
     </body>
 
 	<%-include("../layouts/footer.ejs") %>

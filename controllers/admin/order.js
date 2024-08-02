@@ -1,9 +1,5 @@
 const Order = require("../../models/orderModel")
 const Wallet = require("../../models/walletModel")
-const User = require("../../models/userModel")
-const Address = require("../../models/addressModel")
-const Variant = require("../../models/varientModel")
-const asyncHandler = require("express-async-handler");
 const ExcelJS = require('exceljs');
 const PDFDocument = require('pdfkit');
 
@@ -85,21 +81,12 @@ exports.updateOrderStatus = async (req, res) => {
             return res.status(404).send("Order not found");
         }
         const item = order.orderItems.find(item => item.variantId.equals(variantId))
-        console.log('itemmmmmmmmmmmmmmmm  :  ',item);
+        console.log('itemmmmmmmm  :  ',item);
 
         if (!item) {
             return res.status(404).send("Order item not found");
         }
 
-        // if(newStatus === "Delivered"){
-
-        //     await Order.findOneAndUpdate(
-        //         { _id: orderId, 'orderItems.variantId': variantId },
-        //         { $set: { 'orderItems.$.orderStatus': 'Request Return' } }
-        //     );
-        //     console.log("Status changed to Request Return successfully.");
-
-        // } else 
         if(newStatus === "Refunded"){
 
             const orderDetail = await Order.findOne({_id: orderId,'orderItems.variantId': variantId})

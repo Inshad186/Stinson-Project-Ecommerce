@@ -40,6 +40,15 @@
 	</head>
 
 	<body>
+
+		<!-- Bootstrap JS and dependencies -->
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+		<!-- Cropper.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+		<!-- SweetAlert2 -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 		<!--wrapper-->
 		<div class="wrapper">
 			<!--sidebar wrapper -->
@@ -70,51 +79,31 @@
 							<div class="menu-title">ecommerce</div>
 						</a>
 						<ul>
-							<li><a href="ecommerce-shop-grid-view.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Product Grid
-								</a>
+							<li><a href="/admin/userList">
+								<ion-icon name="ellipse-outline"></ion-icon>User List
+							  </a>
 							</li>
-							<li><a href="ecommerce-shop-list-view.html">
-									<ion-icon name="ellipse-outline"></ion-icon>User List
-								</a>
+							<li><a href="/admin/categoryList">
+								<ion-icon name="ellipse-outline"></ion-icon>Categories
+							  </a>
 							</li>
-							<li><a href="ecommerce-shop-grid-view-top-filter.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Product Top Filters
-								</a>
+							<li><a href="/admin/productList">
+								<ion-icon name="ellipse-outline"></ion-icon>Products
+							  </a>
 							</li>
-							<li><a href="ecommerce-product-details.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Product Details
-								</a>
+							<li><a href="/admin/order">
+								<ion-icon name="ellipse-outline"></ion-icon>Orders List
+							  </a>
 							</li>
-							<li><a href="ecommerce-product-comparison.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Product Comparison
-								</a>
+							<li><a href="/admin/coupons">
+								<ion-icon name="ellipse-outline"></ion-icon>Coupon List
+							  </a>
 							</li>
-							<li><a href="ecommerce-shop-cart.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Shoping Cart
-								</a>
+							<li><a href="/admin/offer">
+								<ion-icon name="ellipse-outline"></ion-icon>Offer List
+							  </a>
 							</li>
-							<li><a href="ecommerce-checkout-details.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Checkout
-								</a>
-							</li>
-							<li><a href="ecommerce-checkout-shipping.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Shipping
-								</a>
-							</li>
-							<li><a href="ecommerce-checkout-payment.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Payment
-								</a>
-							</li>
-							<li><a href="ecommerce-checkout-review.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Review Cart
-								</a>
-							</li>
-							<li><a href="ecommerce-checkout-complete.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Order Complete
-								</a>
-							</li>
-						</ul>
+						  </ul>
 					</li>
 					<li class="menu-label">UI Elements</li>
 					<li>
@@ -166,269 +155,6 @@
 						</ul>
 						</a>
 					</li>
-					<!-- <li class="menu-label">Forms & Tables</li>
-					<li>
-						<a class="has-arrow" href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="newspaper-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Forms</div>
-						</a>
-						<ul>
-							<li> <a href="form-elements.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Form Elements
-								</a>
-							</li>
-							<li> <a href="form-input-group.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Input Groups
-								</a>
-							</li>
-							<li> <a href="form-layouts.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Forms Layouts
-								</a>
-							</li>
-							<li> <a href="form-validations.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Form Validation
-								</a>
-							</li>
-							<li> <a href="form-wizard.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Form Wizard
-								</a>
-							</li>
-							<li> <a href="form-radios-and-checkboxes.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Radio & Checkboxes
-								</a>
-							</li>
-							<li> <a href="form-date-time-pickes.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Date Pickers
-								</a>
-							</li>
-							<li> <a href="form-select2.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Select2
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a class="has-arrow" href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="server-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Tables</div>
-						</a>
-						<ul>
-							<li> <a href="table-basic-table.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Basic Table
-								</a>
-							</li>
-							<li> <a href="table-advance-tables.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Advance Tables
-								</a>
-							</li>
-							<li> <a href="table-datatable.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Data Table
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="menu-label">Pages</li>
-					<li>
-						<a class="has-arrow" href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="lock-closed-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Authentication</div>
-						</a>
-						<ul>
-							<li> <a href="authentication-sign-in-basic.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Sign In Basic
-								</a>
-							</li>
-							<li> <a href="authentication-sign-in-cover.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Sign In Cover
-								</a>
-							</li>
-							<li> <a href="authentication-sign-in-simple.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Sign In Simple
-								</a>
-							</li>
-							<li> <a href="authentication-sign-up-basic.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Sign Up Basic
-								</a>
-							</li>
-							<li> <a href="authentication-sign-up-cover.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Sign Up Cover
-								</a>
-							</li>
-							<li> <a href="authentication-sign-up-simple.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Sign Up Simple
-								</a>
-							</li>
-							<li> <a href="authentication-reset-password-basic.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Reset Password Basic
-								</a>
-							</li>
-							<li> <a href="authentication-reset-password-cover.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Reset Password Cover
-								</a>
-							</li>
-							<li> <a href="authentication-reset-password-simple.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Reset Password Simple
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="pages-user-profile.html">
-							<div class="parent-icon">
-								<ion-icon name="person-circle-outline"></ion-icon>
-							</div>
-							<div class="menu-title">User Profile</div>
-						</a>
-					</li>
-					<li>
-						<a href="pages-edit-profile.html">
-							<div class="parent-icon">
-								<ion-icon name="create-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Edit Profile</div>
-						</a>
-					</li>
-					<li>
-						<a href="pages-invoices.html">
-							<div class="parent-icon">
-								<ion-icon name="receipt-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Invoice</div>
-						</a>
-					</li>
-					<li>
-						<a href="pages-to-do.html">
-							<div class="parent-icon">
-								<ion-icon name="shield-checkmark-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Invoice</div>
-						</a>
-					</li>
-					<li>
-						<a class="has-arrow" href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="copy-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Extra Pages</div>
-						</a>
-						<ul>
-							<li><a href="pages-faq.html">
-									<ion-icon name="ellipse-outline"></ion-icon>FAQ
-								</a>
-							</li>
-							<li><a href="pages-pricing-tables.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Pricing
-								</a>
-							</li>
-							<li><a href="pages-errors-404-error.html">
-									<ion-icon name="ellipse-outline"></ion-icon>404 Error
-								</a>
-							</li>
-							<li><a href="pages-errors-500-error.html">
-									<ion-icon name="ellipse-outline"></ion-icon>500 Error
-								</a></li>
-							<li><a href="pages-errors-coming-soon.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Coming Soon
-								</a></li>
-							<li><a href="pages-starter-page.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Blank Page
-								</a></li>
-						</ul>
-					</li>
-					<li class="menu-label">Charts & Maps</li>
-					<li>
-						<a class="has-arrow" href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="bar-chart-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Charts</div>
-						</a>
-						<ul>
-							<li> <a href="charts-apex-chart.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Apex
-								</a>
-							</li>
-							<li> <a href="charts-chartjs.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Chartjs
-								</a>
-							</li>
-							<li> <a href="charts-peity.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Peity
-								</a>
-							</li>
-							<li> <a href="charts-other.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Other Charts
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a class="has-arrow" href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="map-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Maps</div>
-						</a>
-						<ul>
-							<li> <a href="map-google-maps.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Google Maps
-								</a>
-							</li>
-							<li> <a href="map-vector-maps.html">
-									<ion-icon name="ellipse-outline"></ion-icon>Vector Maps
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="menu-label">Others</li>
-					<li>
-						<a class="has-arrow" href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="list-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Menu Levels</div>
-						</a>
-						<ul>
-							<li> <a class="has-arrow" href="javascript:;">
-									<ion-icon name="ellipse-outline"></ion-icon>Level One
-								</a>
-								<ul>
-									<li> <a class="has-arrow" href="javascript:;">
-											<ion-icon name="ellipse-outline"></ion-icon>Level Two
-										</a>
-										<ul>
-											<li> <a href="javascript:;">
-													<ion-icon name="ellipse-outline"></ion-icon>Level Three
-												</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="document-text-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Documentation</div>
-						</a>
-					</li>
-					<li>
-						<a href="javascript:;">
-							<div class="parent-icon">
-								<ion-icon name="link-outline"></ion-icon>
-							</div>
-							<div class="menu-title">Support</div>
-						</a>
-					</li> -->
 				</ul>
 				<!--end navigation-->
 			</aside>
@@ -598,161 +324,6 @@
 						</div>
 					</div>
 
-					<!-- Bootstrap JS and dependencies -->
-					<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-					<!-- Cropper.js -->
-					<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-					<!-- SweetAlert2 -->
-					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-					<script>
-						document.addEventListener('DOMContentLoaded', function () {
-							const imageUploadify = document.getElementById('image-uploadify');
-							const cropperModal = new bootstrap.Modal(document.getElementById('cropperModal'), { keyboard: false });
-							const imageToCrop = document.getElementById('image-to-crop');
-							let cropper;
-							let uploadedImagesCount = 0; // Track the total number of uploaded images
-							const croppedImages = []; // Array to store cropped images
-
-							imageUploadify.addEventListener('change', function (event) {
-								const files = event.target.files;
-
-								if (uploadedImagesCount + files.length > 6) {
-									Swal.fire({
-										title: "Error",
-										text: "You can upload a maximum of 6 images.",
-										icon: "error"
-									});
-									return;
-								}
-
-								// Process each file
-								Array.from(files).forEach(file => processFile(file));
-							});
-
-							function processFile(file) {
-								const reader = new FileReader();
-								reader.onload = function (e) {
-									imageToCrop.src = e.target.result;
-
-									// Ensure previous cropper instance is destroyed
-									if (cropper) {
-										cropper.destroy();
-									}
-
-									cropper = new Cropper(imageToCrop, {
-										aspectRatio: 1,
-										viewMode: 1,
-										dragMode: 'none',
-										cropBoxResizable: false,
-										toggleDragModeOnDblclick: false
-									});
-									cropperModal.show();
-								};
-								reader.readAsDataURL(file);
-							}
-
-							document.getElementById('crop-button').addEventListener('click', function () {
-								const canvas = cropper.getCroppedCanvas();
-								canvas.toBlob(function (blob) {
-									// Increment the count after successful crop
-									uploadedImagesCount++;
-
-									const url = URL.createObjectURL(blob);
-
-									const fileInput = document.createElement('input');
-									fileInput.type = 'hidden';
-									fileInput.name = 'croppedImages';
-									fileInput.value = url;
-
-									croppedImages.push(blob); // Store the cropped image blob
-
-									cropper.destroy();
-									cropperModal.hide();
-
-									// If 3 images uploaded, inform the user they can add more or proceed
-									if (uploadedImagesCount === 3) {
-										Swal.fire({
-											title: "Images Uploaded",
-											text: "You can add more images or proceed with submission.",
-											icon: "info"
-										});
-									}
-								});
-							});
-
-							document.getElementById('variant-form').addEventListener('submit', async function (event) {
-								event.preventDefault();
-
-								const formData = new FormData(this);
-
-								if (croppedImages.length < 3 || croppedImages.length > 6) {
-									await Swal.fire({
-										title: "Error",
-										text: "Please upload between 3 and 6 images.",
-										icon: "error"
-									});
-									return;
-								}
-
-								// Append each cropped image blob to the FormData
-								croppedImages.forEach((image, index) => {
-									formData.append(`images[${index}]`, image, `image${index}.png`);
-								});
-
-								try {
-									const sizes = Array.from(document.querySelectorAll(".size-input")).map(input => input.value);
-									let stocks = Array.from(document.querySelectorAll(".stock-input")).map(input => input.value);
-									stocks = stocks.map(stock => parseInt(stock, 10));
-
-									sizes.forEach((size, index) => {
-										formData.append(`sizes[${index}]`, size);
-										formData.append(`stocks[${index}]`, stocks[index]);
-									});
-
-									const response = await fetch(`/admin/loadVarients/<%= productSize._id %>`, {
-										method: "POST",
-										body: formData
-									});
-
-									const data = await response.json();
-									console.log("DATA IS REACHED CORRECTLY ---------", data);
-
-									if (data.success) {
-										await Swal.fire({
-											title: "Added",
-											text: "Variant added successfully",
-											icon: "success"
-										});
-										window.location.href = "/admin/productList";
-									} else {
-										await Swal.fire({
-											title: "Error",
-											text: data.message || "Failed to add variant",
-											icon: "error"
-										});
-									}
-								} catch (error) {
-									console.error("Error:", error);
-									await Swal.fire({
-										title: "Error",
-										text: "An unexpected error occurred.",
-										icon: "error"
-									});
-								}
-							});
-
-							// Ensure the cropper instance is destroyed when the modal is hidden
-							document.getElementById('cropperModal').addEventListener('hidden.bs.modal', function () {
-								if (cropper) {
-									cropper.destroy();
-									cropper = null;
-								}
-							});
-						});
-					</script>
-
 				</div>
 			</div>
 			<!--end page wrapper -->
@@ -871,6 +442,154 @@
 		</script>
 		<!--app JS-->
 		<script src="assets/js/app.js"></script>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				const imageUploadify = document.getElementById('image-uploadify');
+				const cropperModal = new bootstrap.Modal(document.getElementById('cropperModal'), { keyboard: false });
+				const imageToCrop = document.getElementById('image-to-crop');
+				let cropper;
+				let uploadedImagesCount = 0; // Track the total number of uploaded images
+				const croppedImages = []; // Array to store cropped images
+
+				imageUploadify.addEventListener('change', function (event) {
+					const files = event.target.files;
+
+					if (uploadedImagesCount + files.length > 6) {
+						Swal.fire({
+							title: "Error",
+							text: "You can upload a maximum of 6 images.",
+							icon: "error"
+						});
+						return;
+					}
+
+					// Process each file
+					Array.from(files).forEach(file => processFile(file));
+				});
+
+				function processFile(file) {
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						imageToCrop.src = e.target.result;
+
+						// Ensure previous cropper instance is destroyed
+						if (cropper) {
+							cropper.destroy();
+						}
+
+						cropper = new Cropper(imageToCrop, {
+							aspectRatio: 1,
+							viewMode: 1,
+							dragMode: 'none',
+							cropBoxResizable: false,
+							toggleDragModeOnDblclick: false
+						});
+						cropperModal.show();
+					};
+					reader.readAsDataURL(file);
+				}
+
+				document.getElementById('crop-button').addEventListener('click', function () {
+					const canvas = cropper.getCroppedCanvas();
+					canvas.toBlob(function (blob) {
+						// Increment the count after successful crop
+						uploadedImagesCount++;
+
+						const url = URL.createObjectURL(blob);
+
+						const fileInput = document.createElement('input');
+						fileInput.type = 'hidden';
+						fileInput.name = 'croppedImages';
+						fileInput.value = url;
+
+						croppedImages.push(blob); // Store the cropped image blob
+
+						cropper.destroy();
+						cropperModal.hide();
+
+						// If 3 images uploaded, inform the user they can add more or proceed
+						if (uploadedImagesCount === 3) {
+							Swal.fire({
+								title: "Images Uploaded",
+								text: "You can add more images or proceed with submission.",
+								icon: "info"
+							});
+						}
+					});
+				});
+
+				document.getElementById('variant-form').addEventListener('submit', async function (event) {
+					event.preventDefault();
+
+					const formData = new FormData(this);
+
+					if (croppedImages.length < 3 || croppedImages.length > 6) {
+						await Swal.fire({
+							title: "Error",
+							text: "Please upload between 3 and 6 images.",
+							icon: "error"
+						});
+						return;
+					}
+
+					// Append each cropped image blob to the FormData
+					croppedImages.forEach((image, index) => {
+						formData.append(`images[${index}]`, image, `image${index}.png`);
+					});
+
+					try {
+						const sizes = Array.from(document.querySelectorAll(".size-input")).map(input => input.value);
+						let stocks = Array.from(document.querySelectorAll(".stock-input")).map(input => input.value);
+						stocks = stocks.map(stock => parseInt(stock, 10));
+
+						sizes.forEach((size, index) => {
+							formData.append(`sizes[${index}]`, size);
+							formData.append(`stocks[${index}]`, stocks[index]);
+						});
+
+						const response = await fetch(`/admin/loadVarients/<%= productSize._id %>`, {
+							method: "POST",
+							body: formData
+						});
+
+						const data = await response.json();
+						console.log("DATA IS REACHED CORRECTLY ---------", data);
+
+						if (data.success) {
+							await Swal.fire({
+								title: "Added",
+								text: "Variant added successfully",
+								icon: "success"
+							});
+							window.location.href = "/admin/productList";
+						} else {
+							await Swal.fire({
+								title: "Error",
+								text: data.message || "Failed to add variant",
+								icon: "error"
+							});
+						}
+					} catch (error) {
+						console.error("Error:", error);
+						await Swal.fire({
+							title: "Error",
+							text: "An unexpected error occurred.",
+							icon: "error"
+						});
+					}
+				});
+
+				// Ensure the cropper instance is destroyed when the modal is hidden
+				document.getElementById('cropperModal').addEventListener('hidden.bs.modal', function () {
+					if (cropper) {
+						cropper.destroy();
+						cropper = null;
+					}
+				});
+			});
+		</script>
+
 	</body>
 
 

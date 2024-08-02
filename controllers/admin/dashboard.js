@@ -55,7 +55,6 @@ exports.getChartData = asyncHandler(async (req, res) => {
         start = new Date(0);
         end = new Date();
     }
-
     console.log(`Filter: ${filter}, Start Date: ${start}, End Date: ${end}`);
 
     try {

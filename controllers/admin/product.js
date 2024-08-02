@@ -64,7 +64,7 @@ exports.productList = async (req, res) => {
 
 exports.viewEditProduct = async(req,res)=>{
     try {
-        const productId = req.params.productId;
+        const productId = req.query.productId;
         const productToEdit = await Product.findById(productId);
         res.render("admin/editProduct",{productToEdit});
     } catch (error) {
@@ -76,7 +76,7 @@ exports.viewEditProduct = async(req,res)=>{
 
 exports.editProduct = async(req,res)=>{
     try {
-        const productId = req.params.productId
+        const productId = req.query.productId
         const oldProduct = await Product.findById(productId)
 
         if (!oldProduct) {
@@ -90,7 +90,7 @@ exports.editProduct = async(req,res)=>{
         if (name && name.trim() !== '') {
             const trimmedName = name.trim();
             if (trimmedName.toLowerCase() !== oldProduct.name.toLowerCase()) {
-                const existingProduct = await category.findOne({ name: new RegExp(`^${trimmedName}$`, 'i') });
+                const existingProduct = await Product.findOne({ name: new RegExp(`^${trimmedName}$`, 'i') });
                 if (existingProduct && existingProduct._id.toString() !== productId) {
                     return res.status(400).json({ success: false, message: "A product with this name already exists." });
                 } else {
@@ -127,7 +127,8 @@ exports.editProduct = async(req,res)=>{
 
 exports.deleteProduct = async(req,res)=>{
     try {
-        const product = await Product.findOne({_id: req.body.productId});
+        const productId = req.query.productId
+        const product = await Product.findOne({_id: productId});
 
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found" });

@@ -9,8 +9,6 @@ const Razorpay = require("razorpay")
 const PDFDocument = require('pdfkit');
 
 
-
-
 exports.viewOrder = async (req, res, next) => {
     try {
         const userId = req.session.userId;

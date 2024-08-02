@@ -33,8 +33,8 @@ router.post("/addCategory",adminAuth.isAuthenticated ,upload.single("image"),loa
 router.get("/categoryList" ,adminAuth.isAuthenticated ,loadCategory.viewCategoryList)
 router.post("/deleteCategory",adminAuth.isAuthenticated ,loadCategory.deleteCategory)
 
-router.get("/editCategory/:categoryID" ,adminAuth.isAuthenticated ,loadCategory.viewEditCategory)
-router.post("/editCategory/:categoryID" ,adminAuth.isAuthenticated , upload.single("image"), loadCategory.editCategory);
+router.get("/editCategory" ,adminAuth.isAuthenticated ,loadCategory.viewEditCategory)
+router.post("/editCategory" ,adminAuth.isAuthenticated , upload.single("image"), loadCategory.editCategory);
 
 router.get("/productList",adminAuth.isAuthenticated ,loadProduct.productList)
 router.post("/deleteProduct" ,adminAuth.isAuthenticated ,loadProduct.deleteProduct)
@@ -42,14 +42,14 @@ router.post("/deleteProduct" ,adminAuth.isAuthenticated ,loadProduct.deleteProdu
 router.get("/addProduct" ,adminAuth.isAuthenticated ,loadProduct.addProduct)
 router.post("/addProduct" ,adminAuth.isAuthenticated ,upload.single("image"),loadProduct.insertProduct)
 
-router.get("/editProduct/:productId" ,adminAuth.isAuthenticated ,loadProduct.viewEditProduct);
-router.post("/editProduct/:productId" ,adminAuth.isAuthenticated ,upload.single("image"),loadProduct.editProduct)
+router.get("/editProduct" ,adminAuth.isAuthenticated ,loadProduct.viewEditProduct);
+router.post("/editProduct" ,adminAuth.isAuthenticated ,upload.single("image"),loadProduct.editProduct)
 
 router.get("/loadVarients/:productId" ,adminAuth.isAuthenticated , varient.loadvarients);
 router.post("/loadVarients/:productId" ,adminAuth.isAuthenticated , upload.any(), varient.addVarients);
 
-router.get("/editVariant/:productId" ,adminAuth.isAuthenticated ,varient.viewEditVariant)
-router.post("/editVariant/:productId" ,adminAuth.isAuthenticated ,upload.any(),varient.editVariant)
+router.get("/editVariant" ,adminAuth.isAuthenticated ,varient.viewEditVariant)
+router.post("/editVariant" ,adminAuth.isAuthenticated ,upload.any(),varient.editVariant)
 router.post("/deleteVariant" ,adminAuth.isAuthenticated ,varient.deleteVariant)
 
 router.get("/productDetail" ,adminAuth.isAuthenticated ,loadProduct.viewProductDetails)

@@ -33,48 +33,28 @@
               <div class="menu-title">ecommerce</div>
             </a>
             <ul>
-              <li><a href="ecommerce-shop-grid-view.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Product Grid
-                </a>
-              </li>
-              <li><a href="ecommerce-shop-list-view.html">
+              <li><a href="/admin/userList">
                   <ion-icon name="ellipse-outline"></ion-icon>User List
                 </a>
               </li>
-              <li><a href="ecommerce-shop-grid-view-top-filter.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Product Top Filters
+              <li><a href="/admin/categoryList">
+                  <ion-icon name="ellipse-outline"></ion-icon>Categories
                 </a>
               </li>
-              <li><a href="ecommerce-product-details.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Product Details
+              <li><a href="/admin/productList">
+                  <ion-icon name="ellipse-outline"></ion-icon>Products
                 </a>
               </li>
-              <li><a href="ecommerce-product-comparison.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Product Comparison
+              <li><a href="/admin/order">
+                  <ion-icon name="ellipse-outline"></ion-icon>Orders List
                 </a>
               </li>
-              <li><a href="ecommerce-shop-cart.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Shoping Cart
+              <li><a href="/admin/coupons">
+                  <ion-icon name="ellipse-outline"></ion-icon>Coupon List
                 </a>
               </li>
-              <li><a href="ecommerce-checkout-details.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Checkout
-                </a>
-              </li>
-              <li><a href="ecommerce-checkout-shipping.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Shipping
-                </a>
-              </li>
-              <li><a href="ecommerce-checkout-payment.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Payment
-                </a>
-              </li>
-              <li><a href="ecommerce-checkout-review.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Review Cart
-                </a>
-              </li>
-              <li><a href="ecommerce-checkout-complete.html">
-                  <ion-icon name="ellipse-outline"></ion-icon>Order Complete
+              <li><a href="/admin/offer">
+                  <ion-icon name="ellipse-outline"></ion-icon>Offer List
                 </a>
               </li>
             </ul>
@@ -657,67 +637,6 @@
               </div>
             </div>
           </div>
-          
-
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-          
-          <script>
-            document.addEventListener('DOMContentLoaded', function () {
-              const statusSelectElements = document.querySelectorAll('.status-select');
-          
-              statusSelectElements.forEach(function (selectElement) {
-                selectElement.addEventListener('change', async function () {
-                  const newStatus = this.value;
-                  const orderId = this.getAttribute('data-order-id');
-                  const variantId = this.getAttribute('data-variant-id');
-                  const currentStatus = this.getAttribute('data-current-status');
-          
-                  try {
-                    const response = await fetch('/admin/updateOrderStatus', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({ orderId, variantId, newStatus })
-                    });
-          
-                    const data = await response.json();
-          
-                    if (response.ok && data.success) {
-                      Swal.fire({
-                        title: 'Success',
-                        text: data.message,
-                        icon: 'success'
-                      }).then(() => {
-                        this.dataset.currentStatus = newStatus;
-                        window.location.reload();
-                      });
-                    } else {
-                      Swal.fire({
-                        title: 'Error',
-                        text: data.message,
-                        icon: 'error'
-                      });
-                      // Revert the select to the current status if there was an error
-                      this.value = currentStatus;
-                    }
-                  } catch (error) {
-                    Swal.fire({
-                      title: 'Error',
-                      text: 'An error occurred. Please try again.',
-                      icon: 'error'
-                    });
-                    // Revert the select to the current status if there was an error
-                    this.value = currentStatus;
-                  }
-                });
-              });
-            });
-          </script>
-        
-
-
-
 
           <!--start footer-->
           <footer class="footer">
@@ -823,6 +742,61 @@
         <!-- Main JS-->
         <script src="assets/js/main.js"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            const statusSelectElements = document.querySelectorAll('.status-select');
+        
+            statusSelectElements.forEach(function (selectElement) {
+              selectElement.addEventListener('change', async function () {
+                const newStatus = this.value;
+                const orderId = this.getAttribute('data-order-id');
+                const variantId = this.getAttribute('data-variant-id');
+                const currentStatus = this.getAttribute('data-current-status');
+        
+                try {
+                  const response = await fetch('/admin/updateOrderStatus', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ orderId, variantId, newStatus })
+                  });
+        
+                  const data = await response.json();
+        
+                  if (response.ok && data.success) {
+                    Swal.fire({
+                      title: 'Success',
+                      text: data.message,
+                      icon: 'success'
+                    }).then(() => {
+                      this.dataset.currentStatus = newStatus;
+                      window.location.reload();
+                    });
+                  } else {
+                    Swal.fire({
+                      title: 'Error',
+                      text: data.message,
+                      icon: 'error'
+                    });
+                    // Revert the select to the current status if there was an error
+                    this.value = currentStatus;
+                  }
+                } catch (error) {
+                  Swal.fire({
+                    title: 'Error',
+                    text: 'An error occurred. Please try again.',
+                    icon: 'error'
+                  });
+                  // Revert the select to the current status if there was an error
+                  this.value = currentStatus;
+                }
+              });
+            });
+          });
+        </script>
 
   </body>
 

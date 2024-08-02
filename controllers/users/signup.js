@@ -5,7 +5,6 @@ const sendEmail = require("../../utils/sendmailer");
 const bcrypt = require("bcrypt")
 
 
-
 const loadSignup = async (req, res) => {
     try {
         res.render("users/signup")
@@ -213,7 +212,6 @@ googleSignin = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
-
 
 
 
