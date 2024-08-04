@@ -1,7 +1,10 @@
 <%-include("../layouts/header.ejs") %>
-
     <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
+        <!-- header section start -->
 		<header class="pages-header">
 			<div class="header-top">
 				<div class="container">
@@ -17,16 +20,22 @@
 						<div class="col-md-6">
 							<div class="right-header">
 								<ul>
+									<li><i class="pe-7s-search"></i>
+										<form method="get" id="searchform" action="#">
+											<input type="text" value="" name="s" id="ws" placeholder="Search product..." />
+											<button type="submit"><i class="pe-7s-search"></i></button>
+										</form>
+									</li>
 									<li><a href="#"><i class="pe-7s-settings"></i></a>
 										<ul class="drop-setting">
 											<li><a href="my-account.html"><i class="fa fa-user"></i>My account</a></li>
 											<li><a href="cart.html"><i class="fa fa-shopping-cart"></i>My cart</a></li>
 											<li><a href="wishlist.html"><i class="fa fa-heart"></i>My wishlist</a></li>
 											<li><a href="checkout.html"><i class="fa fa-usd"></i>Creck out</a></li>
-											<!-- <li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li> -->
+											<li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li>
 										</ul>
 									</li>
-									<li><a href="/cart"><i class="pe-7s-cart"></i><span>2</span></a>
+									<li><a href="cart.html"><i class="pe-7s-cart"></i><span>2</span></a>
 										<ul class="drop-cart">
 											<li>
 												<div class="goto text-center">
@@ -34,7 +43,7 @@
 												</div>
 											</li>
 											<li class="checkout-btn text-center">
-												<a href="/checkOut">Check out</a>
+												<a href="/checkout">Check out</a>
 											</li>
 										</ul>
 									</li>
@@ -58,7 +67,7 @@
 									<ul>
 										<li><a href="/">Home</a></li>
 										<li><a href="/shopList">Shop</a></li>
-										<li><a href="/userProfile">My Account</a>
+										<li><a href="/userProfile">My Account</a></li>
 										<li><a href="/about">About</a></li>
 										<li><a href="/contact">Contact</a></li>
 									</ul>
@@ -71,15 +80,15 @@
 		</header>
         <!-- header section end -->
         <!-- pages-title-start -->
-		<div class="pages-title section-padding">
+		<div class="pages-title about-page section-padding">
 			<div class="container">
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="pages-title-text">
-							<h3>WishList</h3>
+							<h3>About Us</h3>
 							<ul>
 								<li><a href="/">Home</a></li>
-								<li><span>/</span>WishList</li>
+								<li><span>/</span>About Us</li>
 							</ul>
 						</div>
 					</div>
@@ -87,62 +96,142 @@
 			</div>
 		</div>
 		<!-- pages-title-end -->
-		<!-- cart content section start -->
-		<section class="pages cart-page section-padding-top">
+        <!-- about-us-section-start -->
+		<div class="about-us section-padding-top">
 			<div class="container">
 				<div class="row">
-					<div class="col-12">
-						<div class="table-responsive">
-							
-							<table class="cart-table text-center">
-								<thead>
-									<tr>
-										<th>Items</th>
-										<th>Price</th>
-										<th>Action</th>
-										<th>Remove</th>
-									</tr>
-								   </thead>
-								   <tbody>
-									<% if (wishList && wishList.products.length > 0) { %>
-										<% wishList.products.forEach(product => { %>
-											<% if (product.productVariantId) { %>
-												<tr data-product-id="<%= product.productVariantId._id %>">
-													<td class="td-img text-left">
-														<a href="#"><img src="<%= product.productVariantId.image[0] %>" alt="Product Image" style="width: 100px; height: 120px;"/></a>
-														<div class="items-dsc">
-															<h6><a href="#"><%= product.productVariantId.productName %></a></h6>
-															<h6 class="itemcolor">Color : <span><%= product.productVariantId.colour %> </span></h6>
-															<h6 class="itemcolor">Size  : <span><%= product.size %></span></h6>
-														</div>
-													</td>
-													<td><%= product.productVariantId.salePrice %></td>
-													<td><button class="add-to-cart-btn">Add to Cart</button></td>
-													<td><i class="pe-7s-close" title="Remove this product"></i></td>
-												</tr>
-											<% } else { %>
-												<tr>
-													<td colspan="4">Invalid product variant</td>
-												</tr>
-											<% } %>
-										<% }) %>
-									<% } else { %>
-										<tr>
-											<td colspan="4">No products in the wishlist</td>
-										</tr>
-									<% } %>
-								</tbody>								
-							</table>
-		
+					<div class="col-md-6">
+						<div class="about-img">
+							<img src="img/about/l.webp" alt="" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="about-text">
+							<div class="about-author">
+								<h3>We are crazy fashion</h3>
+								<hr />
+							</div>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempores incidi dunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercing tation ullamco laboris nisi ut aliquip ex ea commodo consequats. Duis aute irure dolor reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt culp qui offici deserunt mollit anim id est laborum.</p>
+							<ul>
+								<li><i>Who you are</i></li>
+								<li><i>Why you sell the items you sell</i></li>
+								<li><i>Where you are located</i></li>
+								<li><i>How long you have been in business</i></li>
+							</ul>
+							<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dalese orem que laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veri tatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.</p>
 						</div>
 					</div>
 				</div>
-
-				
+			</div>
+		</div>
+		<!-- about-us section end -->
+        <!-- team-member section start -->
+		<section class="team-member single-products">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="section-title">
+							<h3>our creative team</h3>
+						</div>
+					</div>
+				</div>
+				<div class="row text-center">
+					<div id="new-products" class="owl-carousel product-slider owl-theme">
+						<div class="product-item">
+							<div class="single-product">
+								<div class="product-img">
+									<a href="#"><img src="img/about/1.webp" alt="Team Member" /></a>
+								</div>
+								<div class="member-title">
+									<h4>Jeffrey Ortega</h4>
+									<p>Fashion Designer</p>
+								</div>
+								<div class="actions-btn">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+						<!-- single member end -->
+						<div class="product-item">
+							<div class="single-product">
+								<div class="product-img">
+									<a href="#"><img src="img/about/2.webp" alt="Team Member" /></a>
+								</div>
+								<div class="member-title">
+									<h4>Jeffrey Ortega</h4>
+									<p>Fashion Designer</p>
+								</div>
+								<div class="actions-btn">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+						<!-- single member end -->
+						<div class="product-item">
+							<div class="single-product">
+								<div class="product-img">
+									<a href="#"><img src="img/about/3.webp" alt="Team Member" /></a>
+								</div>
+								<div class="member-title">
+									<h4>Jeffrey Ortega</h4>
+									<p>Fashion Designer</p>
+								</div>
+								<div class="actions-btn">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+						<!-- single member end -->
+						<div class="product-item">
+							<div class="single-product">
+								<div class="product-img">
+									<a href="#"><img src="img/about/4.webp" alt="Team Member" /></a>
+								</div>
+								<div class="member-title">
+									<h4>Jeffrey Ortega</h4>
+									<p>Fashion Designer</p>
+								</div>
+								<div class="actions-btn">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+						<!-- single member end -->
+						<div class="product-item">
+							<div class="single-product">
+								<div class="product-img">
+									<a href="#"><img src="img/about/2.webp" alt="Team Member" /></a>
+								</div>
+								<div class="member-title">
+									<h4>Jeffrey Ortega</h4>
+									<p>Fashion Designer</p>
+								</div>
+								<div class="actions-btn">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+						<!-- single member end -->
+					</div>
 				</div>
 			</div>
 		</section>
-		<!-- cart content section end -->
+		<!-- team-member section end -->
         <!-- footer section start -->
 		<footer class="section-padding-top">
 			<!-- brand logo area start -->
@@ -382,80 +471,6 @@
         <script src="js/plugins.js"></script>
 		<!-- main js -->
         <script src="js/main.js"></script>
-
-
-
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-								
-		<script>
-				 document.querySelectorAll(".pe-7s-close").forEach(removeBtn => {
-					removeBtn.addEventListener("click", async function(event) {
-						event.preventDefault();
-		
-						const productId = this.closest('tr').dataset.productId;
-		
-						const response = await fetch("/wishList-remove", {
-							method: "DELETE",
-							headers: {
-								"Content-Type": "application/json"
-							},
-							body: JSON.stringify({ productId })
-						});
-		
-						const responseData = await response.json();
-		
-						if (response.ok) {
-							Swal.fire({
-								title: "Success",
-								text: responseData.message,
-								icon: "success"
-							}).then(() => {
-								this.closest('tr').remove();
-								updateSubtotalAndGrandTotal();
-							});
-						} else {
-							Swal.fire({
-								title: "Error",
-								text: responseData.error || "Failed to remove item from cart",
-								icon: "error"
-							});
-						}
-					});
-				});       
-
-				document.querySelectorAll(".add-to-cart-btn").forEach(addBtn => {
-				addBtn.addEventListener("click", async function(event) {
-					event.preventDefault();
-
-					const productId = this.closest('tr').dataset.productId;
-
-					const response = await fetch("/addFromWishlist", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify({ productId })
-					});
-
-					const responseData = await response.json();
-
-					if (response.ok) {
-						Swal.fire({
-							title: "Success",
-							text: responseData.message,
-							icon: "success"
-						})
-					} else {
-						Swal.fire({
-							title: "Error",
-							text: responseData.error || "Failed to add item to cart",
-							icon: "error"
-						});
-					}
-				});
-			});
-		</script>
-
     </body>
 
 	<%-include("../layouts/footer.ejs") %>

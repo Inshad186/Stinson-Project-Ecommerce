@@ -11,6 +11,8 @@ const userAuth = require("../middleware/userMiddleware")
 const userDetail = require("../controllers/users/userProfile")
 const loadCart = require("../controllers/users/cart")
 const loadOrder = require("../controllers/users/order")
+const loadAbout = require("../controllers/users/about")
+const loadContact = require("../controllers/users/contact")
 
 
 router.get("/", loadHome);
@@ -60,6 +62,9 @@ router.post('/place-order',userAuth.isAuthenticated , loadOrder.placeOrder)
 router.post("/rePayment", userAuth.isAuthenticated, loadOrder.rePayment)
 router.post("/payment-success", userAuth.isAuthenticated ,loadOrder.verifyPayment)
 router.get("/userInvoice",userAuth.isAuthenticated, loadOrder.invoice)
+
+router.get("/about", loadAbout.viewAbout)
+router.get("/contact", loadContact.viewContact)
 
 router.use(errorHandler)
 

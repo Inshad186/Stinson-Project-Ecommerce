@@ -3,7 +3,7 @@
 
 		<style>
 			.pagination .page-item .page-link {
-			color: #ef6644; /* Orange color */
+			color: #ef6644;
 			border: 1px solid #ef6644;
 			margin: 0 5px;
 			padding: 10px 15px;
@@ -12,15 +12,15 @@
 		}
 
 		.pagination .page-item .page-link:hover {
-			background-color: #ef6644; /* Orange background on hover */
-			color: #FFFFFF; /* White text on hover */
-			border-color: #ef6644; /* Border color on hover */
+			background-color: #ef6644; 
+			color: #FFFFFF;
+			border-color: #ef6644; 
 		}
 
 		.pagination .page-item.active .page-link {
-			background-color: #ef6644; /* Orange background for active page */
-			color: #FFFFFF; /* White text for active page */
-			border-color: #ef6644; /* Border color for active page */
+			background-color: #ef6644; 
+			color: #FFFFFF; 
+			border-color: #ef6644; 
 		}
 		</style>
 
@@ -41,12 +41,6 @@
 						<div class="col-md-6">
 							<div class="right-header">
 								<ul>
-									<li><i class="pe-7s-search"></i>
-										<form method="get" id="searchform" action="#">
-											<input type="text" value="" name="s" id="ws" placeholder="Search product..." />
-											<button type="submit"><i class="pe-7s-search"></i></button>
-										</form>
-									</li>
 									<li><a href="#"><i class="pe-7s-settings"></i></a>
 										<ul class="drop-setting">
 											<li><a href="my-account.html"><i class="fa fa-user"></i>My account</a></li>
@@ -89,8 +83,8 @@
 										<li><a href="/">Home</a></li>
 										<li><a href="/shopList">Shop</a></li>
 										<li><a href="/userProfile">My Account</a></li>
-										<li><a href="about.html">About</a></li>
-										<li><a href="contact.html">Contact</a></li>
+										<li><a href="/about">About</a></li>
+										<li><a href="/contact">Contact</a></li>
 									</ul>
 								</nav>
 							</div>
@@ -240,18 +234,12 @@
 													</div>
 													<div class="product-dsc">
 														<p><a href="/productDetail"><%= variant.colour.toUpperCase() %>-<%= variant.productName.toUpperCase() %></a></p>
-														<% if (variant.offerDiscount ) { %>
+														<% if (variant.offerDiscount && variant.offerDetails[0]?.listed ==false ) { %>
 															<span style="color: red;">
 															  extra <%= variant.offerDiscount %>% off
 															</span>
 														  <% } %>
 														<span><%= variant.salePrice %>/-</span>
-													</div>
-													<div class="actions-btn">
-														<a href="#" data-bs-toggle="modal" data-trigger="hover" data-bs-target="#quick-view" data-placement="right" title="Quick View"><i class="pe-7s-expand1"></i></a>
-														<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="pe-7s-like"></i></a>
-														<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Compare"><i class="pe-7s-repeat"></i></a>
-														<a href="#" data-bs-toggle="tooltip" data-placement="right" title="Add To Cart"><i class="pe-7s-cart"></i></a>
 													</div>
 												</div>
 											</div>

@@ -45,6 +45,7 @@ exports.viewshopList = async (req, res, next) => {
         const totalVariants = await Variant.aggregate([
             { $lookup: { from: 'categories', localField: 'categoryName', foreignField: 'name', as: 'categoryDetails' } },
             { $lookup: { from: 'products', localField: 'productId', foreignField: '_id', as: 'productDetails' } },
+            { $lookup: { from: 'offers', localField: 'offerId', foreignField: '_id', as: 'offerDetails' } },
             { $match: categoryFilter },
             { $count: "total" }
         ]);
@@ -52,6 +53,7 @@ exports.viewshopList = async (req, res, next) => {
         const variants = await Variant.aggregate([
             { $lookup: { from: 'categories', localField: 'categoryName', foreignField: 'name', as: 'categoryDetails' } },
             { $lookup: { from: 'products', localField: 'productId', foreignField: '_id', as: 'productDetails' } },
+            { $lookup: { from: 'offers', localField: 'offerId', foreignField: '_id', as: 'offerDetails' } },
             { $match: categoryFilter },
             { $sort: sortOptions },
             { $skip: startIndex },

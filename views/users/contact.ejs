@@ -1,5 +1,4 @@
 <%-include("../layouts/header.ejs") %>
-
     <body>
 
 		<header class="pages-header">
@@ -26,7 +25,7 @@
 											<!-- <li><a href="login.html"><i class="fa fa-lock"></i>Login</a></li> -->
 										</ul>
 									</li>
-									<li><a href="/cart"><i class="pe-7s-cart"></i><span>2</span></a>
+									<li><a href="cart.html"><i class="pe-7s-cart"></i><span>2</span></a>
 										<ul class="drop-cart">
 											<li>
 												<div class="goto text-center">
@@ -34,7 +33,7 @@
 												</div>
 											</li>
 											<li class="checkout-btn text-center">
-												<a href="/checkOut">Check out</a>
+												<a href="/checkout">Check out</a>
 											</li>
 										</ul>
 									</li>
@@ -58,7 +57,7 @@
 									<ul>
 										<li><a href="/">Home</a></li>
 										<li><a href="/shopList">Shop</a></li>
-										<li><a href="/userProfile">My Account</a>
+										<li><a href="/userProfile">My Account</a></li>
 										<li><a href="/about">About</a></li>
 										<li><a href="/contact">Contact</a></li>
 									</ul>
@@ -76,10 +75,10 @@
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="pages-title-text">
-							<h3>WishList</h3>
+							<h3>Contact</h3>
 							<ul>
 								<li><a href="/">Home</a></li>
-								<li><span>/</span>WishList</li>
+								<li><span>/</span>Contact</li>
 							</ul>
 						</div>
 					</div>
@@ -87,62 +86,64 @@
 			</div>
 		</div>
 		<!-- pages-title-end -->
-		<!-- cart content section start -->
-		<section class="pages cart-page section-padding-top">
+		<!-- contact section start -->
+		<section class="pages checkout contact login-page section-padding">
 			<div class="container">
 				<div class="row">
-					<div class="col-12">
-						<div class="table-responsive">
-							
-							<table class="cart-table text-center">
-								<thead>
-									<tr>
-										<th>Items</th>
-										<th>Price</th>
-										<th>Action</th>
-										<th>Remove</th>
-									</tr>
-								   </thead>
-								   <tbody>
-									<% if (wishList && wishList.products.length > 0) { %>
-										<% wishList.products.forEach(product => { %>
-											<% if (product.productVariantId) { %>
-												<tr data-product-id="<%= product.productVariantId._id %>">
-													<td class="td-img text-left">
-														<a href="#"><img src="<%= product.productVariantId.image[0] %>" alt="Product Image" style="width: 100px; height: 120px;"/></a>
-														<div class="items-dsc">
-															<h6><a href="#"><%= product.productVariantId.productName %></a></h6>
-															<h6 class="itemcolor">Color : <span><%= product.productVariantId.colour %> </span></h6>
-															<h6 class="itemcolor">Size  : <span><%= product.size %></span></h6>
-														</div>
-													</td>
-													<td><%= product.productVariantId.salePrice %></td>
-													<td><button class="add-to-cart-btn">Add to Cart</button></td>
-													<td><i class="pe-7s-close" title="Remove this product"></i></td>
-												</tr>
-											<% } else { %>
-												<tr>
-													<td colspan="4">Invalid product variant</td>
-												</tr>
-											<% } %>
-										<% }) %>
-									<% } else { %>
-										<tr>
-											<td colspan="4">No products in the wishlist</td>
-										</tr>
-									<% } %>
-								</tbody>								
-							</table>
-		
+					<div class="offset-lg-1 col-md-5">
+						<div class="get-touch">
+							<div class="log-title">
+								<h3><strong>get in touch</strong></h3>
+								<hr />
+							</div>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has beening the stand ard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrames bled it make a type specimen book.</p>
+							<div class="footer-text">
+								<ul>
+									<li>
+										<i class="pe-7s-map-marker"></i>
+										<p>My Company, 45 Puffin Street 1245</p>
+										<p>Poffinville France.</p>
+									</li>
+									<li>
+										<i class="pe-7s-call"></i>
+										<p>+201 (987) 6641 053</p>
+										<p>+202 (987) 6641 056</p>
+									</li>
+									<li>
+										<i class="pe-7s-mail-open"></i>
+										<p>info@domainname.com</p>
+										<p>company@outlook.com</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="new-customer">
+							<div class="log-title">
+								<h3><strong>Have a questions?</strong></h3>
+								<hr />
+							</div>
+							<div class="custom-input">
+								<form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php">
+									<input type="text" name="con_name" placeholder="Name" />
+									<input type="text" name="con_email" placeholder="Email Address" />
+									<input type="text" name="con_subject" placeholder="Subject" />
+									<div class="review-mess">
+										<textarea rows="4" placeholder="Massage" name="con_message"></textarea>
+									</div>
+									<div class="submit-text">
+										<button type="submit">send message</button>
+										<p class="form-message"></p>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-
-				
-				</div>
 			</div>
 		</section>
-		<!-- cart content section end -->
+		<!-- contact section end -->
         <!-- footer section start -->
 		<footer class="section-padding-top">
 			<!-- brand logo area start -->
@@ -382,80 +383,6 @@
         <script src="js/plugins.js"></script>
 		<!-- main js -->
         <script src="js/main.js"></script>
-
-
-
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-								
-		<script>
-				 document.querySelectorAll(".pe-7s-close").forEach(removeBtn => {
-					removeBtn.addEventListener("click", async function(event) {
-						event.preventDefault();
-		
-						const productId = this.closest('tr').dataset.productId;
-		
-						const response = await fetch("/wishList-remove", {
-							method: "DELETE",
-							headers: {
-								"Content-Type": "application/json"
-							},
-							body: JSON.stringify({ productId })
-						});
-		
-						const responseData = await response.json();
-		
-						if (response.ok) {
-							Swal.fire({
-								title: "Success",
-								text: responseData.message,
-								icon: "success"
-							}).then(() => {
-								this.closest('tr').remove();
-								updateSubtotalAndGrandTotal();
-							});
-						} else {
-							Swal.fire({
-								title: "Error",
-								text: responseData.error || "Failed to remove item from cart",
-								icon: "error"
-							});
-						}
-					});
-				});       
-
-				document.querySelectorAll(".add-to-cart-btn").forEach(addBtn => {
-				addBtn.addEventListener("click", async function(event) {
-					event.preventDefault();
-
-					const productId = this.closest('tr').dataset.productId;
-
-					const response = await fetch("/addFromWishlist", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify({ productId })
-					});
-
-					const responseData = await response.json();
-
-					if (response.ok) {
-						Swal.fire({
-							title: "Success",
-							text: responseData.message,
-							icon: "success"
-						})
-					} else {
-						Swal.fire({
-							title: "Error",
-							text: responseData.error || "Failed to add item to cart",
-							icon: "error"
-						});
-					}
-				});
-			});
-		</script>
-
     </body>
 
 	<%-include("../layouts/footer.ejs") %>

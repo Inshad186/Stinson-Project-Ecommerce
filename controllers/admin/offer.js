@@ -22,7 +22,7 @@ exports.addOffer = async(req, res)=>{
         if(offerType==='Product Offer'){
 
         const authChek = await Variant.findById(selectProduct); 
-        console.log("PRODUCTS   :  ",authChek);
+        console.log("Selectedd  PRODUCTS   :  ",authChek);
 
         if (authChek) {      
         const existingOffer = await Offer.findOne({productID:selectProduct}).select('_id');
@@ -43,7 +43,7 @@ exports.addOffer = async(req, res)=>{
 
         //UPDATE IN VARIANT FIELD
         await Variant.findByIdAndUpdate(selectProduct,
-        {$set: {offerDiscount:discountPercentage }},
+        {$set: {offerDiscount:discountPercentage, offerId:newOffer._id }},
        );
         return res.status(200).json({success: 'Offer added successfully'});            
 
@@ -86,9 +86,9 @@ exports.viewEditOffer = async(req,res)=>{
 exports.editOffer = async (req, res) => {
     try {
         console.log("Edit Offer: ", req.query.offerId);
-        const offerId = req.query.offerId; 
+        const offerId = req.query.offerId;
         const oldOffer = await Offer.findById(offerId);
-        
+
         if (!oldOffer) {
             return res.status(404).json({ success: false, message: "Offer not found." });
         }
@@ -123,8 +123,14 @@ exports.editOffer = async (req, res) => {
 
         const updatedOffer = await Offer.findByIdAndUpdate(offerId, { $set: updateData }, { new: true });
 
-        res.json({ success: true, offer: updatedOffer });
+        // UPDATE IN VARIANT FIELD if the discountPercentage is updated
+        if (updateData.discountPercentage) {
+            await Variant.findByIdAndUpdate(oldOffer.productId, {
+                $set: { offerDiscount: updateData.discountPercentage }
+            });
+        }
 
+        res.json({ success: true, offer: updatedOffer });
     } catch (error) {
         console.log("Error in editOffer", error);
         res.status(500).send("Server Error");

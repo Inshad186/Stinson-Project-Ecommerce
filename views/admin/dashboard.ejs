@@ -580,89 +580,82 @@
           </div>
         </div>
         <!--end breadcrumb-->
-
-
-      <div class="container mt-5">
-        <div class="mb-4">
-            <label for="sortBy" class="mr-2">Sort By:</label>
-            <select name="sortBy" id="sortBy" class="form-control mr-2">
-                <option value="All Orders">All Orders</option>
-                <option value="yearly">Yearly</option>
-                <option value="monthly">Monthly</option>
-                <option value="weekly">Weekly</option>
-                <option value="daily">Daily</option>
-                <option value="date-range">Date Range</option> 
-            </select>
-            <input type="date" id="startDate" class="date-input">
-            <input type="date" id="endDate" class="date-input">
-            <button id="filterButton" class="filter-button">Filter</button>
-        </div>
-    
-        <div class="loading active" id="loadingIndicator">Loading...</div>
-    
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card radius-10">
-                    <div class="card-body">
-                        <h5 class="card-title">Best Selling Products</h5>
-                        <canvas id="bestSellingProductsChart"></canvas>
-                        <table class="table mt-3">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Product Name</th>
-                                    <th>Sale Count</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bestSellingProductsTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card radius-10">
-                    <div class="card-body">
-                        <h5 class="card-title">Best Selling Categories</h5>
-                        <canvas id="bestSellingCategoriesChart"></canvas>
-                        <table class="table mt-3">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Category Name</th>
-                                    <th>Sale Count</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bestSellingCategoriesTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card radius-10">
-                    <div class="card-body">
-                        <h5 class="card-title">Best Selling Brands</h5>
-                        <canvas id="bestSellingBrandsChart"></canvas>
-                        <table class="table mt-3">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Brand Name</th>
-                                    <th>Sale Count</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bestSellingBrandsTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <div class="container mt-5">
+          <div class="mb-4">
+              <label for="sortBy" class="mr-2">Sort By:</label>
+              <select name="sortBy" id="sortBy" class="form-control mr-2">
+                  <option value="All Orders">All Orders</option>
+                  <option value="yearly">Yearly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="daily">Daily</option>
+                  <option value="date-range">Date Range</option> 
+              </select>
+              <input type="date" id="startDate" class="date-input">
+              <input type="date" id="endDate" class="date-input">
+              <button id="filterButton" class="filter-button">Filter</button>
+          </div>
+      
+          <div class="loading active" id="loadingIndicator">Loading...</div>
+      
+          <div class="row mb-4">
+              <div class="col-6">
+                  <div class="card radius-10">
+                      <div class="card-body">
+                          <h5 class="card-title">Best Selling Products</h5>
+                          <canvas id="bestSellingProductsChart"></canvas>
+                          <table class="table mt-3">
+                              <thead>
+                                  <tr>
+                                      <th>#</th>
+                                      <th>Product Name</th>
+                                      <th>Sale Count</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="bestSellingProductsTableBody"></tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6">
+                  <div class="card radius-10">
+                      <div class="card-body">
+                          <h5 class="card-title">Best Selling Categories</h5>
+                          <canvas id="bestSellingCategoriesChart"></canvas>
+                          <table class="table mt-3">
+                              <thead>
+                                  <tr>
+                                      <th>#</th>
+                                      <th>Category Name</th>
+                                      <th>Sale Count</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="bestSellingCategoriesTableBody"></tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6">
+                  <div class="card radius-10">
+                      <div class="card-body">
+                          <h5 class="card-title">Best Selling Brands</h5>
+                          <canvas id="bestSellingBrandsChart"></canvas>
+                          <table class="table mt-3">
+                              <thead>
+                                  <tr>
+                                      <th>#</th>
+                                      <th>Brand Name</th>
+                                      <th>Sale Count</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="bestSellingBrandsTableBody"></tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
 
       <!-- end page content-->
     </div>

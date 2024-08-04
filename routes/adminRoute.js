@@ -75,7 +75,6 @@ router.post("/editOffer", adminAuth.isAuthenticated, loadOffer.editOffer)
 router.patch("/deleteOffer", adminAuth.isAuthenticated, loadOffer.deleteOffer)
 
 router.get("/salesReport", adminAuth.isAuthenticated, loadOrder.viewSalesReport)
-// router.get("/excelDownload", adminAuth.isAuthenticated, loadOrder.downloadExcel)
 router.get('/salesReport/download-excel', adminAuth.isAuthenticated, loadOrder.downloadExcel);
 router.get("/pdfDownload", adminAuth.isAuthenticated, loadOrder.downloadPdf);
 

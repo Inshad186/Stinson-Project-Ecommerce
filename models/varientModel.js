@@ -41,6 +41,9 @@ const varientSchema = new mongoose.Schema({
     },
     offerDiscount:{
         type: Number
+    },
+    offerId:{
+        type: mongoose.Schema.Types.ObjectId,
     }
 })
 

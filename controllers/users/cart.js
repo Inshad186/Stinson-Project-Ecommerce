@@ -260,6 +260,8 @@ exports.viewWishList = async (req, res, next) => {
                 select: 'categoryId'
             }
         });
+        console.log("WISHLIST : : WISHLIST  : ",wishList);
+        
         res.render('users/wishList', { wishList });
 
     } catch (error) {
